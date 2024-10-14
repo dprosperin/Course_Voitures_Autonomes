@@ -1,0 +1,13 @@
+../Core/Src/main.c:66:1:__io_putchar	1
+../Core/Src/main.c:77:5:main	6
+../Core/Src/main.c:174:6:SystemClock_Config	3
+../Core/Src/main.c:221:13:MX_USART1_UART_Init	5
+../Core/Src/main.c:269:13:MX_USART2_UART_Init	5
+../Core/Src/main.c:317:13:MX_GPIO_Init	1
+../Core/Src/main.c:353:6:HAL_UART_RxCpltCallback	3
+../Core/Src/main.c:365:10:lidar_distance	1
+../Core/Src/main.c:370:6:lidar_send_stop	1
+../Core/Src/main.c:375:6:lidar_start_scan	1
+../Core/Src/main.c:380:6:lidar_send_reset	1
+../Core/Src/main.c:388:6:lidar_get_info	1
+../Core/Src/main.c:398:6:Error_Handler	1
