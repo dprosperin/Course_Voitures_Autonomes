@@ -1,3 +1,9 @@
+### STM32CUBE IDE ##
+*.log
+*.lock
+.log4j2.xml
+
+
 ### Linux ###
 *~
 
