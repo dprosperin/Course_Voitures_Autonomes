@@ -347,21 +347,38 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 
 uint16_t lidar_distance(uint8_t trame[7]) {
+   /**
+	 * @brief Calcule la distance mesurée d'un point en mm
+	 * @param la trame UART reçu
+	 * @retval La distance entre le LIDAR et le point en mm
+	 */
 	return (uint16_t) trame[6] << 8 | (uint16_t) trame[5]; // TODO : A finir
 }
 
 
 void lidar_send_stop() {
+   /**
+	 * @brief Envoi la commande d'arrêt de SCAN
+	 * @retval void
+	 */
 	char command_stop[3] = "\xA5\x25";
 	HAL_UART_Transmit(&huart1, &command_stop, strlen(command_stop), HAL_MAX_DELAY);
 }
 
 void lidar_start_scan() {
+   /**
+	 * @brief Envoi la commande de démarrage du NORMAL SCAN
+	 * @retval void
+	 */
 	char command_start_scan[3] = "\xA5\x20";
 	HAL_UART_Transmit(&huart1, &command_start_scan, strlen(command_start_scan), HAL_MAX_DELAY);
 }
 
 void lidar_send_reset() {
+   /**
+	 * @vrief Envoi la commande de RESET
+	 * @retval void
+	 */
 	char command_reset[3] = "\xA5\x40";
 	HAL_UART_Transmit(&huart1, &command_reset, strlen(command_reset), HAL_MAX_DELAY);
 
@@ -370,6 +387,10 @@ void lidar_send_reset() {
 }
 
 void lidar_get_info() {
+   /**
+	 * @brief Envoi de la comamnde pour obtenir des informations sur le RPLIDAR
+	 * @retval void
+	 */
 	char command_get_info[3] = "\xA5\x50";
 	HAL_UART_Transmit(&huart1, &command_get_info, strlen(command_get_info), HAL_MAX_DELAY);
 }

@@ -3,6 +3,9 @@
 *.lock
 .log4j2.xml
 
+### Doxygen ###
+html
+latex
 
 ### Linux ###
 *~
