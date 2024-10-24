@@ -32,7 +32,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#define LIDAR_HUART huart1
+#define PC_HUART huart2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -47,6 +48,11 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0,
 		flag_reception_uart1 = 0;
+
+#define size_msg 7
+#define number_point 50
+uint8_t lidar_msg[number_point][size_msg];
+float distance[number_point];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -55,9 +61,10 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-uint16_t lidar_distance(uint8_t trame[7]);
+float lidar_distance(uint8_t trame[7]);
 void lidar_send_stop();
 void lidar_start_scan();
+void clear_trame();
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -68,6 +75,7 @@ PUTCHAR_PROTOTYPE
 	HAL_UART_Transmit(&huart2, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
 }
 
+uint8_t caractere;
 /* USER CODE END 0 */
 
 /**
@@ -103,18 +111,12 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
     int i = 0;
-    uint8_t caractere;
+
     uint8_t message[40] = "";
-    HAL_UART_Receive_IT(&huart2, &caractere, 1);
-
-    int size_msg = 7;
-    int number_point = 300;
-    uint8_t lidar_msg[number_point][size_msg];
-    int distance[number_point];
-
-    HAL_UART_Receive_IT(&huart1, lidar_msg, size_msg);
     int a = 0;
 
+    HAL_UART_Receive_IT(&LIDAR_HUART, lidar_msg, size_msg);
+    HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -123,37 +125,33 @@ int main(void)
   {
 	  if (flag_reception_uart2 == 1) {
 	  		  if (caractere == '\n') {
-	  			  //HAL_UART_Transmit(&huart2, message, strlen(message), HAL_MAX_DELAY);
-	  			  HAL_UART_Transmit(&huart1, &message, strlen(message), HAL_MAX_DELAY);
-	  			  printf("%s", message);
-	  			  //strcpy(message, "");
+	  			  HAL_UART_Transmit(&PC_HUART, message, strlen(message), HAL_MAX_DELAY);
+	  			  HAL_UART_Transmit(&LIDAR_HUART, message, strlen(message), HAL_MAX_DELAY);
+	  			  //printf("%s", message);
 
 	  			  message[0] = "\0";
-
-
 	  			  i = 0;
 	  		  }
 
 	  		  message[i++] = caractere;
 	  		  flag_reception_uart2 = 0;
-	  		  HAL_UART_Receive_IT(&huart2, &caractere, 1);
+
+	  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 
 	  	  }
 
+
 	  if (flag_reception_uart1 == 1  && a < number_point) {
-		  	  	  //HAL_UART_Transmit(&huart2, &lidar_msg, 1, HAL_MAX_DELAY);
 	  	  		  flag_reception_uart1 = 0;
 	  	  		  HAL_UART_Receive_IT(&huart1, lidar_msg[a], size_msg);
 	  	  		  distance[a] = lidar_distance(lidar_msg[a]);
-
 	  	  		  a++;
-
 	  }
 
 
 	  if (number_point == a) {
-		  printf("Fin capture");
 		  lidar_send_stop();
+		  printf("Fin capture");
 	  }
     /* USER CODE END WHILE */
 
@@ -338,6 +336,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == USART2) {
 		flag_reception_uart2 = 1;
+		/*
+		 * Relancer la réception dans l'interruption
+	     */
+		HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	}
 
 	if (huart->Instance == USART1) {
@@ -346,13 +348,40 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 
-uint16_t lidar_distance(uint8_t trame[7]) {
+float lidar_distance(uint8_t trame[7]) {
    /**
 	 * @brief Calcule la distance mesurée d'un point en mm
 	 * @param la trame UART reçu
 	 * @retval La distance entre le LIDAR et le point en mm
 	 */
-	return (uint16_t) trame[6] << 8 | (uint16_t) trame[5]; // TODO : A finir
+	uint16_t distance = (((uint16_t) trame[6] << 8) & 0xFF00) | (uint16_t) trame[5]; // TODO : A finir
+	return distance / 4.0;
+}
+
+float lidar_angle(uint8_t trame[7]) {
+	/**
+	 * @brief Calcule la l'angle entre l'origine et le poin en degré
+	 * @param la trame UART reçu
+	 * @retval La valeu de l'angle en degrée
+	 */
+
+	uint16_t angle = (((uint16_t) trame[4] << 8) & 0xFF00) | (uint16_t) trame[3];
+
+	// On retire le bit de vérification C
+	angle >>= 1;
+
+	return angle / 64.0;
+
+}
+
+void clear_trame() {
+	int i, j;
+	for (i = 0; i  < number_point; i++) {
+		for (j = 0; i < size_msg; j++) {
+			lidar_msg[i][j] = 0;
+		}
+	}
+
 }
 
 
@@ -362,7 +391,7 @@ void lidar_send_stop() {
 	 * @retval void
 	 */
 	char command_stop[3] = "\xA5\x25";
-	HAL_UART_Transmit(&huart1, &command_stop, strlen(command_stop), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, command_stop, strlen(command_stop), HAL_MAX_DELAY);
 }
 
 void lidar_start_scan() {
@@ -371,7 +400,7 @@ void lidar_start_scan() {
 	 * @retval void
 	 */
 	char command_start_scan[3] = "\xA5\x20";
-	HAL_UART_Transmit(&huart1, &command_start_scan, strlen(command_start_scan), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, command_start_scan, strlen(command_start_scan), HAL_MAX_DELAY);
 }
 
 void lidar_send_reset() {
@@ -380,7 +409,7 @@ void lidar_send_reset() {
 	 * @retval void
 	 */
 	char command_reset[3] = "\xA5\x40";
-	HAL_UART_Transmit(&huart1, &command_reset, strlen(command_reset), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, command_reset, strlen(command_reset), HAL_MAX_DELAY);
 
 	// TODO : Prochaine requete dans 2 ms
 	HAL_Delay(2);
@@ -392,7 +421,7 @@ void lidar_get_info() {
 	 * @retval void
 	 */
 	char command_get_info[3] = "\xA5\x50";
-	HAL_UART_Transmit(&huart1, &command_get_info, strlen(command_get_info), HAL_MAX_DELAY);
+	HAL_UART_Transmit(&huart1, command_get_info, strlen(command_get_info), HAL_MAX_DELAY);
 }
 /* USER CODE END 4 */
 

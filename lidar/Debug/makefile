@@ -60,8 +60,8 @@ all: main-build
 main-build: lidar.elf secondary-outputs
 
 # Tool invocations
-lidar.elf lidar.map: $(OBJS) $(USER_OBJS) /Users/davidprosperin/STM32CubeIDE/workspace_1.15.1/lidar/STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "lidar.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/davidprosperin/STM32CubeIDE/workspace_1.15.1/lidar/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lidar.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+lidar.elf lidar.map: $(OBJS) $(USER_OBJS) /Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/lidar/STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "lidar.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/lidar/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="lidar.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
