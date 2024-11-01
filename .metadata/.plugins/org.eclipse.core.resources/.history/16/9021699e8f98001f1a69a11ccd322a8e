@@ -1,0 +1,14 @@
+/*
+ * tests.h
+ *
+ *  Created on: Nov 1, 2024
+ *      Author: davidprosperin
+ */
+
+#ifndef INC_TESTS_H_
+#define INC_TESTS_H_
+
+void do_all_tests();
+
+
+#endif /* INC_TESTS_H_ */

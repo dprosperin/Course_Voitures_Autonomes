@@ -35,17 +35,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_rnglists 00000887  00000000  00000000  00018508  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001dcce  00000000  00000000  00018d8f  2**0
+ 16 .debug_macro  0001dce4  00000000  00000000  00018d8f  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000d4f8  00000000  00000000  00036a5d  2**0
+ 17 .debug_line   0000d51d  00000000  00000000  00036a73  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000b8759  00000000  00000000  00043f55  2**0
+ 18 .debug_str    000b875c  00000000  00000000  00043f90  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  000fc6ae  2**0
+ 19 .comment      00000043  00000000  00000000  000fc6ec  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00003594  00000000  00000000  000fc6f4  2**2
+ 20 .debug_frame  00003594  00000000  00000000  000fc730  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  000ffc88  2**0
+ 21 .debug_line_str 00000075  00000000  00000000  000ffcc4  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1149,7 +1149,11 @@ int main(void)
  8000e32:	f000 f92d 	bl	8001090 <MX_USART2_UART_Init>
   MX_USART1_UART_Init();
  8000e36:	f000 f8dd 	bl	8000ff4 <MX_USART1_UART_Init>
-  /* USER CODE BEGIN 2 */
+  // Début des tests
+#ifdef DO_TESTS
+  assert(1 > 2 && "1 n'est pas superieur a 2");
+#endif
+  // Fin des tests
     int i = 0;
  8000e3a:	2300      	movs	r3, #0
  8000e3c:	62fb      	str	r3, [r7, #44]	@ 0x2c

@@ -28,7 +28,6 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-typedef uint8_t frame_t[7];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -62,13 +61,6 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-float lidar_distance(frame_t frame);
-void lidar_send_stop();
-void lidar_start_scan();
-void clear_trame();
-bool lidar_check_bit(frame_t trame);
-bool lidar_check_inversed_start_flag_bit(frame_t trame);
-uint8_t lidar_get_quality(frame_t frame);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
