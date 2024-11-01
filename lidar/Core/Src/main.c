@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <string.h>
 #include <stdio.h>
+#include <stdbool.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,6 +66,9 @@ float lidar_distance(uint8_t trame[7]);
 void lidar_send_stop();
 void lidar_start_scan();
 void clear_trame();
+bool lidar_check_bit(uint8_t trame[7]);
+bool lidar_check_inversed_start_flag_bit(uint8_t trame[7]);
+uint8_t lidar_get_quality(uint8_t trame[7]);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -371,6 +375,44 @@ float lidar_angle(uint8_t trame[7]) {
 	angle >>= 1;
 
 	return angle / 64.0;
+
+}
+
+bool lidar_check_bit(uint8_t trame[7])
+{
+	/**
+	 * @brief Retourne le bit de vérification qui vaut en permamence 1
+	 * @param la trame UART reçu
+	 * @retval La valeur de c
+	 */
+
+	return trame[3] & 0x1;
+}
+
+bool lidar_check_inversed_start_flag_bit(uint8_t trame[7])
+{
+	/**
+	 * @brief Vérifie les deux drapeaux inversé et non inversé
+	 * @param la trame UART reçu
+	 * @retval Retourne true si la valeur du bit de start est bien l'inverse de la valeur du bit de drapeau inversé
+	 */
+
+	bool no_inversed_bit = trame[2] & 0x1;
+	bool inversed_bit = trame[2] & 0x2;
+
+
+	return no_inversed_bit == !inversed_bit;
+}
+
+uint8_t lidar_get_quality(uint8_t trame[7])
+{
+	/**
+	 * @brief Donne la qualuté du signal
+	 * @param la trame UART reçu
+	 * @retval Donne la valeur de la force du signal laser
+	 */
+
+	return trame[2] >> 2;
 
 }
 

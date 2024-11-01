@@ -856,3 +856,15 @@ java.io.FileNotFoundException: /Users/davidprosperin/Documents/GitHub/Course_Voi
 
 !ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-10-29 21:48:56.801
 !MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-01 20:53:01.851
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 27 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-01 20:53:01.854
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-01 20:53:01.855
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 27 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-01 20:53:01.855
+!MESSAGE Existing sessions are:
