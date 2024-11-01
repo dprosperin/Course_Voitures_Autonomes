@@ -423,6 +423,27 @@ void lidar_get_info() {
 	char command_get_info[3] = "\xA5\x50";
 	HAL_UART_Transmit(&huart1, command_get_info, strlen(command_get_info), HAL_MAX_DELAY);
 }
+
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    if (huart->ErrorCode & HAL_UART_ERROR_FE) {
+        // Gestion de l'erreur de framing
+        printf("Erreur de framing detectee.\n");
+    }
+    if (huart->ErrorCode & HAL_UART_ERROR_ORE) {
+        // Gestion de l'erreur d'overrun
+        printf("Erreur d'overrun detectee.\n");
+    }
+    if (huart->ErrorCode & HAL_UART_ERROR_PE) {
+        // Gestion de l'erreur de parité
+        printf("Erreur de parité detectee.\n");
+    }
+    if (huart->ErrorCode & HAL_UART_ERROR_NE) {
+        // Gestion de l'erreur bruit
+        printf("Erreur de bruit detectee.\n");
+    }
+    // Réinitialise la réception pour continuer la communication
+    HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
+}
 /* USER CODE END 4 */
 
 /**
