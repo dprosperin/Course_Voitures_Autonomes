@@ -28,7 +28,7 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+typedef uint8_t frame_t[7];
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -62,13 +62,13 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_USART1_UART_Init(void);
 /* USER CODE BEGIN PFP */
-float lidar_distance(uint8_t trame[7]);
+float lidar_distance(frame_t frame);
 void lidar_send_stop();
 void lidar_start_scan();
 void clear_trame();
-bool lidar_check_bit(uint8_t trame[7]);
-bool lidar_check_inversed_start_flag_bit(uint8_t trame[7]);
-uint8_t lidar_get_quality(uint8_t trame[7]);
+bool lidar_check_bit(frame_t trame);
+bool lidar_check_inversed_start_flag_bit(frame_t trame);
+uint8_t lidar_get_quality(frame_t frame);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -352,24 +352,24 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 
-float lidar_distance(uint8_t trame[7]) {
+float lidar_distance(frame_t frame) {
    /**
 	 * @brief Calcule la distance mesurée d'un point en mm
 	 * @param la trame UART reçu
 	 * @retval La distance entre le LIDAR et le point en mm
 	 */
-	uint16_t distance = (((uint16_t) trame[6] << 8) & 0xFF00) | (uint16_t) trame[5]; // TODO : A finir
+	uint16_t distance = (((uint16_t) frame[6] << 8) & 0xFF00) | (uint16_t) frame[5]; // TODO : A finir
 	return distance / 4.0;
 }
 
-float lidar_angle(uint8_t trame[7]) {
+float lidar_angle(frame_t frame) {
 	/**
 	 * @brief Calcule la l'angle entre l'origine et le poin en degré
 	 * @param la trame UART reçu
 	 * @retval La valeu de l'angle en degrée
 	 */
 
-	uint16_t angle = (((uint16_t) trame[4] << 8) & 0xFF00) | (uint16_t) trame[3];
+	uint16_t angle = (((uint16_t) frame[4] << 8) & 0xFF00) | (uint16_t) frame[3];
 
 	// On retire le bit de vérification C
 	angle >>= 1;
@@ -378,7 +378,7 @@ float lidar_angle(uint8_t trame[7]) {
 
 }
 
-bool lidar_check_bit(uint8_t trame[7])
+bool lidar_check_bit(frame_t frame)
 {
 	/**
 	 * @brief Retourne le bit de vérification qui vaut en permamence 1
@@ -386,10 +386,10 @@ bool lidar_check_bit(uint8_t trame[7])
 	 * @retval La valeur de c
 	 */
 
-	return trame[3] & 0x1;
+	return frame[3] & 0x1;
 }
 
-bool lidar_check_inversed_start_flag_bit(uint8_t trame[7])
+bool lidar_check_inversed_start_flag_bit(frame_t frame)
 {
 	/**
 	 * @brief Vérifie les deux drapeaux inversé et non inversé
@@ -397,14 +397,14 @@ bool lidar_check_inversed_start_flag_bit(uint8_t trame[7])
 	 * @retval Retourne true si la valeur du bit de start est bien l'inverse de la valeur du bit de drapeau inversé
 	 */
 
-	bool no_inversed_bit = trame[2] & 0x1;
-	bool inversed_bit = trame[2] & 0x2;
+	bool no_inversed_bit = frame[2] & 0x1;
+	bool inversed_bit = frame[2] & 0x2;
 
 
 	return no_inversed_bit == !inversed_bit;
 }
 
-uint8_t lidar_get_quality(uint8_t trame[7])
+uint8_t lidar_get_quality(frame_t frame)
 {
 	/**
 	 * @brief Donne la qualuté du signal
@@ -412,7 +412,7 @@ uint8_t lidar_get_quality(uint8_t trame[7])
 	 * @retval Donne la valeur de la force du signal laser
 	 */
 
-	return trame[2] >> 2;
+	return frame[2] >> 2;
 
 }
 
