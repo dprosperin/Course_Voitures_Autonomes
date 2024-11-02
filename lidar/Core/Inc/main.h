@@ -61,6 +61,7 @@ void clear_trame();
 bool lidar_check_bit(frame_t trame);
 bool lidar_check_inversed_start_flag_bit(frame_t trame);
 uint8_t lidar_get_quality(frame_t frame);
+bool lidar_is_new_scan(frame_t frame);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/

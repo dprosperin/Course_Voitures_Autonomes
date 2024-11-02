@@ -415,6 +415,18 @@ uint8_t lidar_get_quality(frame_t frame)
 
 }
 
+bool lidar_is_new_scan(frame_t frame)
+{
+	/**
+	 * @brief Vérifie la trame est la première trame du scan
+	 * @param la trame UART reçu
+	 * @retval booléen
+	 */
+
+	return frame[2] & 0x1;
+
+}
+
 void clear_trame() {
 	int i, j;
 	for (i = 0; i  < number_point; i++) {
@@ -424,7 +436,6 @@ void clear_trame() {
 	}
 
 }
-
 
 void lidar_send_stop() {
    /**

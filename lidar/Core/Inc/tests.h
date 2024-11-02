@@ -14,5 +14,6 @@ void do_lidar_angle_test();
 void do_lidar_check_bit_test();
 void do_lidar_check_inversed_start_flag_bit_test();
 void do_lidar_get_quality_test();
+void do_lidar_is_new_scan_test();
 
 #endif /* INC_TESTS_H_ */

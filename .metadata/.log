@@ -1227,3 +1227,15 @@ Binding(COMMAND+W,
 
 !ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-02 22:20:27.233
 !MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-02 23:26:45.481
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 87 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-02 23:26:45.485
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-02 23:26:45.489
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 87 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-11-02 23:26:45.489
+!MESSAGE Existing sessions are:

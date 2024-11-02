@@ -1,6 +1,7 @@
 ../Core/Src/tests.c:32:6:do_all_tests	8	static
-../Core/Src/tests.c:41:6:do_lidar_distance_test	8	static
-../Core/Src/tests.c:46:6:do_lidar_angle_test	8	static
-../Core/Src/tests.c:52:6:do_lidar_check_bit_test	8	static
-../Core/Src/tests.c:57:6:do_lidar_check_inversed_start_flag_bit_test	8	static
-../Core/Src/tests.c:62:6:do_lidar_get_quality_test	8	static
+../Core/Src/tests.c:43:6:do_lidar_distance_test	8	static
+../Core/Src/tests.c:48:6:do_lidar_angle_test	8	static
+../Core/Src/tests.c:54:6:do_lidar_check_bit_test	8	static
+../Core/Src/tests.c:59:6:do_lidar_check_inversed_start_flag_bit_test	8	static
+../Core/Src/tests.c:64:6:do_lidar_get_quality_test	8	static
+../Core/Src/tests.c:69:6:do_lidar_is_new_scan_test	8	static

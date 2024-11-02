@@ -36,6 +36,8 @@ void do_all_tests()
 	do_lidar_check_bit_test();
 	do_lidar_check_inversed_start_flag_bit_test();
 	do_lidar_get_quality_test();
+	do_lidar_is_new_scan_test();
+
 }
 
 void do_lidar_distance_test()
@@ -62,4 +64,9 @@ void do_lidar_check_inversed_start_flag_bit_test()
 void do_lidar_get_quality_test()
 {
 	assert(lidar_get_quality(frame_under_test) == 10 && "Should return 1");
+}
+
+void do_lidar_is_new_scan_test()
+{
+	assert(lidar_is_new_scan(frame_under_test) == 0 && "Should return 0");
 }
