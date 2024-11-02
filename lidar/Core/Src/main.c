@@ -24,6 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <tests.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -34,6 +35,7 @@
 /* USER CODE BEGIN PD */
 #define LIDAR_HUART huart1
 #define PC_HUART huart2
+#define DO_TESTS 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -106,6 +108,11 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+  // Début des tests
+#ifdef DO_TESTS
+  do_all_tests();
+#endif
+  // Fin des tests
     int i = 0;
 
     uint8_t message[40] = "";
@@ -344,17 +351,19 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
 
-float lidar_distance(frame_t frame) {
+float lidar_distance(frame_t frame)
+{
    /**
 	 * @brief Calcule la distance mesurée d'un point en mm
 	 * @param la trame UART reçu
 	 * @retval La distance entre le LIDAR et le point en mm
 	 */
-	uint16_t distance = (((uint16_t) frame[6] << 8) & 0xFF00) | (uint16_t) frame[5]; // TODO : A finir
+	uint16_t distance = (((uint16_t) frame[6] << 8) & 0xFF00) | (uint16_t) frame[5];
 	return distance / 4.0;
 }
 
-float lidar_angle(frame_t frame) {
+float lidar_angle(frame_t frame)
+{
 	/**
 	 * @brief Calcule la l'angle entre l'origine et le poin en degré
 	 * @param la trame UART reçu
@@ -399,8 +408,6 @@ bool lidar_check_inversed_start_flag_bit(frame_t frame)
 uint8_t lidar_get_quality(frame_t frame)
 {
 	/**
-	 * @brief Donne la qualuté du signal
-	 * @param la trame UART reçu
 	 * @retval Donne la valeur de la force du signal laser
 	 */
 

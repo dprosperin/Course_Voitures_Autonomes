@@ -1,0 +1,31 @@
+/*
+ * tests.c
+ *
+ *  Created on: Nov 1, 2024
+ *      Author: David Prospérin
+ */
+
+#include <main.h>
+
+/*
+   Création d'un trame d'une mesure de SCAN normale d'exemple
+
+
+
+ */
+
+frame_t frame_under_test = {
+
+};
+
+void do_all_tests()
+{
+	do_lidar_distance_test();
+}
+
+void do_lidar_distance_test()
+{
+	lidar_distance();
+}
+
+

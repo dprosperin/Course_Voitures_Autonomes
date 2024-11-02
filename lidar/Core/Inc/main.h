@@ -54,6 +54,7 @@ void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
 float lidar_distance(frame_t frame);
+float lidar_angle(frame_t frame);
 void lidar_send_stop();
 void lidar_start_scan();
 void clear_trame();

@@ -1,0 +1,23 @@
+/*
+ * tests.c
+ *
+ *  Created on: Nov 1, 2024
+ *      Author: David Prospérin
+ */
+
+#include <main.h>
+
+
+
+
+void do_all_tests()
+{
+	do_lidar_distance_test();
+}
+
+void do_lidar_distance_test()
+{
+	lidar_distance();
+}
+
+
