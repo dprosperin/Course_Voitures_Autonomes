@@ -1,15 +1,15 @@
 /*
  * herculex.h
  *
- *  Created on: Nov 4, 2024
+ *  Created on: Nov 25, 2024
  *      Author: joseph.munoz-saltos
  */
 
-#ifndef HERCULEX_H_
-#define HERCULEX_H_
+#ifndef INC_HERCULEX_H_
+#define INC_HERCULEX_H_
 
 uint8_t calcul_checksum1(uint8_t size,uint8_t trame);
 uint8_t calcul_checksum2(uint8_t checksum1);
 void send_trame(uint8_t id,uint8_t size, uint8_t trame);
-matheo ;
-#endif /* HERCULEX_H_ */
+
+#endif /* INC_HERCULEX_H_ */

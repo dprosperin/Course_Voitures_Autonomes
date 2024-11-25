@@ -25,7 +25,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "pwm_api.h"
-#include "herculex.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -93,13 +92,13 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
-  /*HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+  HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
   PWM_write(&htim1, TIM_CHANNEL_1, 1);
   PWM_write(&htim1, TIM_CHANNEL_1, 0.25);
   PWM_dir(reculer);
   PWM_write(&htim1, TIM_CHANNEL_1, 0.25);
   PWM_dir_and_cycle(avancer,&htim1, TIM_CHANNEL_1, 1);
-  PWM_dir_and_cycle(reculer,&htim1, TIM_CHANNEL_1, 0.25);*/
+  PWM_dir_and_cycle(reculer,&htim1, TIM_CHANNEL_1, 0.25);
 
   /* USER CODE END 2 */
 
@@ -108,7 +107,6 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
-	  send_trame(0xfd,7,reboot);
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */

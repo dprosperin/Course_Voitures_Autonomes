@@ -1,5 +1,4 @@
 "./Core/Src/gpio.o"
-"./Core/Src/herculex.o"
 "./Core/Src/main.o"
 "./Core/Src/pwm_api.o"
 "./Core/Src/stm32g4xx_hal_msp.o"
