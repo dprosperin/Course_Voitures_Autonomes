@@ -76,7 +76,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  uint8_t reboot[7]={0xff,0xff,0x07,0x00,0x06,0x00,0x00};
+  uint8_t torque_control[11]={0xff,0xff,0x0a,0xfd,0x03,0xa0,0x5e,0x34,0x01,0x60};
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -100,6 +100,7 @@ int main(void)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
+	 send_trame(0xfd,torque_control);
   }
   /* USER CODE END 3 */
 }
@@ -165,6 +166,7 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
+
   }
   /* USER CODE END Error_Handler_Debug */
 }
