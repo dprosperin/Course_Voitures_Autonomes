@@ -1,0 +1,13 @@
+/*
+ * automate.h
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: davidprosperin
+ */
+
+#ifndef SRC_AUTOMATE_H_
+#define SRC_AUTOMATE_H_
+
+void automate(void);
+
+#endif /* SRC_AUTOMATE_H_ */

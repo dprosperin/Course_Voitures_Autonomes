@@ -62,6 +62,8 @@ bool lidar_check_bit(frame_t trame);
 bool lidar_check_inversed_start_flag_bit(frame_t trame);
 uint8_t lidar_get_quality(frame_t frame);
 bool lidar_is_new_scan(frame_t frame);
+void write_byte_to_buffer(uint8_t byte_to_write);
+uint8_t read_byte_from_buffer(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -79,6 +81,10 @@ bool lidar_is_new_scan(frame_t frame);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+#define LIDAR_COMMAND_STOP "\xA5\x25"
+#define LIDAR_COMMAND_START_SCAN "\xA5\x20"
+#define LIDAR_COMMAND_RESET "\xA5\x40"
+#define LIDAR_COMMAND_GET_INFO "\xA5\x50"
 
 /* USER CODE END Private defines */
 

@@ -1,7 +1,9 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=macosx
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lidar Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lidar G431KB Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lidar G431KB_V1 Debug (1),org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lidar G431KB_V1 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lidar Debug
 eclipse.preferences.version=1
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lidar\ G431KB\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Lidar\ G431KB\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lidar\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:lidar\ Debug/activeLaunchTarget=null\:---
