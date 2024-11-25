@@ -1,0 +1,3 @@
+../Core/Src/herculex.c:11:9:calcul_checksum1	2
+../Core/Src/herculex.c:22:9:calcul_checksum2	1
+../Core/Src/herculex.c:28:6:send_trame	1
