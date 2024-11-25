@@ -199,7 +199,7 @@ while driver.step() != -1:
         #un secteur par tranche de 20° donc 10 secteurs numérotés de 0 à 9    
         #angle_degre = 0.02*(tableau_lidar_mm[60]-tableau_lidar_mm[-60])
         set_direction_degre(angle_correction)
-        vitesse_m_s = 0.5
+        vitesse_m_s = 0
         set_vitesse_m_s(vitesse_m_s)
  
     #########################################################
