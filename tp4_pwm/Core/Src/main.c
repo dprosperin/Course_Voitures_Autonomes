@@ -76,7 +76,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  uint8_t reboot[7]={0xff,0xff,0x07,0x00,0x09,0x00,0x00};
+  uint8_t reboot[7]={0xff,0xff,0x07,0x00,0x06,0x00,0x00};
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -92,13 +92,6 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-  PWM_write(&htim1, TIM_CHANNEL_1, 1);
-  PWM_write(&htim1, TIM_CHANNEL_1, 0.25);
-  PWM_dir(reculer);
-  PWM_write(&htim1, TIM_CHANNEL_1, 0.25);
-  PWM_dir_and_cycle(avancer,&htim1, TIM_CHANNEL_1, 1);
-  PWM_dir_and_cycle(reculer,&htim1, TIM_CHANNEL_1, 0.25);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */

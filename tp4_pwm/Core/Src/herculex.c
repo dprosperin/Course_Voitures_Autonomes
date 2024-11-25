@@ -32,3 +32,8 @@ void send_trame(uint8_t id,uint8_t size, uint8_t *trame)
 	trame[6]=calcul_checksum2(trame[5]);
 	HAL_UART_Transmit(&huart2,trame,size, HAL_MAX_DELAY);
 }
+uint8_t reboot(uint8_t id)
+{
+	uint8_t reboot[7]={0xff,0xff,0x07,0x00,0x09,0x00,0x00};
+	send_trame(id,7,reboot);
+}
