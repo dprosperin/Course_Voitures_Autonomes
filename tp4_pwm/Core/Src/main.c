@@ -76,7 +76,7 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  uint8_t torque_control[11]={0xff,0xff,0x0a,0xfd,0x03,0xa0,0x5e,0x34,0x01,0x60};
+  uint8_t l_jog[12]={0xff,0xff,0x0c,0xfd,0x05,0x32,0xcc,0x00,0x02,0x04,0xfd,0x3c};
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -96,11 +96,12 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  send_torque_on(0xfd);
   while (1)
   {
     /* USER CODE END WHILE */
     /* USER CODE BEGIN 3 */
-	 send_trame(0xfd,torque_control);
+	  send_trame(0xfd,l_jog);
   }
   /* USER CODE END 3 */
 }
