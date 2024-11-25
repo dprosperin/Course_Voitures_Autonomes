@@ -17,3 +17,11 @@ void PWM_dir(int dir)
 {
 	HAL_GPIO_WritePin(dir_GPIO_Port, dir_Pin, dir);
 }
+void PWM_dir_and_cycle(int dir,TIM_HandleTypeDef *htim, uint32_t pwm_channel, float duty_cycle)
+{
+	HAL_GPIO_WritePin(dir_GPIO_Port, dir_Pin, dir);
+	uint32_t ARR = __HAL_TIM_GET_AUTORELOAD(htim);
+    uint32_t CRR = duty_cycle*(ARR+1)-1;
+    __HAL_TIM_SET_COMPARE(htim,pwm_channel,CRR);
+
+}

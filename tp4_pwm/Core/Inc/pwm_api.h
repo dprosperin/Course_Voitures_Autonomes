@@ -10,4 +10,5 @@
 #include "tim.h"
 void PWM_write(TIM_HandleTypeDef *htim, uint32_t pwm_channel, float duty_cycle);
 void PWM_dir(int dir);
+void PWM_dir_and_cycle(int dir,TIM_HandleTypeDef *htim, uint32_t pwm_channel, float duty_cycle);
 #endif /* INC_PWM_API_H_ */
