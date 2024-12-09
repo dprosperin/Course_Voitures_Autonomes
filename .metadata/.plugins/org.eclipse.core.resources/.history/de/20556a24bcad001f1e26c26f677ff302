@@ -1,0 +1,27 @@
+/*
+ * automate.h
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: davidprosperin
+ */
+
+#ifndef SRC_AUTOMATE_H_
+#define SRC_AUTOMATE_H_
+
+#include <main.h>
+
+typedef enum {
+     FLAG_START1,
+     FLAG_START2,
+     DATA_AND_SEND_MODE,
+     DATA_TYPE,
+     QUALITY,
+     ANGLE_FIRST_PART,
+     ANGLE_SECOND_PART,
+     DISTANCE_FIRST_PART,
+     DISTANCE_SECOND_PART
+} state_automate_t;
+
+void automate_decode(void);
+
+#endif /* SRC_AUTOMATE_H_ */

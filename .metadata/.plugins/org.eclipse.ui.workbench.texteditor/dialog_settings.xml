@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="Callback"/>
+		<item key="selection" value="buffer"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="buffer"/>
+			<item value="size_msg"/>
+			<item value="number_point"/>
+			<item value="distance"/>
+			<item value="lidar_msg"/>
 			<item value="callback"/>
 			<item value="lidar_angle"/>
 			<item value="float"/>
@@ -17,7 +22,6 @@
 			<item value="1000000"/>
 			<item value="__HAL_U"/>
 			<item value="__SEND"/>
-			<item value="lidar_msg"/>
 			<item value="lidar_distance"/>
 		</list>
 		<list key="replacehistory">

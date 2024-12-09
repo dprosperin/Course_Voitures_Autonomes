@@ -1,4 +1,5 @@
 "./Core/Src/automate.o"
+"./Core/Src/buffer.o"
 "./Core/Src/main.o"
 "./Core/Src/stm32g4xx_hal_msp.o"
 "./Core/Src/stm32g4xx_it.o"

@@ -1,0 +1,18 @@
+/*
+ * buffer.h
+ *
+ *  Created on: Nov 28, 2024
+ *      Author: davidprosperin
+ */
+
+#ifndef INC_BUFFER_H_
+#define INC_BUFFER_H_
+
+#include <stddef.h>
+#include <stdint.h>
+
+extern size_t index_write;
+extern size_t index_read;
+extern uint8_t buffer[2048];
+
+#endif /* INC_BUFFER_H_ */

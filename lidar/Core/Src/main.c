@@ -24,7 +24,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
-#include <tests.h>
+#include <buffer.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -52,11 +52,7 @@ DMA_HandleTypeDef hdma_usart1_rx;
 uint8_t flag_reception_uart2 = 0,
 		flag_reception_uart1 = 0;
 
-#define size_msg 7
-#define number_point 50
-uint8_t lidar_msg[number_point][size_msg];
 uint8_t byte_received = 0;
-float distance[number_point];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -79,8 +75,6 @@ PUTCHAR_PROTOTYPE
 }
 
 uint8_t caractere;
-uint8_t buffer[300];
-size_t index_write = 0;
 /* USER CODE END 0 */
 
 /**
@@ -91,7 +85,6 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
-
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -100,7 +93,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -116,22 +108,18 @@ int main(void)
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  // Début des tests
-#ifdef DO_TESTS
-  do_all_tests();
-#endif
-  // Fin des tests
     int i = 0;
-
     uint8_t message[40] = "";
+
+    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, 2048);
     HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
-    HAL_UART_Receive_DMA(&LIDAR_HUART, &byte_received, 1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+
 	  if (flag_reception_uart2 == 1) {
 	  		  if (caractere == '\n') {
 	  			  HAL_UART_Transmit(&PC_HUART, message, strlen(message), HAL_MAX_DELAY);
@@ -146,6 +134,35 @@ int main(void)
 	  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	  	  }
 
+	  if (flag_reception_uart1 == 1)
+
+	  {
+		  for (int i = 0; i < sizeof(buffer); i++)
+		  		{
+		  			if (buffer[i] == 0xA5 &&
+		  			    buffer[++i] == 0x5A &&
+		  				buffer[++i] == 0x05 &&
+		  				buffer[++i] == 0x00 &&
+		  				buffer[++i] == 0x00 &&
+		  				buffer[++i] == 0x40 &&
+		  				buffer[++i] == 0x81)
+		  			{
+		  				printf("\n------- Primere trame ------\n");
+		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
+		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
+		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
+		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
+		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
+		  			    printf("------- Fin primere trame ------\n");
+
+
+		  				break;
+		  			}
+
+
+		  		}
+		  flag_reception_uart1 = 0;
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -354,42 +371,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	if (huart->Instance == USART1) {
 		flag_reception_uart1 = 1;
-		HAL_UART_Receive_DMA(&LIDAR_HUART, &byte_received, 1);
-		printf("0x%X\n", byte_received);
-
 	}
 }
-
-void write_byte_to_buffer(uint8_t byte_to_write)
-{
-	if (index_write < 300)
-	{
-		buffer[index_write] = byte_to_write;
-		index_write++;
-	} else {
-		index_write = 0;
-		buffer[index_write] = byte_to_write;
-	}
-}
-
-uint8_t read_byte_from_buffer(void)
-{
-	static size_t index_read = 0;
-
-	if (index_write > index_read)
-	{
-		index_read++;
-	}
-
-	if (index_write < index_read)
-	{
-		index_read = index_write;
-	}
-
-	return buffer[index_read];
-}
-
-
 /* USER CODE END 4 */
 
 /**
