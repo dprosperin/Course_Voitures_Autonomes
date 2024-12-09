@@ -109,9 +109,9 @@ int main(void)
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
     int i = 0;
-    uint8_t message[40] = "";
+    char message[40] = "";
 
-    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, 2048);
+    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, sizeof(buffer));
     HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
@@ -122,9 +122,27 @@ int main(void)
 
 	  if (flag_reception_uart2 == 1) {
 	  		  if (caractere == '\n') {
-	  			  HAL_UART_Transmit(&PC_HUART, message, strlen(message), HAL_MAX_DELAY);
-	  			  HAL_UART_Transmit(&LIDAR_HUART, message, strlen(message), HAL_MAX_DELAY);
-	  			  message[0] = "\0";
+	  			  if (strstr(message, "START_SCAN") != NULL)
+	  			  {
+	  				printf("Demarrage du scan normal\n");
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, strlen(LIDAR_COMMAND_START_SCAN), HAL_MAX_DELAY);
+	  			  } else if (strstr(message, "STOP") != NULL)
+	  			  {
+	  				printf("Arret\n");
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, strlen(LIDAR_COMMAND_STOP), HAL_MAX_DELAY);
+	  			  } else if (strstr(message, "RESET") != NULL)
+	  			  {
+	  				printf("Reset\n");
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, strlen(LIDAR_COMMAND_RESET), HAL_MAX_DELAY);
+	  			  } else if (strstr(message, "GET_INFO") != NULL)
+	  			  {
+	  				printf("RTFM ! <*_*>\n");
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, strlen(LIDAR_COMMAND_GET_INFO), HAL_MAX_DELAY);
+	  			  } else {
+	  				  printf("Commande non reconnue : %s\n", message);
+	  			  }
+
+	  			  message[0] = '\0';
 	  			  i = 0;
 	  		  }
 

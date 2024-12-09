@@ -114,7 +114,7 @@ void automate_decode(void)
     case ANGLE_SECOND_PART:
     	angle_high_byte = buffer[index_read];
 
-    	angle = (angle_high_byte | angle_low_byte) / 64.0;
+    	angle = ((angle_high_byte | angle_low_byte) >> 1) / 64.0;
 
     	printf("Angle %f degree\n", angle);
 
