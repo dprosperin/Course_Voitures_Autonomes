@@ -28,13 +28,9 @@ const float* range_donnees;
 //float range_donnees[SIZE_TABLEAU];
 unsigned char gestion_appuie_clavier(void);
 unsigned char modeAuto=0;
-float max_90 , max_270,max = 0.0 ; 
-float angle_calculé = 0.0 ; 
-float maxangle = 0.35 ; 
-float MAX= 0.35 ; 
 // prototype des fonctions
 void affichage_consigne();
-void set_direction_degres(float angle_degre);
+//void set_direction_degres(float angle_degre);
 void set_vitesse_m_s(float vitesse_m_s);
 unsigned char gestion_appui_clavier(void);
 void recule(void);
@@ -42,21 +38,25 @@ void set_angle_test() ;
 //vitesse en km/h
 float speed = 0;
 float maxSpeed = 28; //km/h
+signed int data_lidar_mm_main[360];
 
 // angle max de la direction
-float maxangle_degre = 16; 
+//float maxangle_degre = 16; 
 
+float degree_vers_radian(float degree)
+{
+ return degree*( 3.14/180);
+}
   /* main loop
    * Perform simulation steps of TIME_STEP milliseconds
    * and leave the loop when the simulation is over
    */
   
 int main(int argc, char **argv) 
-{
- prtinf ("a\n") ; 
+{ 
   unsigned int i;
-  signed int data_lidar_mm_main[360];
-  float angle_degre, vitesse_m_s;
+  
+  float vitesse_m_s;
   /* necessary to initialize webots stuff */
   //intialisation du conducteur de voiture
   wbu_driver_init();
@@ -69,28 +69,26 @@ int main(int argc, char **argv)
   wb_lidar_enable_point_cloud(lidar);
  
   affichage_consigne();
-  set_direction_degres(0);
   set_vitesse_m_s(0);
   while (wbu_driver_step() != -1) 
   {
-   printf("b\n");
     float distance;
     /* lire le lidar et traiter les données :   */
     range_donnees=wb_lidar_get_range_image(lidar);
     distance = range_donnees[0];
-    if((distance > 0.0) && (distance <20.0))
+    if((distance > 0.0))
       data_lidar_mm_main[0]=1000*distance;
       else data_lidar_mm_main[0] = 0;
     for(i = 1; i<360 ; i++)
     {
       distance = range_donnees[360-i];
-      if((distance > 0.0) && (distance <20.0))
+      if((distance > 0.0))
         data_lidar_mm_main[i]=1000*distance;
       else data_lidar_mm_main[i] = 0;
     }       
     gestion_appui_clavier();     
     if(modeAuto)
-    {
+    { 
        set_angle_test() ; 
         /****************************************/
         /* Programme etudiant avec              */
@@ -99,11 +97,8 @@ int main(int argc, char **argv)
         /*  - la fonction set_vitesse_m_s(...)  */
         /*  - la fonction recule()              */
         /****************************************/
-       // angle_degre = 0.02*(data_lidar_mm_main[60]-data_lidar_mm_main[300]); //distance à 60° - distance à -60°
-        //set_direction_degres(angle_degre);
         vitesse_m_s = 0.5;
-        set_vitesse_m_s(vitesse_m_s);
-         printf("c");  
+        set_vitesse_m_s(vitesse_m_s); 
     }
   }
   /* This is necessary to cleanup webots resources */
@@ -150,18 +145,6 @@ void affichage_consigne()
   printf("cliquer sur la vue 3D pour commencer\n");
   printf("a pour mode auto, n pour stop\n");
 }
-
-void set_direction_degres(float angle_degre)
-{
-  float angle=0; 
-  if(angle_degre > maxangle_degre)
-    angle_degre = maxangle_degre;
-  else if(angle_degre < -maxangle_degre)
-    angle_degre = -maxangle_degre;   
-  angle = -angle_degre * 3.14/180; 
-  wbu_driver_set_steering_angle(angle);
-}
-
 void set_vitesse_m_s(float vitesse_m_s){
   float speed;
   speed = vitesse_m_s*3.6;
@@ -169,41 +152,93 @@ void set_vitesse_m_s(float vitesse_m_s){
     speed = maxSpeed;
   if(speed < 0)
     speed = 0;
-  wbu_driver_set_cruising_speed(speed);
+ wbu_driver_set_cruising_speed(speed);
 }
 
 void recule(void){
     wbu_driver_set_cruising_speed(-1);
 }
 
-void set_angle_test(signed int data_lidar_mm_main[])
-{
-    max = 0; 
-    max_270 = 0; 
-    max_90 = 0; 
-
-    for (int i = 0; i < 90; i++) 
+void set_angle_test()
+{   
+  int max_distance_d = 0.0 ; 
+  int max_distance_g = 0.0; 
+  int max_distance = 0.0 ;  
+  int angle_d =0.0 ;  
+  int angle_g =0.0; 
+  int max_angle=0.0 ; 
+  float angle_voiture =0.0 ; 
+ 
+ 
+ if ((data_lidar_mm_main[270]-data_lidar_mm_main[90])!=0)
+ {
+   for (int j = 0 ; j<91;j++)
+   {
+    if (data_lidar_mm_main[j]>max_distance_d)
+     {
+     max_distance_d=data_lidar_mm_main[j];
+     angle_d = j ; 
+     }
+    else 
+     {
+      max_distance_d=max_distance_d;}
+      angle_d = angle_d ; 
+     }
+ 
+    for (int k=270;k<360;k++)
     {
-        if (data_lidar_mm_main[i] > max_90)
-            max_90 = data_lidar_mm_main[i];
-    }
-    for (int i = 270; i < 360; i++) 
-    {
-        if (data_lidar_mm_main[i] > max_270)
-            max_270 = data_lidar_mm_main[i];
-    }
+     if (data_lidar_mm_main[k]>max_distance_g)
+     {
+      max_distance_g=data_lidar_mm_main[k];
+      angle_g = k ; 
+     }
+      else 
+     { 
+     max_distance_g=max_distance_g;
+     angle_g = angle_g ; 
+     }
+   }
+ 
+ if (max_distance_d>max_distance_g)
+ {
+  max_distance=max_distance_d;
+  max_angle = angle_d ; 
+ }
+ else
+ {
+ max_distance=max_distance_d;
+ max_angle = -angle_g ;
+ }
 
-    if (max_270 > max_90)
-        max = max_270;
-    else
-        max = max_90;
+angle_voiture = degree_vers_radian(max_angle); 
 
-    if (max_270 != 0)
-        angle_calculé = (max_90 * MAX) / max_270;
-    else
-       angle_calculé = 0;
+if (angle_voiture>0.35)
+ {
+  angle_voiture=0.35;
+ }
+  else
+  {
+   angle_voiture=angle_voiture;
+  }
 
-    wbu_driver_set_steering_angle(angle_calculé);
- printf("d\n");
+if (angle_voiture<-0.35) 
+  { 
+   angle_voiture=-0.31;
+  }
+else 
+ {
+angle_voiture=angle_voiture;
+ }
+
+} 
+  
+ printf("--------distance-----------\n");  
+ printf("dd=%d,dg=%d,dmax=%d \n",max_distance_d,max_distance_g,max_distance);  
+ printf("-----angle--------\n");  
+ printf("ad=%d,ag=%d,amax=%d \n",angle_d,angle_g,max_angle);  
+ printf("-----angle_voiture--------\n"); 
+ printf("voiture_angle=%4.4f\n",angle_voiture);  
+  
+   wbu_driver_set_steering_angle(-angle_voiture);
 }
 
