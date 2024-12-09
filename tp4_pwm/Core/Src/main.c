@@ -25,6 +25,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "pwm_api.h"
+#include "herculex.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -76,7 +77,6 @@ int main(void)
   HAL_Init();
 
   /* USER CODE BEGIN Init */
-  uint8_t l_jog[12]={0xff,0xff,0x0c,0xfd,0x05,0x32,0xcc,0x00,0x02,0x04,0xfd,0x3c};
   /* USER CODE END Init */
 
   /* Configure the system clock */
@@ -98,7 +98,7 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   send_torque_on(0xfd);
-  send_pos_color(0xfd,0x0013,0x21);
+  send_angle(0xfd, -120.0);
   while (1)
   {
     /* USER CODE END WHILE */

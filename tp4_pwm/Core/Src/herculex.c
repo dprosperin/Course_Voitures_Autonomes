@@ -48,16 +48,19 @@ void send_torque_on(uint8_t id)
 	uint8_t torque_control[11]={0xff,0xff,0x0a,id,0x03,0xa0,0x5e,0x34,0x01,0x60};
 	send_trame(id,0x0b,torque_control);
 }
-void send_pos_color(uint8_t id,uint16_t pos)
+void send_pos(uint8_t id,uint16_t pos_16b)
 {
 	uint8_t position[2];
-	position[0]=pos>>8;
-	position[1]=(uint8_t)pos;
+	position[0]=pos_16b>>8;
+	position[1]=(uint8_t)pos_16b;
 	uint8_t l_jog[12]={0xff,0xff,0x0c,0xfd,0x05,0x32,0xcc,position[1],position[0],0x04,0xfd,0x3c};
 	send_trame(id,0x0c,l_jog);
 }
-
-
+void send_angle(uint8_t id, float angle)
+{
+	  uint16_t pos=0x200+(angle/0.325);
+	  send_pos(id,pos);
+}
 
 
 
