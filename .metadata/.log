@@ -2890,3 +2890,6 @@ Caused by: org.xml.sax.SAXParseException; lineNumber: 2; columnNumber: 10; DOCTY
 	at org.eclipse.core.internal.runtime.XmlProcessorFactory.parseWithErrorOnDOCTYPE(XmlProcessorFactory.java:246)
 	at org.eclipse.urischeme.internal.registration.PlistFileWriter.getDom(PlistFileWriter.java:219)
 	... 6 more
+
+!ENTRY org.eclipse.cdt.core 1 0 2024-12-09 16:51:37.686
+!MESSAGE Indexed 'lidar' (25 sources, 123 headers) in 9.47 sec: 12,364 declarations; 51,732 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.27%)

@@ -1,0 +1,143 @@
+/*
+ * automate.c
+ *
+ *  Created on: Nov 14, 2024
+ *      Author: davidprosperin
+ */
+#include <automate.h>
+
+void automate_decode(void)
+{
+    static state_automate_t next_state = FLAG_START1;
+    static state_automate_t current_state;
+
+    uint8_t quality = 0;
+    uint8_t constant_bit = 0;
+    uint8_t s = 0;
+    uint8_t not_s = 0;
+
+    uint8_t distance_low_byte = 0;
+    uint8_t distance_high_byte = 0;
+
+    float distance;
+    float angle;
+
+    current_state = next_state;
+
+    switch (current_state)
+    {
+    case FLAG_START1 :
+    	//printf("Etat courant : FLAG_START1\n");
+    	if (buffer[index_read] == 0xA5)
+        {
+             next_state = FLAG_START2;
+        }
+    break;
+
+    case FLAG_START2:
+    	//printf("Etat courant : FLAG_START2\n");
+        if (buffer[index_read] == 0x5A)
+        {
+            next_state = RESPONSE_DESCRIPTOR1;
+        } else {
+        	next_state = FLAG_START1;
+        }
+    break;
+
+    case RESPONSE_DESCRIPTOR1:
+    	if (buffer[index_read] == 0x05)
+    	{
+    		next_state = RESPONSE_DESCRIPTOR2;
+    	}
+    	break;
+    case RESPONSE_DESCRIPTOR2:
+    	if (buffer[index_read] == 0x00)
+    	{
+    		next_state = RESPONSE_DESCRIPTOR3;
+    	}
+    	break;
+
+    case RESPONSE_DESCRIPTOR3:
+        if (buffer[index_read] == 0x00)
+        {
+        	next_state = RESPONSE_DESCRIPTOR4;
+        }
+        break;
+    case RESPONSE_DESCRIPTOR4:
+    	if (buffer[index_read] == 0x40)
+    	{
+    	    next_state = RESPONSE_DESCRIPTOR5;
+    	}
+    	break;
+
+    case RESPONSE_DESCRIPTOR5:
+        if (buffer[index_read] == 0x81)
+        {
+        	printf("Response descriptor correctement lu\n");
+        	next_state = QUALITY;
+        }
+        break;
+
+    case QUALITY:
+    		quality = buffer[index_read] >> 2;
+    		not_s = (buffer[index_read] >> 1) & 1;
+    		s = buffer[index_read] & 1;
+
+            if (!not_s == s)
+            {
+            	printf("Pass QUALITY : not S : %d S : %d, Quality : %d\n", not_s, s, quality);
+                next_state = FLAG_START1;
+            } else {
+            	printf("No pass QUALITY : not S : %d S : %d, Quality : %d\n", not_s, s, quality);
+            	next_state = QUALITY;
+            }
+    break;
+
+
+    case ANGLE_FIRST_PART:
+    	constant_bit = buffer[index_read] & 0b1;
+    	distance_low_byte = buffer[index_read] >> 1;
+
+        if (constant_bit)
+        {
+            next_state = ANGLE_SECOND_PART;
+        } else {
+        	next_state = QUALITY;
+        }
+    break;
+
+
+
+    case ANGLE_SECOND_PART:
+    	if ()
+        {
+            next_state = QUALITY;
+        }
+    break;
+
+    }
+
+    /*break;
+
+    case ANGLE_SECOND_PART:
+            if (read_byte_from_buffer() == (CPT=CPT+1))
+            {
+                next_state = DISTANCE_FIRST_PART;
+            }
+    break;
+
+    case DISTANCE_FIRST_PART:
+        if (read_byte_from_buffer() == (CPT=CPT+1))
+        {
+            next_state = DISTANCE_SECOND_PART;
+        }
+
+    break;
+
+    case DISTANCE_SECOND_PART:
+        {
+            next_state = QUALITY;
+        }
+
+    break;*/
+}

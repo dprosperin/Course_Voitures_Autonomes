@@ -160,6 +160,15 @@ int main(void)
 		  			}
 
 
+		  			automate_decode();
+
+
+		  			index_read++;
+
+		  			if (index_read >= sizeof(buffer))
+		  			{
+		  				index_read = 0;
+		  			}
 		  		}
 		  flag_reception_uart1 = 0;
 	  }
