@@ -13,4 +13,7 @@
 	</section>
 	<section name="CRenameRefactoringInputPage">
 	</section>
+	<section name="OptionalMessageDialog.hide.">
+		<item key="askReindex.detail" value="0"/>
+	</section>
 </section>

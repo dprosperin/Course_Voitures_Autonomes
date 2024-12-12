@@ -107,6 +107,9 @@ int main(void)
   MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
+
+  printf("Programme interface LIDAR\n");
+  printf("Compile le %s\n", __DATE__);
   /* USER CODE BEGIN 2 */
     int i = 0;
     char message[40] = "";
@@ -172,7 +175,6 @@ int main(void)
 		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
 		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
 		  			    printf("------- Fin primere trame ------\n");
-
 
 		  				break;
 		  			}
