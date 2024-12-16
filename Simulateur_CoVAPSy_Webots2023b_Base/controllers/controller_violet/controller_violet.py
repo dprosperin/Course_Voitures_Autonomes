@@ -1,3 +1,4 @@
+
 # Copyright 1996-2022 Cyberbotics Ltd.
 #
 # Controle de la voiture TT-02 simulateur CoVAPSy pour Webots 2023b
@@ -30,8 +31,6 @@ maxSpeed = 28 #km/h
 # angle de la direction
 angle = 0
 maxangle = 0.28 #rad (étrange, la voiture est défini pour une limite à 0.31 rad...
-angle_max_distance = 0
-distance = 0
 
 # mise a zéro de la vitesse et de la direction
 driver.setSteeringAngle(angle)
@@ -65,7 +64,7 @@ while driver.step() != -1:
                 modeManuel = False
                 modeAuto = False
                 print("--------Modes Manuel et Auto Désactivé-------")
-        elif currentKey == ord('a') or currentKey == ord('A'):
+        elif currentKey == ord('A') or currentKey == ord('a'):
             if not modeAuto : 
                 modeAuto = True
                 modeManuel = False
@@ -94,11 +93,10 @@ while driver.step() != -1:
         angle = 0
         
     if modeAuto:
-        speed = 0#km/h
+        speed = 0 #km/h
         #l'angle de la direction est la différence entre les mesures des rayons 
         #du lidar à (-99+18*2)=-63° et (-99+81*2)=63°
         angle = donnees_lidar[60]-donnees_lidar[300]
-
 
     # clamp speed and angle to max values
     if speed > maxSpeed:
@@ -111,5 +109,4 @@ while driver.step() != -1:
         angle = -maxangle
 
     driver.setCruisingSpeed(speed)
-    driver.setSteeringAngle(angle_max_distance)
-
+    driver.setSteeringAngle(angle)

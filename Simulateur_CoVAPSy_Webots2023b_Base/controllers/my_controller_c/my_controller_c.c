@@ -92,7 +92,7 @@ int main(int argc, char **argv)
         /*  - la fonction set_vitesse_m_s(...)  */
         /*  - la fonction recule()              */
         /****************************************/
-        vitesse_m_s = 0.8;
+        vitesse_m_s = 0.87; 
         set_vitesse_m_s(vitesse_m_s); 
     }
   }
@@ -161,25 +161,22 @@ void set_angle_test()
 float distance_droite = data_lidar_mm_main[300];   
 float distance_gauche = data_lidar_mm_main[60];   
 float distance  = distance_droite - distance_gauche ; 
-float droite = 0.31  ; 
-float gauche  = -0.31 ; 
-
 float angle = 0.0 ; 
+float kp = 0.089;
 
+//kp = 0.0002 pour des corrections plus douces ou kp = 0.001 pour des corrections plus agressives.
 
-if (distance > 9) 
-{
-angle  = droite;
-}
-else if (distance<-9) 
-{
-angle = gauche;
-}
+ angle = kp * distance;
+
+printf("%4.4f \n",angle) ; 
+
+if (angle > 0.31) {angle = 0.31;}   // Limite à droite
+if (angle < -0.31) {angle = -0.31;} // Limite à gauche
+
 
 
     // Appliquer l'angle calculé
     wbu_driver_set_steering_angle(angle);
-
 
 }
 
