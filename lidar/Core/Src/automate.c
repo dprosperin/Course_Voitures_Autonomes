@@ -99,7 +99,7 @@ void automate_decode(void)
 
     case ANGLE_FIRST_PART:
     	constant_bit = buffer[index_read] & 0b1;
-    	angle_low_byte = buffer[index_read] >> 1;
+    	angle_low_byte = buffer[index_read];
 
     	//printf("ANGLE_FIRST_PART\n");
 
@@ -114,9 +114,9 @@ void automate_decode(void)
     case ANGLE_SECOND_PART:
     	angle_high_byte = buffer[index_read];
 
-    	angle = ((angle_high_byte | angle_low_byte) >> 1) / 64.0;
+    	angle = (((uint16_t)(angle_high_byte) << 7) | ((uint16_t)(angle_low_byte) & 0x00FF)) / 64.0;
 
-    	printf("Angle %f degree\n", angle);
+    	//printf("angle_high_byte : 0x%x angle_low_byte : 0x%x Angle %f degree\n", angle_high_byte, angle_low_byte, angle);
 
     	next_state = DISTANCE_FIRST_PART;
     break;
@@ -131,10 +131,11 @@ void automate_decode(void)
     case DISTANCE_SECOND_PART:
     	distance_high_byte = buffer[index_read];
 
-    	distance = (distance_high_byte | distance_low_byte) / 4.0;
+    	distance = ((((uint16_t) distance_high_byte << 8) & 0xFF00 ) | ((uint16_t) distance_low_byte & 0x00FF)) / 4.0;
 
-    	//printf("Distance %3.6f mm\n", distance);
+    	printf("distance_high_byte : 0x%x distance_low_byte : 0x%x Distance %3.6f mm\n", distance_high_byte, distance_low_byte, distance);;
 
+    	printf("(%d, %d)\n", (int)angle, (int)distance);
         next_state = QUALITY;
     break;
     }
