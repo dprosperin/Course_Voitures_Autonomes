@@ -35,17 +35,17 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  15 .debug_rnglists 00000864  00000000  00000000  0001cbb0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001de1a  00000000  00000000  0001d414  2**0
+ 16 .debug_macro  0001de32  00000000  00000000  0001d414  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000dd2b  00000000  00000000  0003b22e  2**0
+ 17 .debug_line   0000dd2b  00000000  00000000  0003b246  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000b88c5  00000000  00000000  00048f59  2**0
+ 18 .debug_str    000b8963  00000000  00000000  00048f71  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  0010181e  2**0
+ 19 .comment      00000043  00000000  00000000  001018d4  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004188  00000000  00000000  00101864  2**2
+ 20 .debug_frame  00004188  00000000  00000000  00101918  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  001059ec  2**0
+ 21 .debug_line_str 00000075  00000000  00000000  00105aa0  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1871,7 +1871,7 @@ int main(void)
 	  				printf("Demarrage du scan normal\n");
  8001366:	4886      	ldr	r0, [pc, #536]	@ (8001580 <main+0x290>)
  8001368:	f006 fc7e 	bl	8007c68 <puts>
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, strlen(LIDAR_COMMAND_START_SCAN), HAL_MAX_DELAY);
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
  800136c:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
  8001370:	2202      	movs	r2, #2
  8001372:	4984      	ldr	r1, [pc, #528]	@ (8001584 <main+0x294>)
@@ -1890,7 +1890,7 @@ int main(void)
 	  				printf("Arret\n");
  800138c:	487f      	ldr	r0, [pc, #508]	@ (800158c <main+0x29c>)
  800138e:	f006 fc6b 	bl	8007c68 <puts>
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, strlen(LIDAR_COMMAND_STOP), HAL_MAX_DELAY);
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
  8001392:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
  8001396:	2202      	movs	r2, #2
  8001398:	497d      	ldr	r1, [pc, #500]	@ (8001590 <main+0x2a0>)
@@ -1909,7 +1909,7 @@ int main(void)
 	  				printf("Reset\n");
  80013b2:	4879      	ldr	r0, [pc, #484]	@ (8001598 <main+0x2a8>)
  80013b4:	f006 fc58 	bl	8007c68 <puts>
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, strlen(LIDAR_COMMAND_RESET), HAL_MAX_DELAY);
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
  80013b8:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
  80013bc:	2202      	movs	r2, #2
  80013be:	4977      	ldr	r1, [pc, #476]	@ (800159c <main+0x2ac>)
@@ -1928,7 +1928,7 @@ int main(void)
 	  				printf("RTFM ! <*_*>\n");
  80013d8:	4872      	ldr	r0, [pc, #456]	@ (80015a4 <main+0x2b4>)
  80013da:	f006 fc45 	bl	8007c68 <puts>
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, strlen(LIDAR_COMMAND_GET_INFO), HAL_MAX_DELAY);
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
  80013de:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
  80013e2:	2202      	movs	r2, #2
  80013e4:	4970      	ldr	r1, [pc, #448]	@ (80015a8 <main+0x2b8>)

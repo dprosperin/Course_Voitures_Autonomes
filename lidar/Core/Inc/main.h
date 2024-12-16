@@ -72,10 +72,14 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define LIDAR_COMMAND_STOP "\xA5\x25"
-#define LIDAR_COMMAND_START_SCAN "\xA5\x20"
-#define LIDAR_COMMAND_RESET "\xA5\x40"
-#define LIDAR_COMMAND_GET_INFO "\xA5\x50"
+#define LIDAR_COMMAND_STOP ((uint8_t*)"\xA5\x25")
+#define LIDAR_COMMAND_STOP_LEN 2
+#define LIDAR_COMMAND_START_SCAN ((uint8_t*)"\xA5\x20")
+#define LIDAR_COMMAND_START_SCAN_LEN 2
+#define LIDAR_COMMAND_RESET ((uint8_t*)"\xA5\x40")
+#define LIDAR_COMMAND_RESET_LEN 2
+#define LIDAR_COMMAND_GET_INFO ((uint8_t*)"\xA5\x5")
+#define LIDAR_COMMAND_GET_INFO_LEN 2
 
 /* USER CODE END Private defines */
 
