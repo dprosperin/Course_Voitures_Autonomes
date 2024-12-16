@@ -92,7 +92,7 @@ int main(int argc, char **argv)
         /*  - la fonction set_vitesse_m_s(...)  */
         /*  - la fonction recule()              */
         /****************************************/
-        vitesse_m_s = 1.0;
+        vitesse_m_s = 0.8;
         set_vitesse_m_s(vitesse_m_s); 
     }
   }
@@ -167,11 +167,11 @@ float gauche  = -0.31 ;
 float angle = 0.0 ; 
 
 
-if (distance > 50 ) 
+if (distance > 9) 
 {
 angle  = droite;
 }
-else if (distance<-50) 
+else if (distance<-9) 
 {
 angle = gauche;
 }
