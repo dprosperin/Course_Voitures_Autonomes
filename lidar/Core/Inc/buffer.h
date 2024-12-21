@@ -10,9 +10,12 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 extern size_t index_write;
 extern size_t index_read;
 extern uint8_t buffer[2048];
+
+bool dequeue(uint8_t *value);
 
 #endif /* INC_BUFFER_H_ */

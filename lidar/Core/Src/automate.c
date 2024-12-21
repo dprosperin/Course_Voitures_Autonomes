@@ -6,7 +6,7 @@
  */
 #include <automate.h>
 
-void automate_decode(void)
+void automate_decode(uint8_t receivedByte)
 {
     static state_automate_t next_state = FLAG_START1;
     static state_automate_t current_state;
@@ -31,15 +31,15 @@ void automate_decode(void)
     {
     case FLAG_START1 :
     	//printf("Etat courant : FLAG_START1\n");
-    	if (buffer[index_read] == 0xA5)
+    	if (receivedByte == 0xA5)
         {
              next_state = FLAG_START2;
         }
     break;
 
     case FLAG_START2:
-    	//printf("Etat courant : FLAG_START2\n");
-        if (buffer[index_read] == 0x5A)
+    	printf("Etat courant : FLAG_START2\n");
+        if (receivedByte == 0x5A)
         {
             next_state = RESPONSE_DESCRIPTOR1;
         } else {
@@ -48,33 +48,33 @@ void automate_decode(void)
     break;
 
     case RESPONSE_DESCRIPTOR1:
-    	if (buffer[index_read] == 0x05)
+    	if (receivedByte == 0x05)
     	{
     		next_state = RESPONSE_DESCRIPTOR2;
     	}
     	break;
     case RESPONSE_DESCRIPTOR2:
-    	if (buffer[index_read] == 0x00)
+    	if (receivedByte == 0x00)
     	{
     		next_state = RESPONSE_DESCRIPTOR3;
     	}
     	break;
 
     case RESPONSE_DESCRIPTOR3:
-        if (buffer[index_read] == 0x00)
+        if (receivedByte == 0x00)
         {
         	next_state = RESPONSE_DESCRIPTOR4;
         }
         break;
     case RESPONSE_DESCRIPTOR4:
-    	if (buffer[index_read] == 0x40)
+    	if (receivedByte == 0x40)
     	{
     	    next_state = RESPONSE_DESCRIPTOR5;
     	}
     	break;
 
     case RESPONSE_DESCRIPTOR5:
-        if (buffer[index_read] == 0x81)
+        if (receivedByte == 0x81)
         {
         	printf("Response descriptor correctement lu\n");
         	next_state = QUALITY;
@@ -82,9 +82,9 @@ void automate_decode(void)
         break;
 
     case QUALITY:
-    		quality = buffer[index_read] >> 2;
-    		not_s = (buffer[index_read] >> 1) & 1;
-    		s = buffer[index_read] & 1;
+    		quality = receivedByte >> 2;
+    		not_s = (receivedByte >> 1) & 1;
+    		s = receivedByte & 1;
 
             if (!not_s == s)
             {
@@ -98,8 +98,8 @@ void automate_decode(void)
     break;
 
     case ANGLE_FIRST_PART:
-    	constant_bit = buffer[index_read] & 0b1;
-    	angle_low_byte = buffer[index_read];
+    	constant_bit = receivedByte & 0b1;
+    	angle_low_byte = receivedByte;
 
     	//printf("ANGLE_FIRST_PART\n");
 
@@ -112,7 +112,7 @@ void automate_decode(void)
     break;
 
     case ANGLE_SECOND_PART:
-    	angle_high_byte = buffer[index_read];
+    	angle_high_byte = receivedByte;
 
     	angle = (((uint16_t)(angle_high_byte) << 7) | ((uint16_t)(angle_low_byte) & 0x00FF)) / 64.0;
 
@@ -122,20 +122,20 @@ void automate_decode(void)
     break;
 
     case DISTANCE_FIRST_PART:
-    	distance_low_byte = buffer[index_read];
+    	distance_low_byte = receivedByte;
 
     	next_state = DISTANCE_SECOND_PART;
 
     break;
 
     case DISTANCE_SECOND_PART:
-    	distance_high_byte = buffer[index_read];
+    	distance_high_byte = receivedByte;
 
     	distance = ((((uint16_t) distance_high_byte << 8) & 0xFF00 ) | ((uint16_t) distance_low_byte & 0x00FF)) / 4.0;
 
-    	printf("distance_high_byte : 0x%x distance_low_byte : 0x%x Distance %3.6f mm\n", distance_high_byte, distance_low_byte, distance);;
+    	//printf("distance_high_byte : 0x%x distance_low_byte : 0x%x Distance %3.6f mm\n", distance_high_byte, distance_low_byte, distance);
 
-    	printf("(%d, %d)\n", (int)angle, (int)distance);
+    	printf("(%f, %f)\n", angle, distance);
         next_state = QUALITY;
     break;
     }

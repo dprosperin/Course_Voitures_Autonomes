@@ -1,0 +1,4 @@
+../Core/Src/buffer.c:27:6:bufferIsFull	1
+../Core/Src/buffer.c:37:6:bufferIsEmpty	1
+../Core/Src/buffer.c:48:6:enqueue	2
+../Core/Src/buffer.c:71:6:dequeue	2

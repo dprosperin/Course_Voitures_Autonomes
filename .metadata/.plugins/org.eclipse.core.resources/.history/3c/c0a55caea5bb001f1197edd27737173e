@@ -1,0 +1,33 @@
+/**
+  ******************************************************************************
+  * @file buffer.c
+  * @brief Fonctions utilitaire pour le buffer circulaire
+  * @author David PROSPÉRIN
+  ******************************************************************************
+  */
+
+#include <stddef.h>
+#include <stdint.h>
+#include <stdbool.h>
+
+size_t index_write = 0;
+size_t index_read = 0;
+size_t buffer_size = 0;
+uint8_t buffer[2048] = {0};
+
+
+bool bufferIsFull()
+{
+	return buffer_size == 2048;
+}
+
+/**
+ * @brief Ajoute un élément au buffer circulaire
+ *
+ * @param Valeur à ajouter au buffer circulaire
+ * @retval Retourne True si élément est bien ajouté au buffer False sinon
+ */
+bool enqueue(uint8_t value) {
+
+}
+

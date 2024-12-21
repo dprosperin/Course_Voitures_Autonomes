@@ -25,6 +25,6 @@ typedef enum {
      DISTANCE_SECOND_PART
 } state_automate_t;
 
-void automate_decode(void);
+void automate_decode(uint8_t receivedByte);
 
 #endif /* SRC_AUTOMATE_H_ */
