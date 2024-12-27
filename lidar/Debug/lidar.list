@@ -27,25 +27,25 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   ALLOC
  11 .ARM.attributes 00000030  00000000  00000000  0000c1d4  2**0
                   CONTENTS, READONLY
- 12 .debug_info   0000e43c  00000000  00000000  0000c204  2**0
+ 12 .debug_info   0000e403  00000000  00000000  0000c204  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00002316  00000000  00000000  0001a640  2**0
+ 13 .debug_abbrev 000022f8  00000000  00000000  0001a607  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00000b38  00000000  00000000  0001c958  2**3
+ 14 .debug_aranges 00000b30  00000000  00000000  0001c900  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 00000889  00000000  00000000  0001d490  2**0
+ 15 .debug_rnglists 00000883  00000000  00000000  0001d430  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  0001e1c8  00000000  00000000  0001dd19  2**0
+ 16 .debug_macro  0001e31a  00000000  00000000  0001dcb3  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0000e2c9  00000000  00000000  0003bee1  2**0
+ 17 .debug_line   0000e588  00000000  00000000  0003bfcd  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000b89b5  00000000  00000000  0004a1aa  2**0
+ 18 .debug_str    000b89a8  00000000  00000000  0004a555  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00102b5f  2**0
+ 19 .comment      00000043  00000000  00000000  00102efd  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00004224  00000000  00000000  00102ba4  2**2
+ 20 .debug_frame  00004200  00000000  00000000  00102f40  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000075  00000000  00000000  00106dc8  2**0
+ 21 .debug_line_str 00000075  00000000  00000000  00107140  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -1317,9 +1317,9 @@ Disassembly of section .text:
  8001032:	bf00      	nop
 
 08001034 <automate_decode>:
- */
-#include <automate.h>
-#include <stdio.h>
+#include "stm32g4xx_hal.h"
+
+extern UART_HandleTypeDef huart1;
 
 void automate_decode(uint8_t receivedByte)
 {
@@ -1376,7 +1376,6 @@ void automate_decode(uint8_t receivedByte)
  8001094:	080011c7 	.word	0x080011c7
     {
     case FLAG_START1 :
-    	//printf("Etat courant : FLAG_START1\n");
     	if (receivedByte == 0xA5)
  8001098:	79fb      	ldrb	r3, [r7, #7]
  800109a:	2ba5      	cmp	r3, #165	@ 0xa5
@@ -1391,7 +1390,6 @@ void automate_decode(uint8_t receivedByte)
  80010a6:	e0ca      	b.n	800123e <automate_decode+0x20a>
 
     case FLAG_START2:
-    	//printf("Etat courant : FLAG_START2\n");
         if (receivedByte == 0x5A)
  80010a8:	79fb      	ldrb	r3, [r7, #7]
  80010aa:	2b5a      	cmp	r3, #90	@ 0x5a
@@ -1503,7 +1501,7 @@ void automate_decode(uint8_t receivedByte)
  800112e:	f003 0301 	and.w	r3, r3, #1
  8001132:	737b      	strb	r3, [r7, #13]
 
-            if (!not_s == s)
+            if ((!not_s) == s)
  8001134:	7b3b      	ldrb	r3, [r7, #12]
  8001136:	2b00      	cmp	r3, #0
  8001138:	bf0c      	ite	eq
@@ -1514,15 +1512,17 @@ void automate_decode(uint8_t receivedByte)
  8001142:	7b7b      	ldrb	r3, [r7, #13]
  8001144:	429a      	cmp	r2, r3
  8001146:	d103      	bne.n	8001150 <automate_decode+0x11c>
-            {
-            	//printf("Pass QUALITY : not S : %d S : %d, Quality : %d\n", not_s, s, quality);
+            	/*
+            	if (s == 1 && not_s == 0)
+            	{
+            	  printf("New SCAN\n");
+            	}*/
             	next_state = ANGLE_FIRST_PART;
  8001148:	4b44      	ldr	r3, [pc, #272]	@ (800125c <automate_decode+0x228>)
  800114a:	2208      	movs	r2, #8
  800114c:	701a      	strb	r2, [r3, #0]
 
             } else {
-            	//printf("No pass QUALITY : not S : %d S : %d, Quality : %d\n", not_s, s, quality);
             	next_state = QUALITY;
             }
     break;
@@ -1543,8 +1543,6 @@ void automate_decode(uint8_t receivedByte)
  8001160:	4a42      	ldr	r2, [pc, #264]	@ (800126c <automate_decode+0x238>)
  8001162:	79fb      	ldrb	r3, [r7, #7]
  8001164:	7013      	strb	r3, [r2, #0]
-
-    	//printf("ANGLE_FIRST_PART\n");
 
         if (constant_bit)
  8001166:	7bbb      	ldrb	r3, [r7, #14]
@@ -1593,8 +1591,6 @@ void automate_decode(uint8_t receivedByte)
  80011aa:	4603      	mov	r3, r0
  80011ac:	4a32      	ldr	r2, [pc, #200]	@ (8001278 <automate_decode+0x244>)
  80011ae:	6013      	str	r3, [r2, #0]
-
-    	//printf("angle_high_byte : 0x%x angle_low_byte : 0x%x Angle %f degree\n", angle_high_byte, angle_low_byte, angle);
 
     	next_state = DISTANCE_FIRST_PART;
  80011b0:	4b2a      	ldr	r3, [pc, #168]	@ (800125c <automate_decode+0x228>)
@@ -1645,8 +1641,6 @@ void automate_decode(uint8_t receivedByte)
  80011f8:	4a23      	ldr	r2, [pc, #140]	@ (8001288 <automate_decode+0x254>)
  80011fa:	6013      	str	r3, [r2, #0]
 
-    	//printf("distance_high_byte : 0x%x distance_low_byte : 0x%x Distance %3.6f mm\n", distance_high_byte, distance_low_byte, distance);
-
     	if (distance > 0)
  80011fc:	4b22      	ldr	r3, [pc, #136]	@ (8001288 <automate_decode+0x254>)
  80011fe:	edd3 7a00 	vldr	s15, [r3]
@@ -1654,6 +1648,8 @@ void automate_decode(uint8_t receivedByte)
  8001206:	eef1 fa10 	vmrs	APSR_nzcv, fpscr
  800120a:	dd14      	ble.n	8001236 <automate_decode+0x202>
     	{
+    		//printf("(%4.3f, %4.3f) remainingByte : %ld index_read : %d\n", angle, distance, 2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx), index_read);
+
     		printf("(%4.3f, %4.3f)\n", angle, distance);
  800120c:	4b1a      	ldr	r3, [pc, #104]	@ (8001278 <automate_decode+0x244>)
  800120e:	681b      	ldr	r3, [r3, #0]
@@ -1727,11 +1723,6 @@ bool dequeue(uint8_t *value) {
  8001292:	b085      	sub	sp, #20
  8001294:	af00      	add	r7, sp, #0
  8001296:	6078      	str	r0, [r7, #4]
-        return false;
-    }*/
-
-    // Si on peut lire
-
     uint32_t remainingByte = 2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
  8001298:	4b11      	ldr	r3, [pc, #68]	@ (80012e0 <dequeue+0x50>)
  800129a:	f8d3 3080 	ldr.w	r3, [r3, #128]	@ 0x80
@@ -1739,7 +1730,6 @@ bool dequeue(uint8_t *value) {
  80012a0:	685b      	ldr	r3, [r3, #4]
  80012a2:	f5c3 6300 	rsb	r3, r3, #2048	@ 0x800
  80012a6:	60fb      	str	r3, [r7, #12]
-
 
     if (remainingByte > index_read)
  80012a8:	4b0e      	ldr	r3, [pc, #56]	@ (80012e4 <dequeue+0x54>)
@@ -1772,7 +1762,6 @@ bool dequeue(uint8_t *value) {
  80012d0:	2300      	movs	r3, #0
     }
 
-    //buffer_size--;
 }
  80012d2:	4618      	mov	r0, r3
  80012d4:	3714      	adds	r7, #20
@@ -2559,34 +2548,31 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
  800177c:	681b      	ldr	r3, [r3, #0]
  800177e:	4a0c      	ldr	r2, [pc, #48]	@ (80017b0 <HAL_UART_RxCpltCallback+0x58>)
  8001780:	4293      	cmp	r3, r2
- 8001782:	d109      	bne.n	8001798 <HAL_UART_RxCpltCallback+0x40>
-
-
-		HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
- 8001784:	f04f 33ff 	mov.w	r3, #4294967295	@ 0xffffffff
- 8001788:	2202      	movs	r2, #2
- 800178a:	490a      	ldr	r1, [pc, #40]	@ (80017b4 <HAL_UART_RxCpltCallback+0x5c>)
- 800178c:	480a      	ldr	r0, [pc, #40]	@ (80017b8 <HAL_UART_RxCpltCallback+0x60>)
- 800178e:	f002 f8d5 	bl	800393c <HAL_UART_Transmit>
-
+ 8001782:	d108      	bne.n	8001796 <HAL_UART_RxCpltCallback+0x3e>
 		flag_reception_uart1 = 1;
- 8001792:	4b0a      	ldr	r3, [pc, #40]	@ (80017bc <HAL_UART_RxCpltCallback+0x64>)
- 8001794:	2201      	movs	r2, #1
- 8001796:	701a      	strb	r2, [r3, #0]
+ 8001784:	4b0b      	ldr	r3, [pc, #44]	@ (80017b4 <HAL_UART_RxCpltCallback+0x5c>)
+ 8001786:	2201      	movs	r2, #1
+ 8001788:	701a      	strb	r2, [r3, #0]
+		HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, sizeof(buffer));
+ 800178a:	f44f 6200 	mov.w	r2, #2048	@ 0x800
+ 800178e:	490a      	ldr	r1, [pc, #40]	@ (80017b8 <HAL_UART_RxCpltCallback+0x60>)
+ 8001790:	480a      	ldr	r0, [pc, #40]	@ (80017bc <HAL_UART_RxCpltCallback+0x64>)
+ 8001792:	f002 f9ad 	bl	8003af0 <HAL_UART_Receive_DMA>
 	}
 }
- 8001798:	bf00      	nop
- 800179a:	3708      	adds	r7, #8
- 800179c:	46bd      	mov	sp, r7
- 800179e:	bd80      	pop	{r7, pc}
+ 8001796:	bf00      	nop
+ 8001798:	3708      	adds	r7, #8
+ 800179a:	46bd      	mov	sp, r7
+ 800179c:	bd80      	pop	{r7, pc}
+ 800179e:	bf00      	nop
  80017a0:	40004400 	.word	0x40004400
  80017a4:	20000b8c 	.word	0x20000b8c
  80017a8:	20000b8e 	.word	0x20000b8e
  80017ac:	20000a98 	.word	0x20000a98
  80017b0:	40013800 	.word	0x40013800
- 80017b4:	0800a7ac 	.word	0x0800a7ac
- 80017b8:	20000a04 	.word	0x20000a04
- 80017bc:	20000b8d 	.word	0x20000b8d
+ 80017b4:	20000b8d 	.word	0x20000b8d
+ 80017b8:	20000204 	.word	0x20000204
+ 80017bc:	20000a04 	.word	0x20000a04
 
 080017c0 <Error_Handler>:
 /**
@@ -2802,9 +2788,9 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
  80018d8:	4b36      	ldr	r3, [pc, #216]	@ (80019b4 <HAL_UART_MspInit+0x1a0>)
  80018da:	2200      	movs	r2, #0
  80018dc:	619a      	str	r2, [r3, #24]
-    hdma_usart1_rx.Init.Mode = DMA_CIRCULAR;
+    hdma_usart1_rx.Init.Mode = DMA_NORMAL;
  80018de:	4b35      	ldr	r3, [pc, #212]	@ (80019b4 <HAL_UART_MspInit+0x1a0>)
- 80018e0:	2220      	movs	r2, #32
+ 80018e0:	2200      	movs	r2, #0
  80018e2:	61da      	str	r2, [r3, #28]
     hdma_usart1_rx.Init.Priority = DMA_PRIORITY_HIGH;
  80018e4:	4b33      	ldr	r3, [pc, #204]	@ (80019b4 <HAL_UART_MspInit+0x1a0>)

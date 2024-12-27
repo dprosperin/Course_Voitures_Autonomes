@@ -22,10 +22,10 @@ python3 -m serial.tools.list_ports
 
 ##### Config #####
 ## Via un fichier
-filename = "./lidar_filtree.txt"
+filename = "./lidar.txt"
 mode_ouverture = "r"
 ## Via la liaison série
-port = "/dev/cu.usbmodem1203"
+port = "/dev/cu.usbmodem1303"
 baudrate = 1000000
 timeout = 1
 bytesize = 8
@@ -131,7 +131,7 @@ def update(frame):
         # Extraction (angle °, distance mm)
         angle, distance = parse("({:f},{:f})\n", chaine_recu)
     
-        print("angle : {} distane : {}".format(angle, distance))
+        print("angle : {} distance : {}".format(angle, distance))
 
         tableau_lidar_mm.append(distance)
         teta.append(angle * np.pi / 180)
@@ -144,7 +144,7 @@ def update(frame):
 
     line.set_array(tableau_lidar_mm)
 
-    ax.set_rmax(8000)
+    ax.set_rmax(1000)
 
     ax.grid(True)
 

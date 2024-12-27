@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include "stm32g4xx_hal.h"
 
-size_t index_write = 0;
 size_t index_read = 0;
 size_t buffer_size = 0;
 uint8_t buffer[2048] = {0};
@@ -40,28 +39,6 @@ bool bufferIsEmpty()
 }
 
 /**
- * @brief Ajoute un élément au buffer circulaire
- *
- * @param Valeur à ajouter au buffer circulaire
- * @retval Retourne True si élément est bien ajouté au buffer False sinon
- */
-bool enqueue(uint8_t value) {
-	if (bufferIsFull())
-	{
-		printf("Le buffer est plein !\n");
-		return false;
-	}
-
-	buffer[index_write] = value;
-
-	index_write = (index_write + 1) % 2048;
-
-	buffer_size++;
-
-	return true;
-}
-
-/**
  * @brief Retire un élément du buffer circulaire
  *
  * @param Variable
@@ -69,16 +46,7 @@ bool enqueue(uint8_t value) {
  */
 
 bool dequeue(uint8_t *value) {
-	/*
-    if (bufferIsEmpty()) {
-        printf("Buffer vide ! Rien à retirer.\n");
-        return false;
-    }*/
-
-    // Si on peut lire
-
     uint32_t remainingByte = 2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
-
 
     if (remainingByte > index_read)
     {
@@ -91,7 +59,6 @@ bool dequeue(uint8_t *value) {
     	return false;
     }
 
-    //buffer_size--;
 }
 
 

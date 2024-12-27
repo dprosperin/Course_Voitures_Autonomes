@@ -3323,3 +3323,9 @@ java.lang.NullPointerException: Cannot read the array length because "this.fCach
 	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
 	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
 	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-12-27 15:17:45.663
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 12 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2024-12-27 15:17:45.665
+!MESSAGE Existing sessions are:

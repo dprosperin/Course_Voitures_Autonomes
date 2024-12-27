@@ -417,11 +417,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	}
 
 	if (huart->Instance == USART1) {
-
-
-		HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
-
 		flag_reception_uart1 = 1;
+		HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, sizeof(buffer));
 	}
 }
 /* USER CODE END 4 */

@@ -1,4 +1,3 @@
-../Core/Src/buffer.c:27:6:bufferIsFull	4	static
-../Core/Src/buffer.c:37:6:bufferIsEmpty	4	static
-../Core/Src/buffer.c:48:6:enqueue	16	static
-../Core/Src/buffer.c:71:6:dequeue	24	static
+../Core/Src/buffer.c:26:6:bufferIsFull	4	static
+../Core/Src/buffer.c:36:6:bufferIsEmpty	4	static
+../Core/Src/buffer.c:48:6:dequeue	24	static
