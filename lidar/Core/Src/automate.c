@@ -5,6 +5,7 @@
  *      Author: davidprosperin
  */
 #include <automate.h>
+#include <stdio.h>
 
 void automate_decode(uint8_t receivedByte)
 {
@@ -16,14 +17,14 @@ void automate_decode(uint8_t receivedByte)
     uint8_t s = 0;
     uint8_t not_s = 0;
 
-    uint8_t distance_low_byte = 0;
-    uint8_t distance_high_byte = 0;
+    static uint8_t distance_low_byte = 0;
+    static uint8_t distance_high_byte = 0;
 
-    uint8_t angle_low_byte = 0;
-    uint8_t angle_high_byte = 0;
+    static uint8_t angle_low_byte = 0;
+    static uint8_t angle_high_byte = 0;
 
-    float distance;
-    float angle;
+    static float distance = 0;
+    static float angle = 0;
 
     current_state = next_state;
 
@@ -38,7 +39,7 @@ void automate_decode(uint8_t receivedByte)
     break;
 
     case FLAG_START2:
-    	printf("Etat courant : FLAG_START2\n");
+    	//printf("Etat courant : FLAG_START2\n");
         if (receivedByte == 0x5A)
         {
             next_state = RESPONSE_DESCRIPTOR1;
@@ -76,7 +77,7 @@ void automate_decode(uint8_t receivedByte)
     case RESPONSE_DESCRIPTOR5:
         if (receivedByte == 0x81)
         {
-        	printf("Response descriptor correctement lu\n");
+        	printf("Response descriptor correctement lu debut a %d\n", index_read);
         	next_state = QUALITY;
         }
         break;
@@ -135,7 +136,10 @@ void automate_decode(uint8_t receivedByte)
 
     	//printf("distance_high_byte : 0x%x distance_low_byte : 0x%x Distance %3.6f mm\n", distance_high_byte, distance_low_byte, distance);
 
-    	printf("(%f, %f)\n", angle, distance);
+    	if (distance > 0)
+    	{
+    		printf("(%4.3f, %4.3f)\n", angle, distance);
+    	}
         next_state = QUALITY;
     break;
     }
