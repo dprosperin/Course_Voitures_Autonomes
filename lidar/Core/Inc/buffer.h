@@ -12,9 +12,11 @@
 #include <stdint.h>
 #include <stdbool.h>
 
+#define BUFFER_SIZE 2048
+
 extern size_t index_write;
 extern size_t index_read;
-extern uint8_t buffer[2048];
+extern uint8_t buffer[BUFFER_SIZE];
 
 bool dequeue(uint8_t *value);
 

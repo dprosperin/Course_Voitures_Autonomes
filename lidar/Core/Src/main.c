@@ -49,10 +49,7 @@ UART_HandleTypeDef huart2;
 DMA_HandleTypeDef hdma_usart1_rx;
 
 /* USER CODE BEGIN PV */
-uint8_t flag_reception_uart2 = 0,
-		flag_reception_uart1 = 0;
-
-uint8_t byte_received = 0;
+uint8_t flag_reception_uart2 = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -114,7 +111,7 @@ int main(void)
     int i = 0;
     char message[40] = "";
 
-    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, sizeof(buffer));
+    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
     HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
@@ -368,8 +365,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	}
 
 	if (huart->Instance == USART1) {
-		flag_reception_uart1 = 1;
-		HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, sizeof(buffer));
+		HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
 	}
 }
 /* USER CODE END 4 */

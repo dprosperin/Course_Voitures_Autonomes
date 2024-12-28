@@ -11,10 +11,11 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "stm32g4xx_hal.h"
+#include "buffer.h"
 
 size_t index_read = 0;
 size_t buffer_size = 0;
-uint8_t buffer[2048] = {0};
+uint8_t buffer[BUFFER_SIZE] = {0};
 
 extern UART_HandleTypeDef huart1;
 
@@ -26,13 +27,13 @@ extern UART_HandleTypeDef huart1;
  */
 
 bool dequeue(uint8_t *value) {
-    uint32_t remainingByte = 2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
+    uint32_t remainingByte = BUFFER_SIZE - __HAL_DMA_GET_COUNTER(huart1.hdmarx);
 
     if (remainingByte > index_read)
     {
     	*value = buffer[index_read];
 
-    	index_read = (index_read + 1) % 2048;  // Boucle autour
+    	index_read = (index_read + 1) % BUFFER_SIZE;  // Boucle autour
 
     	return true;
     } else {
