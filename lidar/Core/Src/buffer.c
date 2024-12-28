@@ -19,26 +19,6 @@ uint8_t buffer[2048] = {0};
 extern UART_HandleTypeDef huart1;
 
 /**
- * @brief Vérifie si le buffer est plein
- *
- * @retval Retourne True si le buffer est plein False sinon
- */
-bool bufferIsFull()
-{
-	return buffer_size == 2048;
-}
-
-/**
- * @brief Vérifie si le buffer est vide
- *
- * @retval Retourne True si le buffer est vide False si le buffer contient un ou plusieurs élément(s)
- */
-bool bufferIsEmpty()
-{
-	return buffer_size == 0;
-}
-
-/**
  * @brief Retire un élément du buffer circulaire
  *
  * @param Variable
@@ -60,6 +40,3 @@ bool dequeue(uint8_t *value) {
     }
 
 }
-
-
-

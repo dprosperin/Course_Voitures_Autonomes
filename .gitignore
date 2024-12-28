@@ -255,3 +255,4 @@ pyrightconfig.json
 
 # stm32cube ide
 .metadata/
+*/Debug/

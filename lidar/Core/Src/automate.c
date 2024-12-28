@@ -90,11 +90,6 @@ void automate_decode(uint8_t receivedByte)
 
             if ((!not_s) == s)
             {
-            	/*
-            	if (s == 1 && not_s == 0)
-            	{
-            	  printf("New SCAN\n");
-            	}*/
             	next_state = ANGLE_FIRST_PART;
 
             } else {
@@ -136,8 +131,6 @@ void automate_decode(uint8_t receivedByte)
 
     	if (distance > 0)
     	{
-    		//printf("(%4.3f, %4.3f) remainingByte : %ld index_read : %d\n", angle, distance, 2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx), index_read);
-
     		printf("(%4.3f, %4.3f)\n", angle, distance);
     	}
         next_state = QUALITY;

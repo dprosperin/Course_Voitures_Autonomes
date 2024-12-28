@@ -155,61 +155,12 @@ int main(void)
 	  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	  	  }
 
-
-
-
-	  //if (flag_reception_uart1 == 1)
-
-	  //{
-	  	  //printf("Data remaining : %ld \n",  2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx));
-		  //printf("(0,%ld)\n",  2048 - __HAL_DMA_GET_COUNTER(huart1.hdmarx));
-
 		  uint8_t receivedByte = 0;
 
 		  if (dequeue(&receivedByte))
 		  {
-			  //printf("Ox%x\n", receivedByte);
-
 			  automate_decode(receivedByte);
 		  }
-	  //}
-	  /*
-
-
-		  for (int i = 0; i < sizeof(buffer); i++)
-		  		{
-		  			if (buffer[i] == 0xA5 &&
-		  			    buffer[++i] == 0x5A &&
-		  				buffer[++i] == 0x05 &&
-		  				buffer[++i] == 0x00 &&
-		  				buffer[++i] == 0x00 &&
-		  				buffer[++i] == 0x40 &&
-		  				buffer[++i] == 0x81)
-		  			{
-		  				printf("\n------- Primere trame ------\n");
-		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
-		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
-		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
-		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
-		  			    printf("Valeur trame : 0x%x\n", buffer[++i]);
-		  			    printf("------- Fin primere trame ------\n");
-
-		  				break;
-		  			}
-
-
-		  			automate_decode();
-
-
-		  			index_read++;
-
-		  			if (index_read >= sizeof(buffer))
-		  			{
-		  				index_read = 0;
-		  			}
-		  		}
-		  flag_reception_uart1 = 0;
-	  }*/
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
