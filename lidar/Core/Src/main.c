@@ -108,8 +108,12 @@ int main(void)
   printf("Programme interface LIDAR\n");
   printf("Compile le %s\n", __DATE__);
 
+  init_data_lidar_mm_main();
+
     int i = 0;
     char message[40] = "";
+
+    size_t counter = 0;
 
     HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
     HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
@@ -125,15 +129,18 @@ int main(void)
 	  			  if (strstr(message, "START_SCAN") != NULL)
 	  			  {
 	  				printf("Demarrage du scan normal\n");
+	  				init_data_lidar_mm_main();
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
 	  			  } else if (strstr(message, "STOP") != NULL)
 	  			  {
 	  				printf("Arret\n");
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
+	  				init_data_lidar_mm_main();
 	  			  } else if (strstr(message, "RESET") != NULL)
 	  			  {
 	  				printf("Reset\n");
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
+	  				init_data_lidar_mm_main();
 	  			  } else if (strstr(message, "GET_INFO") != NULL)
 	  			  {
 	  				printf("RTFM ! <*_*>\n");
@@ -157,6 +164,16 @@ int main(void)
 		  if (dequeue(&receivedByte))
 		  {
 			  automate_decode(receivedByte);
+
+			  counter++;
+		  }
+
+		  if (counter == 20000)
+		  {
+			  print_init_data_lidar_mm_main();
+
+			  HAL_Delay(1000 * 10);
+			  counter = 0;
 		  }
     /* USER CODE END WHILE */
 

@@ -131,6 +131,7 @@ void automate_decode(uint8_t receivedByte)
 
     	if (distance > 0)
     	{
+    		ajout_mesure(angle, distance);
     		printf("(%4.3f, %4.3f)\n", angle, distance);
     	}
         next_state = QUALITY;

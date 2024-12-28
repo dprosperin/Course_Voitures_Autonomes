@@ -16,6 +16,7 @@
 size_t index_read = 0;
 size_t buffer_size = 0;
 uint8_t buffer[BUFFER_SIZE] = {0};
+int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
 extern UART_HandleTypeDef huart1;
 
@@ -41,3 +42,57 @@ bool dequeue(uint8_t *value) {
     }
 
 }
+
+/**
+ * @brief Initialise le tableau data_lidar_mm_main
+ *
+ * @retval void
+ */
+void init_data_lidar_mm_main()
+{
+	for (size_t i = 0; i < DATA_LIDAR_MM_MAIN_SIZE; i++)
+	{
+		data_lidar_mm_main[i] = -1;
+	}
+}
+
+/**
+ * @brief Affiche le contenu du tableau data_lidar_mm_main
+ *
+ * @retval void
+ */
+void print_init_data_lidar_mm_main()
+{
+	for (size_t i = 0; i < DATA_LIDAR_MM_MAIN_SIZE; i++)
+	{
+		printf("(%d, %d)\n", i, data_lidar_mm_main[i]);
+	}
+}
+
+/**
+ * @brief  Ajout une mesure au tableau data_lidar_mm_main
+ *
+ * @retval Revoie true si élément à bien été ajouté au tableau, false sinon
+ */
+bool ajout_mesure(float angle, float distance)
+{
+	if (!(angle >= 0 && angle <= DATA_LIDAR_MM_MAIN_SIZE))
+	{
+		return false;
+	}
+
+	if (data_lidar_mm_main[(size_t) angle] == -1)
+	{
+		data_lidar_mm_main[(size_t) angle] = (int16_t) distance;
+		return true;
+	} else {
+
+		float somme = data_lidar_mm_main[(size_t) angle] + distance;
+		// Moyenne
+		int16_t moyenne = somme / 2.0;
+
+		data_lidar_mm_main[(size_t) angle] = moyenne;
+		return true;
+	}
+}
+
