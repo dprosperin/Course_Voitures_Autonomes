@@ -38,6 +38,13 @@ extern "C" {
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+typedef enum {
+	LIDAR_RESET,
+	LIDAR_STOP,
+	LIDAR_START_SCAN,
+	LIDAR_GET_HEALTH,
+	LIDAR_UNKNOWN_COMMAND
+} command_lidar_t;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -80,6 +87,8 @@ void Error_Handler(void);
 #define LIDAR_COMMAND_RESET_LEN 2
 #define LIDAR_COMMAND_GET_INFO ((uint8_t*)"\xA5\x5")
 #define LIDAR_COMMAND_GET_INFO_LEN 2
+#define LIDAR_COMMAND_GET_HEALTH ((uint8_t*)"\xA5\x52")
+#define LIDAR_COMMAND_GET_HEALTH_LEN 2
 
 /* USER CODE END Private defines */
 

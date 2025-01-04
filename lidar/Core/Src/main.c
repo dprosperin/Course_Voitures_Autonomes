@@ -110,10 +110,10 @@ int main(void)
 
   init_data_lidar_mm_main();
 
+  command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
+
     int i = 0;
     char message[40] = "";
-
-    size_t counter = 0;
 
     HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
     HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
@@ -128,16 +128,19 @@ int main(void)
 	  		  if (caractere == '\n') {
 	  			  if (strstr(message, "START_SCAN") != NULL)
 	  			  {
+	  				command_requested = LIDAR_START_SCAN;
 	  				printf("Demarrage du scan normal\n");
 	  				init_data_lidar_mm_main();
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
 	  			  } else if (strstr(message, "STOP") != NULL)
 	  			  {
+	  				command_requested = LIDAR_STOP;
 	  				printf("Arret\n");
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
 	  				init_data_lidar_mm_main();
 	  			  } else if (strstr(message, "RESET") != NULL)
 	  			  {
+	  				command_requested = LIDAR_RESET;
 	  				printf("Reset\n");
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
 	  				init_data_lidar_mm_main();
@@ -145,7 +148,13 @@ int main(void)
 	  			  {
 	  				printf("RTFM ! <*_*>\n");
 	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
+	  			  } else if (strstr(message, "GET_HEALTH") != NULL)
+	  			  {
+	  				command_requested = LIDAR_GET_HEALTH;
+	  				printf("GET_HEALTH\n");
+	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_HEALTH, LIDAR_COMMAND_GET_HEALTH_LEN, HAL_MAX_DELAY);
 	  			  } else {
+	  				  command_requested = LIDAR_UNKNOWN_COMMAND;
 	  				  printf("Commande non reconnue : %s\n", message);
 	  			  }
 
@@ -163,17 +172,14 @@ int main(void)
 
 		  if (dequeue(&receivedByte))
 		  {
-			  automate_decode(receivedByte);
-
-			  counter++;
-		  }
-
-		  if (counter == 20000)
-		  {
-			  print_init_data_lidar_mm_main();
-
-			  HAL_Delay(1000 * 10);
-			  counter = 0;
+			  switch (command_requested) {
+				case LIDAR_START_SCAN:
+					automate_scan_decode(receivedByte);
+					break;
+				case LIDAR_GET_HEALTH:
+					automate_health_decode(receivedByte);
+					break;
+			}
 		  }
     /* USER CODE END WHILE */
 
