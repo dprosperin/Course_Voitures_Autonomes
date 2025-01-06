@@ -92,16 +92,16 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-  PWM_write(&htim1, TIM_CHANNEL_1, 0.75);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  send_torque_on(0xfd);
-  send_angle(0xfd, -120.0);
   while (1)
   {
-    /* USER CODE END WHILE */
+	  PWM_dir_and_cycle(1,&htim1, TIM_CHANNEL_1, 0.2);
+	  HAL_Delay(10000);
+	  PWM_dir_and_cycle(0,&htim1, TIM_CHANNEL_1, 0.00);
+	  while(1);
 
     /* USER CODE BEGIN 3 */
   }
