@@ -1,0 +1,20 @@
+16:47:50 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi\multiperiph_base_test_tp\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+   text	   data	    bss	    dec	    hex	filename
+  36572	    468	   2196	  39236	   9944	multiperiph_base_test_tp.elf
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+
+16:47:51 Build Finished. 0 errors, 0 warnings. (took 809ms)
+
