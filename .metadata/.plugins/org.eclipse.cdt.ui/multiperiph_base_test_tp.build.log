@@ -1,6 +1,5 @@
-00:36:26 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+00:50:34 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
 make -j7 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
 arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
 arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: multiperiph_base_test_tp.elf
@@ -17,5 +16,5 @@ Finished building: multiperiph_base_test_tp.bin
 Finished building: multiperiph_base_test_tp.list
  
 
-00:36:32 Build Finished. 0 errors, 0 warnings. (took 5s.895ms)
+00:50:36 Build Finished. 0 errors, 0 warnings. (took 1s.538ms)
 

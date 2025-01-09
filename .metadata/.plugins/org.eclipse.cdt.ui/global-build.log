@@ -2128,3 +2128,263 @@ Finished building: code_carte_moteur.bin
  
 Finished building: code_carte_moteur.list
  
+00:46:51 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+../Core/Src/mymain.c: In function 'BAR_set':
+../Core/Src/mymain.c:172:29: error: 'BAR_SET' undeclared (first use in this function); did you mean 'BAR_set'?
+  172 |         header.Identifier = BAR_SET;
+      |                             ^~~~~~~
+      |                             BAR_set
+../Core/Src/mymain.c:172:29: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/mymain.c:178:55: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  178 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                       ^~~~~~~~
+      |                                                       |
+      |                                                       uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/fdcan.h:29,
+                 from ../Core/Src/mymain.c:7:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_clear':
+../Core/Src/mymain.c:197:25: error: 'LCD_CLEAR' undeclared (first use in this function); did you mean 'LCD_clear'?
+  197 |     header.Identifier = LCD_CLEAR;
+      |                         ^~~~~~~~~
+      |                         LCD_clear
+../Core/Src/mymain.c: In function 'LCD_printf':
+../Core/Src/mymain.c:210:9: error: unknown type name 'va_list'
+  210 |         va_list arg;
+      |         ^~~~~~~
+../Core/Src/mymain.c:9:1: note: 'va_list' is defined in header '<stdarg.h>'; did you forget to '#include <stdarg.h>'?
+    8 | #include "mymain.h"
+  +++ |+#include <stdarg.h>
+    9 | #include <stm32g4xx_hal.h>
+../Core/Src/mymain.c:211:9: warning: implicit declaration of function 'va_start' [-Wimplicit-function-declaration]
+  211 |         va_start(arg, format);
+      |         ^~~~~~~~
+../Core/Src/mymain.c:213:29: warning: implicit declaration of function 'vsprintf' [-Wimplicit-function-declaration]
+  213 |         curseur = curseur + vsprintf(tableau_ecran+curseur % 64, format, arg);
+      |                             ^~~~~~~~
+../Core/Src/mymain.c:9:1: note: include '<stdio.h>' or provide a declaration of 'vsprintf'
+    8 | #include "mymain.h"
+  +++ |+#include <stdio.h>
+    9 | #include <stm32g4xx_hal.h>
+../Core/Src/mymain.c:213:74: warning: incompatible type for argument 3 of 'vsprintf' [-Wbuiltin-declaration-mismatch]
+  213 |         curseur = curseur + vsprintf(tableau_ecran+curseur % 64, format, arg);
+      |                                                                          ^~~
+../Core/Src/mymain.c:213:74: note: expected '__va_list' but argument is of type 'int'
+../Core/Src/mymain.c:231:10: warning: implicit declaration of function 'va_end' [-Wimplicit-function-declaration]
+  231 |          va_end(arg);
+      |          ^~~~~~
+../Core/Src/mymain.c:238:34: error: 'LCD_CHAR0' undeclared (first use in this function)
+  238 |              header.Identifier = LCD_CHAR0 + j;
+      |                                  ^~~~~~~~~
+../Core/Src/mymain.c:246:64: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  246 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                                ^~~~~~~~
+      |                                                                |
+      |                                                                uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:46: Core/Src/mymain.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+00:47:45 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+../Core/Src/mymain.c: In function 'BAR_set':
+../Core/Src/mymain.c:180:55: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  180 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                       ^~~~~~~~
+      |                                                       |
+      |                                                       uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/fdcan.h:29,
+                 from ../Core/Src/mymain.c:7:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_printf':
+../Core/Src/mymain.c:213:9: warning: implicit declaration of function 'va_start' [-Wimplicit-function-declaration]
+  213 |         va_start(arg, format);
+      |         ^~~~~~~~
+../Core/Src/mymain.c:233:10: warning: implicit declaration of function 'va_end' [-Wimplicit-function-declaration]
+  233 |          va_end(arg);
+      |          ^~~~~~
+../Core/Src/mymain.c:248:64: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  248 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                                ^~~~~~~~
+      |                                                                |
+      |                                                                uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_clear':
+../Core/Src/mymain.c:205:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  205 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/mymain.c:204:13: note: 'pTxData' declared here
+  204 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36512	    468	   2196	  39176	   9908	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+00:48:38 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+../Core/Src/mymain.c: In function 'BAR_set':
+../Core/Src/mymain.c:181:55: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  181 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                       ^~~~~~~~
+      |                                                       |
+      |                                                       uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/fdcan.h:29,
+                 from ../Core/Src/mymain.c:7:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_printf':
+../Core/Src/mymain.c:249:64: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  249 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                                ^~~~~~~~
+      |                                                                |
+      |                                                                uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_clear':
+../Core/Src/mymain.c:206:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  206 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/mymain.c:205:13: note: 'pTxData' declared here
+  205 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36512	    468	   2196	  39176	   9908	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+00:49:09 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+../Core/Src/mymain.c: In function 'LCD_printf':
+../Core/Src/mymain.c:249:64: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  249 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |                                                                ^~~~~~~~
+      |                                                                |
+      |                                                                uint8_t (*)[8] {aka unsigned char (*)[8]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/fdcan.h:29,
+                 from ../Core/Src/mymain.c:7:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/mymain.c: In function 'LCD_clear':
+../Core/Src/mymain.c:206:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  206 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/mymain.c:205:13: note: 'pTxData' declared here
+  205 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36512	    468	   2196	  39176	   9908	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+00:50:02 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+../Core/Src/mymain.c: In function 'LCD_clear':
+../Core/Src/mymain.c:206:55: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' makes pointer from integer without a cast [-Wint-conversion]
+  206 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , pTxData);
+      |                                                       ^~~~~~~
+      |                                                       |
+      |                                                       uint8_t {aka unsigned char}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Inc/fdcan.h:29,
+                 from ../Core/Src/mymain.c:7:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t' {aka 'unsigned char'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36512	    468	   2196	  39176	   9908	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+00:50:34 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36512	    468	   2196	  39176	   9908	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
