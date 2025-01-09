@@ -1553,3 +1553,22 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY org.eclipse.cdt.core 1 0 2025-01-09 23:38:06.395
 !MESSAGE Indexed 'multiperiph_base_test_tp' (56 sources, 186 headers) in 2.72 sec: 16,750 declarations; 82,903 references; 3 unresolved inclusions; 46 syntax errors; 173 unresolved names (0.17%)
+!SESSION 2025-01-10 00:32:14.914 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=macosx, ARCH=x86_64, WS=cocoa, NL=fr_FR
+Framework arguments:  -keyring /Users/davidprosperin/.eclipse_keyring
+Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -keyring /Users/davidprosperin/.eclipse_keyring
+
+!ENTRY org.eclipse.core.resources 2 10035 2025-01-10 00:32:26.761
+!MESSAGE The workspace exited with unsaved changes in the previous session; refreshing workspace to recover changes.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-01-10 00:32:33.675
+!MESSAGE Log4j2 initialized with config file /Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/.metadata/.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-01-10 00:32:50.974
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-01-10 00:33:17.886
+!MESSAGE Indexed 'multiperiph_base_test_tp' (30 sources, 123 headers) in 17.5 sec: 12,772 declarations; 58,598 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.24%)

@@ -73,10 +73,10 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define CAN_ID_HERKULEX 0x701
+#define CAN_ID_HERKULEX 0x601
 #define ID_HERKULEX 254
 
-#define CAN_ID_MOTEUR 0x702
+#define CAN_ID_MOTEUR 0x602
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
