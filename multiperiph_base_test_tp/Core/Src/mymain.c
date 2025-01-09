@@ -36,8 +36,25 @@ void setup()
 void loop()
 {
 
-	set_angle_test();
-    HAL_Delay(1000);
+	//set_angle_test();
+
+	set_angle(0);
+    HAL_Delay(1000 * 2);
+
+    set_angle(30);
+    HAL_Delay(1000 * 2);
+
+    set_angle(90);
+    HAL_Delay(1000 * 2);
+
+
+    set_angle(120);
+    HAL_Delay(1000 * 2);
+
+
+    set_angle(0);
+    HAL_Delay(1000 * 2);
+
 }
 
 ////  Fonctions de navigation
@@ -124,6 +141,7 @@ void set_angle(float nouvelle_angle)
 	uint16_t cmd_angle;
 
 	//TODO : Fixer les limites de rotation du robot
+	angle = nouvelle_angle;
 
 	header.Identifier = CAN_ID_HERKULEX; // Set your CAN identifier
 	header.IdType = FDCAN_STANDARD_ID; // Standard ID
