@@ -171,6 +171,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 				uint16_t pos_herculex = ((uint16_t) trame_rx.data[0] << 8) | trame_rx.data[1];
 				send_pos(ID_HERKULEX, pos_herculex);
 				break;
+			case CAN_ID_MOTEUR:
+
+				break;
 			default:
 				break;
 		}

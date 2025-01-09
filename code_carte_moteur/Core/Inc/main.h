@@ -73,6 +73,8 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define CAN_ID_HERKULEX 0x701
 #define ID_HERKULEX 254
+
+#define CAN_ID_MOTEUR 0x702
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
