@@ -11,7 +11,7 @@
 
 FDCAN_TxHeaderTypeDef header;
 
-float vitesse = 0.0;
+float rapport_cyclique = 0.0;
 bool  sens = 0;
 float angle = 0.0;
 
@@ -82,25 +82,25 @@ void set_angle_test(void)
  * @param  nouveau_sens : sens de rotation des roues
  * @retval None
  */
-void set_vitesse_et_sens(float nouvelle_vitesse, bool nouveau_sens)
+void set_rapport_cyclique_et_sens(float nouveau_rapport_cyclique, bool nouveau_sens)
 {
-	uint8_t octet_nouvelle_vitesse;
+	uint8_t octet_nouveau_rapport_cyclique;
 	uint8_t octet_nouveau_sens;
 	uint8_t txData[2];
 
 	// On gère les cas limites
-	if (nouvelle_vitesse > 1)
-		vitesse = 1;
-	else if (nouvelle_vitesse < 0)
-		vitesse = 0;
+	if (nouveau_rapport_cyclique > 1)
+		rapport_cyclique = 1;
+	else if (nouveau_rapport_cyclique < 0)
+		rapport_cyclique = 0;
 	else
-		vitesse = nouvelle_vitesse;
+		rapport_cyclique = nouveau_rapport_cyclique;
 
-	octet_nouvelle_vitesse = (uint8_t) (vitesse * 100);
+	octet_nouveau_rapport_cyclique = (uint8_t) (rapport_cyclique * 100);
 	octet_nouveau_sens     =  nouveau_sens;
 
 	// Premier octet la vitesse * 100
-	txData[0] = octet_nouvelle_vitesse;
+	txData[0] = octet_nouveau_rapport_cyclique;
 
 	// Second octet le sens de rotation
 	txData[1] = octet_nouveau_sens;
@@ -121,7 +121,7 @@ void set_vitesse_et_sens(float nouvelle_vitesse, bool nouveau_sens)
  */
 void recule(void)
 {
-	set_vitesse_et_sens(vitesse, 0);
+	set_rapport_cyclique_et_sens(rapport_cyclique, 0);
 }
 
 /**
@@ -130,7 +130,7 @@ void recule(void)
  */
 void avance(void)
 {
-	set_vitesse_et_sens(vitesse, 1);
+	set_rapport_cyclique_et_sens(rapport_cyclique, 1);
 }
 
 void set_angle(float nouvelle_angle)

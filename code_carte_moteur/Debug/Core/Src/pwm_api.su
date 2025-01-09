@@ -1,0 +1,3 @@
+../Core/Src/pwm_api.c:10:6:PWM_write	32	static
+../Core/Src/pwm_api.c:16:6:PWM_dir	16	static
+../Core/Src/pwm_api.c:20:6:PWM_dir_and_cycle	32	static

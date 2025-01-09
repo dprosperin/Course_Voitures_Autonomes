@@ -1,3 +1,7 @@
-../Core/Src/mymain.c:16:10:set_angle	1
-../Core/Src/mymain.c:37:6:setup	1
-../Core/Src/mymain.c:55:6:loop	1
+../Core/Src/mymain.c:18:6:setup	1
+../Core/Src/mymain.c:36:6:loop	1
+../Core/Src/mymain.c:61:6:set_angle_test	1
+../Core/Src/mymain.c:85:6:set_rapport_cyclique_et_sens	3
+../Core/Src/mymain.c:122:6:recule	1
+../Core/Src/mymain.c:131:6:avance	1
+../Core/Src/mymain.c:136:6:set_angle	1
