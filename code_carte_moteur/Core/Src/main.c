@@ -116,6 +116,7 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -182,7 +183,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 				send_pos(ID_HERKULEX, pos_herculex);
 				break;
 			case CAN_ID_MOTEUR:
-					float rapport_cyclique = trame_rx.data[0] / 100;
+					float rapport_cyclique = trame_rx.data[0] / 100.0;
 					bool sens_rotation =  trame_rx.data[1];
 
 					PWM_dir_and_cycle(sens_rotation, &htim1, TIM_CHANNEL_1, rapport_cyclique);

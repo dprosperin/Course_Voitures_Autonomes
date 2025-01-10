@@ -2388,3 +2388,719 @@ Finished building: multiperiph_base_test_tp.bin
  
 Finished building: multiperiph_base_test_tp.list
  
+08:13:19 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36440	    468	   2196	  39104	   98c0	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+08:15:42 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36440	    468	   2196	  39104	   98c0	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+08:20:34 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36440	    468	   2196	  39104	   98c0	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+08:22:54 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:26: warning: implicit declaration of function 'calcul_angle' [-Wimplicit-function-declaration]
+  120 |                 send_pos(calcul_angle(0));
+      |                          ^~~~~~~~~~~~
+../Core/Src/main.c:120:17: error: too few arguments to function 'send_pos'
+  120 |                 send_pos(calcul_angle(0));
+      |                 ^~~~~~~~
+In file included from ../Core/Src/main.c:30:
+../Core/Inc/herculex.h:30:6: note: declared here
+   30 | void send_pos(uint8_t id, uint16_t pos);
+      |      ^~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+08:23:18 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:39: warning: implicit declaration of function 'calcul_angle' [-Wimplicit-function-declaration]
+  120 |                 send_pos(ID_HERKULEX, calcul_angle(0));
+      |                                       ^~~~~~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43184	    500	   2276	  45960	   b388	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:24:36 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:39: warning: implicit declaration of function 'calcul_angle' [-Wimplicit-function-declaration]
+  120 |                 send_pos(ID_HERKULEX, calcul_angle(-159.8));
+      |                                       ^~~~~~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:26:59 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:39: warning: implicit declaration of function 'calcul_angle' [-Wimplicit-function-declaration]
+  120 |                 send_pos(ID_HERKULEX, calcul_angle(-79));
+      |                                       ^~~~~~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43184	    500	   2276	  45960	   b388	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:27:35 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:39: warning: implicit declaration of function 'calcul_angle' [-Wimplicit-function-declaration]
+  120 |                 send_pos(ID_HERKULEX, calcul_angle(-50));
+      |                                       ^~~~~~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43184	    500	   2276	  45960	   b388	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:39:53 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/herculex.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/herculex.d" -MT"Core/Src/herculex.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/herculex.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:50:40 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:51:28 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:51:52 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:52:12 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:52:50 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:53:28 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:55:09 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:120:39: error: too many arguments to function 'calcul_angle'
+  120 |                 send_pos(ID_HERKULEX, calcul_angle(-65,8));
+      |                                       ^~~~~~~~~~~~
+In file included from ../Core/Src/main.c:30:
+../Core/Inc/herculex.h:32:10: note: declared here
+   32 | uint16_t calcul_angle(double angle);
+      |          ^~~~~~~~~~~~
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+make: *** [Core/Src/subdir.mk:52: Core/Src/main.o] Error 1
+"make -j7 all" terminated with exit code 2. Build might be incomplete.
+08:55:58 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:56:33 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:57:10 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:57:45 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:58:40 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+08:59:01 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43192	    500	   2276	  45968	   b390	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:04:51 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:124:5: warning: "/*" within comment [-Wcomment]
+  124 |     /* USER CODE END WHILE */
+      |      
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:06:04 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36456	    468	   2196	  39120	   98d0	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:14:01 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36520	    468	   2196	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:15:10 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+   text	   data	    bss	    dec	    hex	filename
+  36520	    468	   2196	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+09:15:52 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36520	    468	   2196	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:19:19 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36520	    468	   2196	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:24:57 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36520	    472	   2192	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:25:44 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36520	    472	   2192	  39184	   9910	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:31:01 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36704	    472	   2192	  39368	   99c8	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 
+09:32:00 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+   text	   data	    bss	    dec	    hex	filename
+  36704	    472	   2192	  39368	   99c8	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+09:34:42 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:35:43 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:36:04 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-size  code_carte_moteur.elf 
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+09:36:24 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-size  code_carte_moteur.elf 
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+09:36:45 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-size  code_carte_moteur.elf 
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+09:39:55 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43000	    500	   2276	  45776	   b2d0	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:40:52 **** Incremental Build of configuration Debug for project code_carte_moteur ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: code_carte_moteur.elf
+ 
+arm-none-eabi-size  code_carte_moteur.elf 
+arm-none-eabi-objdump -h -S code_carte_moteur.elf  > "code_carte_moteur.list"
+arm-none-eabi-objcopy  -O binary code_carte_moteur.elf  "code_carte_moteur.bin"
+   text	   data	    bss	    dec	    hex	filename
+  43008	    500	   2276	  45784	   b2d8	code_carte_moteur.elf
+Finished building: default.size.stdout
+ 
+Finished building: code_carte_moteur.bin
+ 
+Finished building: code_carte_moteur.list
+ 
+09:55:03 **** Incremental Build of configuration Debug for project multiperiph_base_test_tp ****
+make -j7 all 
+arm-none-eabi-gcc "../Core/Src/mymain.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/mymain.d" -MT"Core/Src/mymain.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/mymain.o"
+arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list"   -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/multiperiph_base_test_tp/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: multiperiph_base_test_tp.elf
+ 
+arm-none-eabi-size  multiperiph_base_test_tp.elf 
+arm-none-eabi-objdump -h -S multiperiph_base_test_tp.elf  > "multiperiph_base_test_tp.list"
+arm-none-eabi-objcopy  -O binary multiperiph_base_test_tp.elf  "multiperiph_base_test_tp.bin"
+   text	   data	    bss	    dec	    hex	filename
+  36768	    472	   2192	  39432	   9a08	multiperiph_base_test_tp.elf
+Finished building: default.size.stdout
+ 
+Finished building: multiperiph_base_test_tp.bin
+ 
+Finished building: multiperiph_base_test_tp.list
+ 

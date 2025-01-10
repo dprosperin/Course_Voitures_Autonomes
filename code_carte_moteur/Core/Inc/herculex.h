@@ -29,4 +29,6 @@ void send_torque(uint8_t id, uint8_t torq);
 
 void send_pos(uint8_t id, uint16_t pos);
 
+uint16_t calcul_angle(double angle);
+
 #endif /* INC_HERCULEX_H_ */

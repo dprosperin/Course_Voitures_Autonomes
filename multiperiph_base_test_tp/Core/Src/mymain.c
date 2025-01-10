@@ -21,7 +21,7 @@ char tableau_ecran[65];
 // Base motrice
 float rapport_cyclique = 0.0;
 bool  sens = 0;
-float angle = 0.0;
+float angle = -100;
 
 void setup()
 {
@@ -46,12 +46,25 @@ void loop()
 
 	//set_angle_test();
 
-	set_angle(0);
+	set_angle(-120);
+	set_rapport_cyclique_et_sens(0.2, 1);
     HAL_Delay(1000 * 2);
 
-    set_angle(30);
+
+
+    set_angle(-100);
     HAL_Delay(1000 * 2);
 
+    set_angle(-90);
+       HAL_Delay(1000 * 2);
+
+
+       set_angle(-85);
+           HAL_Delay(1000 * 2);
+
+    //set_angle(-80.8);
+    //HAL_Delay(1000 * 2);
+    /*
     set_angle(90);
     HAL_Delay(1000 * 2);
 
@@ -61,8 +74,15 @@ void loop()
 
 
     set_angle(0);
-    HAL_Delay(1000 * 2);
+    HAL_Delay(1000 * 2);*/
 
+}
+
+//// Fonctions utilitaire
+float mapf(float value, float fromLow, float fromHigh, float toLow, float toHigh) {
+  float result;
+  result = (value - fromLow) * (toHigh - toLow) / (fromHigh - fromLow) + toLow;
+  return result;
 }
 
 ////  Fonctions de navigation
@@ -148,8 +168,14 @@ void set_angle(float nouvelle_angle)
 	uint8_t txData[2];
 	uint16_t cmd_angle;
 
-	//TODO : Fixer les limites de rotation du robot
-	angle = nouvelle_angle;
+	//Fixer les limites de rotation du robot
+
+	if (nouvelle_angle > -80.8)
+		angle = -80.8;
+	else if (nouvelle_angle < -120.8)
+		angle = -120.8;
+	else
+		angle = nouvelle_angle;
 
 	header.Identifier = CAN_ID_HERKULEX; // Set your CAN identifier
 	header.IdType = FDCAN_STANDARD_ID; // Standard ID
