@@ -1,12 +1,4 @@
-../Core/Src/mymain.c:26:6:setup	4	static
-../Core/Src/mymain.c:44:6:loop	8	static
-../Core/Src/mymain.c:82:7:mapf	40	static
-../Core/Src/mymain.c:89:6:set_angle_test	1464	static
-../Core/Src/mymain.c:113:6:set_rapport_cyclique_et_sens	32	static
-../Core/Src/mymain.c:150:6:recule	8	static
-../Core/Src/mymain.c:159:6:avance	8	static
-../Core/Src/mymain.c:164:6:set_angle	24	static
-../Core/Src/mymain.c:199:6:BAR_set	24	static
-../Core/Src/mymain.c:212:6:LCD_gotoxy	16	static
-../Core/Src/mymain.c:217:6:LCD_clear	16	static
-../Core/Src/mymain.c:236:6:LCD_printf	24	static
+../Core/Src/mymain.c:14:6:setup	4	static
+../Core/Src/mymain.c:18:6:loop	8	static
+../Core/Src/mymain.c:54:7:mapf	40	static
+../Core/Src/mymain.c:61:6:set_angle_test	1464	static

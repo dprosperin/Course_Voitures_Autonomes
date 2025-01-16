@@ -1,4 +1,5 @@
-Core/Src/mymain.o: ../Core/Src/mymain.c ../Core/Inc/mymain.h \
+Core/Src/deplacement.o: ../Core/Src/deplacement.c \
+ ../Core/Inc/deplacement.h ../Core/Inc/fdcan.h ../Core/Inc/main.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h \
  ../Core/Inc/stm32g4xx_hal_conf.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h \
@@ -27,8 +28,10 @@ Core/Src/mymain.o: ../Core/Src/mymain.c ../Core/Inc/mymain.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/deplacement.h
-../Core/Inc/mymain.h:
+ ../Core/Inc/automate.h ../Core/Inc/buffer.h
+../Core/Inc/deplacement.h:
+../Core/Inc/fdcan.h:
+../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
 ../Core/Inc/stm32g4xx_hal_conf.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_rcc.h:
@@ -57,4 +60,5 @@ Core/Src/mymain.o: ../Core/Src/mymain.c ../Core/Inc/mymain.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
-../Core/Inc/deplacement.h:
+../Core/Inc/automate.h:
+../Core/Inc/buffer.h:
