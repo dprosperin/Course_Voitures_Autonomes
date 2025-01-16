@@ -112,11 +112,11 @@ int main(void)
 
   command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
 
-    int i = 0;
-    char message[40] = "";
+  int i = 0;
+  char message[40] = "";
 
-    HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
-    HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
+  HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
+  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
   /* Infinite loop */

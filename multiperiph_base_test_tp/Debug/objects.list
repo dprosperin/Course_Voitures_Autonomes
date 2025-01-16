@@ -1,3 +1,6 @@
+"./Core/Src/automate.o"
+"./Core/Src/buffer.o"
+"./Core/Src/dma.o"
 "./Core/Src/fdcan.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"

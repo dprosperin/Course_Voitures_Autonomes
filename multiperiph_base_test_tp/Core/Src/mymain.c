@@ -2,7 +2,7 @@
  * mymain.c
  *
  *  Created on: Jan 6, 2025
- *      Author: yassine.mesbahi
+ *      Author: david.prosperin
  */
 #include "fdcan.h"
 #include "mymain.h"
@@ -48,19 +48,17 @@ void loop()
 
 	set_angle(-120);
 	set_rapport_cyclique_et_sens(0.2, 1);
-    HAL_Delay(1000 * 2);
-
-
+    //HAL_Delay(1000 * 2);
 
     set_angle(-100);
-    HAL_Delay(1000 * 2);
+    //HAL_Delay(1000 * 2);
 
     set_angle(-90);
-       HAL_Delay(1000 * 2);
+       //HAL_Delay(1000 * 2);
 
 
-       set_angle(-85);
-           HAL_Delay(1000 * 2);
+    set_angle(-85);
+    HAL_Delay(1000 * 1);
 
     //set_angle(-80.8);
     //HAL_Delay(1000 * 2);

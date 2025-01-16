@@ -27,7 +27,8 @@ Core/Src/mymain.o: ../Core/Src/mymain.c ../Core/Inc/fdcan.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h \
  ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h \
- ../Core/Inc/mymain.h ../Core/Inc/ident.h
+ ../Core/Inc/automate.h ../Core/Inc/buffer.h ../Core/Inc/mymain.h \
+ ../Core/Inc/ident.h
 ../Core/Inc/fdcan.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:
@@ -58,5 +59,7 @@ Core/Src/mymain.o: ../Core/Src/mymain.c ../Core/Inc/fdcan.h \
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_pwr_ex.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart.h:
 ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_uart_ex.h:
+../Core/Inc/automate.h:
+../Core/Inc/buffer.h:
 ../Core/Inc/mymain.h:
 ../Core/Inc/ident.h:
