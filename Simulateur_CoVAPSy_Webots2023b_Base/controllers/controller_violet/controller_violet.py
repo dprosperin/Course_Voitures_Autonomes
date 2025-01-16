@@ -25,7 +25,7 @@ keyboard = driver.getKeyboard()
 keyboard.enable(sensorTimeStep)
 
 # vitesse en km/h
-speed = 0
+speed = 0.0
 maxSpeed = 28 #km/h
 
 # angle de la direction
@@ -93,7 +93,7 @@ while driver.step() != -1:
         angle = 0
         
     if modeAuto:
-        speed = 0 #km/h
+        speed = 0.0 #km/h
         #l'angle de la direction est la différence entre les mesures des rayons 
         #du lidar à (-99+18*2)=-63° et (-99+81*2)=63°
         angle = donnees_lidar[60]-donnees_lidar[300]

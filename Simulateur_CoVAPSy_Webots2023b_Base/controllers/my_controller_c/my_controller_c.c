@@ -29,12 +29,11 @@ const float* range_donnees;
 unsigned char gestion_appuie_clavier(void);
 unsigned char modeAuto=0;
 // prototype des fonctions
-void affichage_consigne();
-//void set_direction_degres(float angle_degre);
+void affichage_consigne(); 
 void set_vitesse_m_s(float vitesse_m_s);
 unsigned char gestion_appui_clavier(void);
 void recule(void);
-void set_angle_test() ; 
+float set_angle() ; 
 //vitesse en km/h
 float speed = 0;
 float maxSpeed = 28; //km/h
@@ -49,56 +48,62 @@ signed int data_lidar_mm_main[360];
 int main(int argc, char **argv) 
 { 
   unsigned int i;
-  
   float vitesse_m_s;
+
   /* necessary to initialize webots stuff */
-  //intialisation du conducteur de voiture
+  // initialisation du conducteur de voiture
   wbu_driver_init();
-  //enable keyboard
+  // enable keyboard
   wb_keyboard_enable(TIME_STEP);
   // enable lidar
   WbDeviceTag lidar = wb_robot_get_device("RpLidarA2");
-  wb_lidar_enable(lidar,TIME_STEP);
+  wb_lidar_enable(lidar, TIME_STEP);
   // affichage des points lidar sur la piste
   wb_lidar_enable_point_cloud(lidar);
- 
+
   affichage_consigne();
   set_vitesse_m_s(0);
+
   while (wbu_driver_step() != -1) 
   {
     float distance;
-    /* lire le lidar et traiter les données :   */
-    range_donnees=wb_lidar_get_range_image(lidar);
+
+
+    /* lire le lidar et traiter les données */
+    range_donnees = wb_lidar_get_range_image(lidar);
     distance = range_donnees[0];
-    if((distance > 0.0))
-      data_lidar_mm_main[0]=1000*distance;
-      else data_lidar_mm_main[0] = 0;
-    for(i = 1; i<360 ; i++)
+    if (distance > 0.0)
+      data_lidar_mm_main[0] = 1000 * distance;
+    else 
+      data_lidar_mm_main[0] = 0;
+
+    for (i = 1; i < 360; i++) 
     {
-      distance = range_donnees[360-i];
-      if((distance > 0.0))
-        data_lidar_mm_main[i]=1000*distance;
-      else data_lidar_mm_main[i] = 0;
-    }       
-    gestion_appui_clavier();     
-    if(modeAuto)
-    { 
-      set_angle_test() ; 
-      
-        /****************************************/
-        /* Programme etudiant avec              */
-        /*  - le tableau data_lidar_mm_main     */
-        /*  - la fonction set_direction_degre(.)*/
-        /*  - la fonction set_vitesse_m_s(...)  */
-        /*  - la fonction recule()              */
-        /****************************************/
-        vitesse_m_s = 0.87; 
-        set_vitesse_m_s(vitesse_m_s); 
+      distance = range_donnees[360 - i];
+      if (distance > 0.0)
+        data_lidar_mm_main[i] = 1000 * distance;
+      else 
+        data_lidar_mm_main[i] = 0;
     }
-  }
-  /* This is necessary to cleanup webots resources */
-  wbu_driver_cleanup();
-  return 0;
+
+    gestion_appui_clavier();
+
+    if (modeAuto) 
+    {  
+          set_angle(); 
+          vitesse_m_s = 0.8;
+          set_vitesse_m_s(vitesse_m_s);
+          if (data_lidar_mm_main[359]<250)
+          {
+          recule(); // Reculer
+          wb_robot_step(2500); // Reculer pendant 2.5s
+          }
+    }
+  } // Fin de la boucle while
+
+  wbu_driver_cleanup(); // Nettoyage des ressources Webots
+
+  return 0;  // Retour correct de la fonction main
 }
 
 unsigned char gestion_appui_clavier(void)
@@ -156,31 +161,29 @@ void recule(void){
 
 
   
-void set_angle_test()
+float set_angle()
 {   
-float distance_droite = data_lidar_mm_main[300];   
-float distance_gauche = data_lidar_mm_main[60];   
+float distance_droite = data_lidar_mm_main[315];   
+float distance_gauche = data_lidar_mm_main[45];   
 float distance  = distance_droite - distance_gauche ; 
+float kp = 0.002;
 float angle = 0.0 ; 
-float kp = 0.089;
 
 //kp = 0.0002 pour des corrections plus douces ou kp = 0.001 pour des corrections plus agressives.
 
  angle = kp * distance;
-
-printf("%4.4f \n",angle) ; 
-
 if (angle > 0.31) {angle = 0.31;}   // Limite à droite
 if (angle < -0.31) {angle = -0.31;} // Limite à gauche
 
-
-
-    // Appliquer l'angle calculé
-    wbu_driver_set_steering_angle(angle);
-
+ // Appliquer l'angle calculé     
+    wbu_driver_set_steering_angle(angle); 
+    
+         if (data_lidar_mm_main[359]<250)
+          {
+      wbu_driver_set_steering_angle(-angle); 
+          }
+    
+    
+    return distance ; 
 }
-
-
-
-
 
