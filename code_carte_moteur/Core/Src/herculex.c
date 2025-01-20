@@ -2,7 +2,8 @@
 
 uint8_t reboot [7] = {0xFF, 0xFF, 0x07, 0, 0x09, 0,0}; // Trame de la fonction reboot
 uint8_t torque[10] = {0xFF, 0xFF, 0x0A, 0, 0x03, 0,0, 0x34, 0x01,0}; //Trame pour la fonction send_torque
-uint8_t Iposition[12] = {0xFF, 0xFF, 0x0c, 0, 0x05, 0,0, 0,0, 0x04,0 , 0x3c}; //Trame pour la fonction send_Iposition
+uint8_t Iposition[12] = {0xFF, 0xFF, 0x0c, 0, 0x05, 0,0, 0,0, 0x04,0 , 0x7}; //Trame pour la fonction send_Iposition
+uint8_t change_acele[9]={0xff,0xff,0,0x01,0,0,14,1,0x00};
 
 uint16_t calcul_angle(double angle) // Calcul la valeur à envoyé en fonction d'un angle donné (+ ou - 90° de chaque côté)
 {
@@ -88,12 +89,19 @@ void send_torque(uint8_t id, uint8_t torq) //Permet de modifier le torque du her
 	send_trame(id, 10, torque);
 }
 
-void send_pos(uint8_t id, uint16_t pos) //Donne une position pour un herkulex + une couleur
+void send_pos_speed(uint8_t id, uint16_t pos, float speed_in_decimal) //Donne une position pour un herkulex + la vitesse
 {																// position -> entre -90° et +90°
+	uint8_t play_time= 0xfe*(1 - speed_in_decimal);
 	Iposition[10] = id;
 	Iposition[7] = pos&0x00FF;
 	Iposition[8] = (pos&0xFF00) >>8;
+	Iposition[11]=play_time;
 	send_torque(id, TORQUE_ON);
 	send_trame(id, 12, Iposition);
 }
-
+void aceleration_rapport(uint8_t id,float rapport_in_decimal) //temps de aceleration = playtime(Iposition[11])*aceleration_rapport, voir page 27 et 30
+{
+	uint8_t hexa_rapport=0x32*rapport_in_decimal;
+	change_acele[8]=hexa_rapport;
+	send_trame(id, sizeof(change_acele), change_acele);
+}

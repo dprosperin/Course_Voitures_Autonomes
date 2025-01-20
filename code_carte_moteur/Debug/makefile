@@ -34,37 +34,37 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := code_carte_moteur
+BUILD_ARTIFACT_NAME := multiperiph_base_test_tp
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-code_carte_moteur.elf \
+multiperiph_base_test_tp.elf \
 
 MAP_FILES += \
-code_carte_moteur.map \
+multiperiph_base_test_tp.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-code_carte_moteur.list \
+multiperiph_base_test_tp.list \
 
 OBJCOPY_BIN += \
-code_carte_moteur.bin \
+multiperiph_base_test_tp.bin \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: code_carte_moteur.elf secondary-outputs
+main-build: multiperiph_base_test_tp.elf secondary-outputs
 
 # Tool invocations
-code_carte_moteur.elf code_carte_moteur.map: $(OBJS) $(USER_OBJS) /Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "code_carte_moteur.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"/Users/davidprosperin/Documents/GitHub/Course_Voitures_Autonomes/code_carte_moteur/STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="code_carte_moteur.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
+multiperiph_base_test_tp.elf multiperiph_base_test_tp.map: $(OBJS) $(USER_OBJS) C:\Users\joseph.munoz-saltos\Documents\GitHub\Course_Voitures_Autonomes\Course_Voitures_Autonomes\code_carte_moteur\STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "multiperiph_base_test_tp.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\joseph.munoz-saltos\Documents\GitHub\Course_Voitures_Autonomes\Course_Voitures_Autonomes\code_carte_moteur\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="multiperiph_base_test_tp.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -u _scanf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -73,19 +73,19 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-code_carte_moteur.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "code_carte_moteur.list"
+multiperiph_base_test_tp.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "multiperiph_base_test_tp.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
-code_carte_moteur.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "code_carte_moteur.bin"
+multiperiph_base_test_tp.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "multiperiph_base_test_tp.bin"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) code_carte_moteur.bin code_carte_moteur.elf code_carte_moteur.list code_carte_moteur.map default.size.stdout
+	-$(RM) default.size.stdout multiperiph_base_test_tp.bin multiperiph_base_test_tp.elf multiperiph_base_test_tp.list multiperiph_base_test_tp.map
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
