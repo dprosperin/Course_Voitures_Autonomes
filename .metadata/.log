@@ -1,0 +1,148 @@
+!SESSION 2025-01-20 13:30:25.746 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=fr_FR
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-01-20 13:30:55.143
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-01-20 13:30:55.156
+!MESSAGE Log4j2 initialized with config file C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-01-20 13:30:59.662
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-01-20 13:37:30.907 -----------------------------------------------
+eclipse.buildId=Version 1.15.1
+java.version=17.0.8.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=fr_FR
+Framework arguments:  C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\.project
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\.project
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-01-20 13:37:56.916
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-01-20 13:37:56.918
+!MESSAGE Log4j2 initialized with config file C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-01-20 13:38:02.065
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.core.resources 4 77 2025-01-20 13:38:02.708
+!MESSAGE Invalid project description.
+!SUBENTRY 1 unknown 0 0 2025-01-20 13:38:02.708
+!MESSAGE OK
+!SUBENTRY 1 org.eclipse.core.resources 4 77 2025-01-20 13:38:02.708
+!MESSAGE C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can overlaps the location of another project: 'tp6_can'
+
+!ENTRY org.eclipse.core.resources 4 368 2025-01-20 13:38:02.718
+!MESSAGE Resource '/multiperiph_base' does not exist.
+!STACK 0
+java.lang.Exception: Resource '/multiperiph_base' does not exist.
+	at org.eclipse.core.internal.resources.ResourceException.provideStackTrace(ResourceException.java:42)
+	at org.eclipse.core.internal.resources.ResourceException.<init>(ResourceException.java:38)
+	at org.eclipse.core.internal.resources.Resource.checkExists(Resource.java:367)
+	at org.eclipse.core.internal.resources.Resource.checkAccessible(Resource.java:241)
+	at org.eclipse.core.internal.resources.Project.checkAccessible(Project.java:183)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:244)
+	at org.eclipse.core.internal.resources.Container.members(Container.java:231)
+	at com.st.stm32cube.ide.mcu.converters.AbstractCubeIDEProjectConfigurator.openReadmeFile(AbstractCubeIDEProjectConfigurator.java:1008)
+	at com.st.stm32cube.ide.mcu.ide.ui.project.internal.MCUProjectImporter$3.run(MCUProjectImporter.java:387)
+	at org.eclipse.ui.internal.PendingSyncExec.run(PendingSyncExec.java:68)
+	at org.eclipse.ui.internal.UILockListener.doPendingWork(UILockListener.java:172)
+	at org.eclipse.swt.widgets.RunnableLock.run(RunnableLock.java:40)
+	at org.eclipse.swt.widgets.Synchronizer.runAsyncMessages(Synchronizer.java:132)
+	at org.eclipse.swt.widgets.Display.runAsyncMessages(Display.java:4046)
+	at org.eclipse.swt.widgets.Display.readAndDispatch(Display.java:3662)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine$5.run(PartRenderingEngine.java:1155)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.e4.ui.internal.workbench.swt.PartRenderingEngine.run(PartRenderingEngine.java:1046)
+	at org.eclipse.e4.ui.internal.workbench.E4Workbench.createAndRunUI(E4Workbench.java:155)
+	at org.eclipse.ui.internal.Workbench.lambda$3(Workbench.java:648)
+	at org.eclipse.core.databinding.observable.Realm.runWithDefault(Realm.java:342)
+	at org.eclipse.ui.internal.Workbench.createAndRunWorkbench(Workbench.java:555)
+	at org.eclipse.ui.PlatformUI.createAndRunWorkbench(PlatformUI.java:173)
+	at org.eclipse.ui.internal.ide.application.IDEApplication.start(IDEApplication.java:152)
+	at org.eclipse.equinox.internal.app.EclipseAppHandle.run(EclipseAppHandle.java:208)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.runApplication(EclipseAppLauncher.java:136)
+	at org.eclipse.core.runtime.internal.adaptor.EclipseAppLauncher.start(EclipseAppLauncher.java:104)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:402)
+	at org.eclipse.core.runtime.adaptor.EclipseStarter.run(EclipseStarter.java:255)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.eclipse.equinox.launcher.Main.invokeFramework(Main.java:651)
+	at org.eclipse.equinox.launcher.Main.basicRun(Main.java:588)
+	at org.eclipse.equinox.launcher.Main.run(Main.java:1459)
+
+!ENTRY org.eclipse.ui.workbench 4 2 2025-01-20 13:40:04.659
+!MESSAGE Problems occurred when invoking code from plug-in: "org.eclipse.ui.workbench".
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.cdt.managedbuilder.core.IManagedBuildInfo.getDefaultConfiguration()" because "buildInfo" is null
+	at com.st.stm32cube.ide.mcu.build.ui.decorator.BoldDecorator.decorate(BoldDecorator.java:79)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:253)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.queue(DecorationScheduler.java:419)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:397)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.ui 4 4 2025-01-20 13:40:04.665
+!MESSAGE Exception in Decorator. The 'linkerDecorator' decorator will be disabled.
+!SUBENTRY 1 org.eclipse.ui 4 4 2025-01-20 13:40:04.666
+!MESSAGE Cannot invoke "org.eclipse.cdt.managedbuilder.core.IManagedBuildInfo.getDefaultConfiguration()" because "buildInfo" is null
+!STACK 0
+java.lang.NullPointerException: Cannot invoke "org.eclipse.cdt.managedbuilder.core.IManagedBuildInfo.getDefaultConfiguration()" because "buildInfo" is null
+	at com.st.stm32cube.ide.mcu.build.ui.decorator.BoldDecorator.decorate(BoldDecorator.java:79)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorDefinition.decorate(LightweightDecoratorDefinition.java:253)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager$LightweightRunnable.run(LightweightDecoratorManager.java:105)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.decorate(LightweightDecoratorManager.java:360)
+	at org.eclipse.ui.internal.decorators.LightweightDecoratorManager.getDecorations(LightweightDecoratorManager.java:346)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.queue(DecorationScheduler.java:419)
+	at org.eclipse.ui.internal.decorators.DecorationScheduler$1.run(DecorationScheduler.java:397)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-01-20 13:40:10.866
+!MESSAGE Indexed 'tp6_can' (27 sources, 123 headers) in 7 sec: 12,650 declarations; 54,914 references; 3 unresolved inclusions; 46 syntax errors; 171 unresolved names (0.25%)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 13:53:50.757
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 7 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 13:53:50.758
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 13:53:50.759
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 7 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 13:53:50.760
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 14:18:53.417
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 31 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 14:18:53.418
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 14:18:53.419
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 31 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 14:18:53.420
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 15:28:53.740
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 63 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 15:28:53.741
+!MESSAGE Existing sessions are:
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 15:28:53.742
+!MESSAGE Error - No active DSF-Session. tmpSessionId = 63 (contextManager row 121)
+
+!ENTRY com.st.stm32cube.ide.mcu.debug 4 0 2025-01-20 15:28:53.743
+!MESSAGE Existing sessions are:
