@@ -59,7 +59,7 @@ uint8_t curseur = 0;
 char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
-uint16_t valeur_afficher ;
+uint16_t = valeur_afficher ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

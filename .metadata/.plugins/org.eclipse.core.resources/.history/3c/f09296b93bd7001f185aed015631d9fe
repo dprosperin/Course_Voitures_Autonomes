@@ -59,7 +59,6 @@ uint8_t curseur = 0;
 char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
-uint16_t valeur_afficher ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -153,7 +152,7 @@ int main(void)
 
   while (1)
   {
-
+	  //BAR_set(0b100010000);
 	  JOG_read();
 	  COD_read();
 
@@ -165,14 +164,9 @@ int main(void)
 	  //TODO : Bloque la réception des trames lidar
 
 	  LCD_gotoxy(0,0);
-	  LCD_printf("valeur jog= %d",jog_value);
+	  LCD_printf(" valeur jog = %d",jog_value);
 	  LCD_gotoxy(0,1);
-	  LCD_printf("valeur cod= %d ",cod_value);
-
-	  valeur_afficher = cod_value & 0x00FF ;
-
-
-	  BAR_set(valeur_afficher);
+	  LCD_printf("valeur cod = %d   ",cod_value);
 
 
     /* USER CODE END WHILE */
@@ -291,7 +285,7 @@ void JOG_read(void)
  */
 void COD_read(void)
 {
-	FDCAN_TxHeaderTypeDef pTxHeader = {0} ;
+	FDCAN_TxHeaderTypeDef pTxHeader;
 
 	pTxHeader.Identifier = COD_REQ;
 	pTxHeader.IdType = FDCAN_STANDARD_ID;
@@ -299,15 +293,13 @@ void COD_read(void)
 	pTxHeader.DataLength = 0;
 
 	uint8_t pTxData;
-
-
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
 
 }
 
 
 void BAR_set(uint16_t motif_BAR) {
-	FDCAN_TxHeaderTypeDef pTxHeader = {0};
+	FDCAN_TxHeaderTypeDef pTxHeader;
 
     pTxHeader.Identifier = BAR_SET;
     pTxHeader.IdType = FDCAN_STANDARD_ID;

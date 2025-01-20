@@ -59,7 +59,6 @@ uint8_t curseur = 0;
 char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
-uint16_t valeur_afficher ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -169,10 +168,7 @@ int main(void)
 	  LCD_gotoxy(0,1);
 	  LCD_printf("valeur cod= %d ",cod_value);
 
-	  valeur_afficher = cod_value & 0x00FF ;
-
-
-	  BAR_set(valeur_afficher);
+      Bar_set(3) ;
 
 
     /* USER CODE END WHILE */

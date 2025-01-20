@@ -59,7 +59,6 @@ uint8_t curseur = 0;
 char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
-uint16_t valeur_afficher ;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -169,10 +168,7 @@ int main(void)
 	  LCD_gotoxy(0,1);
 	  LCD_printf("valeur cod= %d ",cod_value);
 
-	  valeur_afficher = cod_value & 0x00FF ;
-
-
-	  BAR_set(valeur_afficher);
+	  void BAR_set(uint16_t motif_BAR)
 
 
     /* USER CODE END WHILE */
@@ -291,7 +287,7 @@ void JOG_read(void)
  */
 void COD_read(void)
 {
-	FDCAN_TxHeaderTypeDef pTxHeader = {0} ;
+	FDCAN_TxHeaderTypeDef pTxHeader;
 
 	pTxHeader.Identifier = COD_REQ;
 	pTxHeader.IdType = FDCAN_STANDARD_ID;
@@ -307,7 +303,7 @@ void COD_read(void)
 
 
 void BAR_set(uint16_t motif_BAR) {
-	FDCAN_TxHeaderTypeDef pTxHeader = {0};
+	FDCAN_TxHeaderTypeDef pTxHeader;
 
     pTxHeader.Identifier = BAR_SET;
     pTxHeader.IdType = FDCAN_STANDARD_ID;

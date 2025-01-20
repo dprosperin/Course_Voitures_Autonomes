@@ -630,3 +630,1577 @@ Finished building: default.size.stdout
  
 Finished building: tp6_can.list
  
+15:33:27 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21456	    104	   3768	  25328	   62f0	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+15:34:21 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21484	    104	   3768	  25356	   630c	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+15:34:58 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	    104	   3768	  25352	   6308	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+15:35:41 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	    104	   3768	  25352	   6308	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+15:36:31 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21480	    104	   3768	  25352	   6308	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+15:36:56 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:310:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  310 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:382:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  382 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:278:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  278 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:277:17: note: 'pTxData' declared here
+  277 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:296:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  296 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:295:17: note: 'pTxData' declared here
+  295 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:337:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  337 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:336:13: note: 'pTxData' declared here
+  336 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21476	    104	   3768	  25348	   6304	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:24:01 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:11: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  171 |           BAR_set(cod_value);
+      |           ^~~~~~~
+      |           BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:304:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  304 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:171:11: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  171 |           BAR_set(cod_value);
+      |           ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:313:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  313 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:385:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  385 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:279:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  279 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:278:17: note: 'pTxData' declared here
+  278 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:299:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  299 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:296:17: note: 'pTxData' declared here
+  296 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:340:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  340 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:339:13: note: 'pTxData' declared here
+  339 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21564	    104	   3768	  25436	   635c	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:25:31 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:11: warning: parameter names (without types) in function declaration
+  171 |           void BAR_set(cod_value) ;
+      |           ^~~~
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:305:6: error: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  305 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:305:1: note: an argument type that has a default promotion cannot match an empty parameter name list declaration
+  305 | void BAR_set(uint16_t motif_BAR) {
+      | ^~~~
+../Core/Src/main.c:171:16: note: previous declaration of 'BAR_set' with type 'void()'
+  171 |           void BAR_set(cod_value) ;
+      |                ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:28:18 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:11: warning: implicit declaration of function 'Bar_set' [-Wimplicit-function-declaration]
+  171 |           Bar_set(0x03);
+      |           ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: ./Core/Src/main.o: in function `main':
+C:/travail/yassine_mesbahi_s3/voiture/Course_Voitures_Autonomes/tp6_can/Debug/../Core/Src/main.c:171: undefined reference to `Bar_set'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:64: tp6_can.elf] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:28:30 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:24: error: expected declaration specifiers or '...' before numeric constant
+  171 |           void Bar_set(0x03);
+      |                        ^~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:31:14 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:174:11: warning: parameter names (without types) in function declaration
+  174 |           void Bar_set (valeur_afficher) ;
+      |           ^~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:317:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  317 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:389:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  389 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:283:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  283 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:282:17: note: 'pTxData' declared here
+  282 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:303:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  303 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:300:17: note: 'pTxData' declared here
+  300 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:344:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  344 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:343:13: note: 'pTxData' declared here
+  343 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21488	    104	   3768	  25360	   6310	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:32:19 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:173:25: error: expected declaration specifiers or '...' before numeric constant
+  173 |           void Bar_set (0x0003) ;
+      |                         ^~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:316:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  316 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:388:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  388 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:32:59 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:24: error: expected declaration specifiers or '...' before numeric constant
+  171 |           void BAR_set(0x0000) ;
+      |                        ^~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:33:25 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:177:3: error: expected declaration specifiers before '}' token
+  177 |   }
+      |   ^
+../Core/Src/main.c:179:1: error: expected declaration specifiers before '}' token
+  179 | }
+      | ^
+../Core/Src/main.c:186:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  186 | {
+      | ^
+../Core/Src/main.c:228:82: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  228 | void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+      |                                                                                  ^
+../Core/Src/main.c:240:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  240 | {
+      | ^
+../Core/Src/main.c:271:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  271 | {
+      | ^
+../Core/Src/main.c:289:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  289 | {
+      | ^
+../Core/Src/main.c:305:34: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  305 | void BAR_set(uint16_t motif_BAR) {
+      |                                  ^
+../Core/Src/main.c:320:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  320 | {
+      | ^
+../Core/Src/main.c:325:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  325 | {
+      | ^
+../Core/Src/main.c:346:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  346 | {
+      | ^
+../Core/Src/main.c:397:1: error: expected '=', ',', ';', 'asm' or '__attribute__' before '{' token
+  397 | {
+      | ^
+../Core/Src/main.c:424: error: expected '{' at end of input
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:405:1: error: expected declaration or statement at end of input
+  405 | }
+      | ^
+../Core/Src/main.c:405:1: error: expected declaration or statement at end of input
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:171:16: warning: 'BAR_set' defined but not used [-Wunused-function]
+  171 |           void BAR_set(uint16_t motif_BAR)
+      |                ^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:33:35 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21476	    104	   3768	  25348	   6304	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:36:31 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:24: error: expected declaration specifiers or '...' before numeric constant
+  171 |           void BAR_set(3) ;
+      |                        ^
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:37:02 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:24: error: expected declaration specifiers or '...' before numeric constant
+  171 |           void BAR_set(0x0003) ;
+      |                        ^~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:37:29 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:10: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  171 |          BAR_set(0x0003) ;
+      |          ^~~~~~~
+      |          BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:305:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  305 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:171:10: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  171 |          BAR_set(0x0003) ;
+      |          ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21560	    104	   3768	  25432	   6358	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:37:53 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:10: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  171 |          BAR_set(3) ;
+      |          ^~~~~~~
+      |          BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:305:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  305 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:171:10: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  171 |          BAR_set(3) ;
+      |          ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21560	    104	   3768	  25432	   6358	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:39:57 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21476	    104	   3768	  25348	   6304	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:40:40 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21488	    104	   3768	  25360	   6310	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:41:54 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:7: warning: implicit declaration of function 'Bar_set' [-Wimplicit-function-declaration]
+  171 |       Bar_set(3) ;
+      |       ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: ./Core/Src/main.o: in function `main':
+C:/travail/yassine_mesbahi_s3/voiture/Course_Voitures_Autonomes/tp6_can/Debug/../Core/Src/main.c:171: undefined reference to `Bar_set'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:64: tp6_can.elf] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:42:05 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:7: warning: implicit declaration of function 'Bar_set' [-Wimplicit-function-declaration]
+  171 |       Bar_set(0x0003) ;
+      |       ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+C:/ST/STM32CubeIDE_1.15.1/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.12.3.rel1.win32_1.0.100.202403111256/tools/bin/../lib/gcc/arm-none-eabi/12.3.1/../../../../arm-none-eabi/bin/ld.exe: ./Core/Src/main.o: in function `main':
+C:/travail/yassine_mesbahi_s3/voiture/Course_Voitures_Autonomes/tp6_can/Debug/../Core/Src/main.c:171: undefined reference to `Bar_set'
+collect2.exe: error: ld returned 1 exit status
+make: *** [makefile:64: tp6_can.elf] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:42:12 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:19: error: expected declaration specifiers or '...' before numeric constant
+  171 |     void  Bar_set(0x0003) ;
+      |                   ^~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:42:47 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:171:11: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  171 |           BAR_set(3);
+      |           ^~~~~~~
+      |           BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:305:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  305 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:171:11: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  171 |           BAR_set(3);
+      |           ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:314:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  314 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:386:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  386 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:280:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  280 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:279:17: note: 'pTxData' declared here
+  279 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:300:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  300 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:297:17: note: 'pTxData' declared here
+  297 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:341:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  341 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:340:13: note: 'pTxData' declared here
+  340 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21584	    104	   3768	  25456	   6370	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
+16:44:57 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c:62:10: error: expected identifier or '(' before '=' token
+   62 | uint16_t = valeur_afficher ;
+      |          ^
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:172:11: error: 'valeur_afficher' undeclared (first use in this function)
+  172 |           valeur_afficher = cod_value & 0x00FF ;
+      |           ^~~~~~~~~~~~~~~
+../Core/Src/main.c:172:11: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/main.c:175:11: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  175 |           BAR_set(valeur_afficher);
+      |           ^~~~~~~
+      |           BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:309:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  309 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:175:11: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  175 |           BAR_set(valeur_afficher);
+      |           ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:318:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  318 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:390:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  390 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+make: *** [Core/Src/subdir.mk:43: Core/Src/main.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+16:45:21 **** Incremental Build of configuration Debug for project tp6_can ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32G431xx -c -I../Core/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc -I../Drivers/STM32G4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32G4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:175:11: warning: implicit declaration of function 'BAR_set'; did you mean 'BAR_SET'? [-Wimplicit-function-declaration]
+  175 |           BAR_set(valeur_afficher);
+      |           ^~~~~~~
+      |           BAR_SET
+../Core/Src/main.c: At top level:
+../Core/Src/main.c:309:6: warning: conflicting types for 'BAR_set'; have 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  309 | void BAR_set(uint16_t motif_BAR) {
+      |      ^~~~~~~
+../Core/Src/main.c:175:11: note: previous implicit declaration of 'BAR_set' with type 'void(uint16_t)' {aka 'void(short unsigned int)'}
+  175 |           BAR_set(valeur_afficher);
+      |           ^~~~~~~
+../Core/Src/main.c: In function 'BAR_set':
+../Core/Src/main.c:318:58: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  318 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                          ^~~~~~~~
+      |                                                          |
+      |                                                          uint8_t (*)[2] {aka unsigned char (*)[2]}
+In file included from ../Core/Inc/stm32g4xx_hal_conf.h:256,
+                 from ../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal.h:29,
+                 from ../Core/Inc/main.h:30,
+                 from ../Core/Src/main.c:20:
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[2]' {aka 'unsigned char (*)[2]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'LCD_printf':
+../Core/Src/main.c:390:67: warning: passing argument 3 of 'HAL_FDCAN_AddMessageToTxFifoQ' from incompatible pointer type [-Wincompatible-pointer-types]
+  390 |              HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |                                                                   ^~~~~~~~
+      |                                                                   |
+      |                                                                   uint8_t (*)[8] {aka unsigned char (*)[8]}
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1211:64: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'uint8_t (*)[8]' {aka 'unsigned char (*)[8]'}
+ 1211 |                                                 const uint8_t *pTxData);
+      |                                                 ~~~~~~~~~~~~~~~^~~~~~~
+../Core/Src/main.c: In function 'JOG_read':
+../Core/Src/main.c:284:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  284 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:283:17: note: 'pTxData' declared here
+  283 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'COD_read':
+../Core/Src/main.c:304:9: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  304 |         HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:301:17: note: 'pTxData' declared here
+  301 |         uint8_t pTxData;
+      |                 ^~~~~~~
+../Core/Src/main.c: In function 'LCD_clear':
+../Core/Src/main.c:345:5: warning: 'pTxData' may be used uninitialized [-Wmaybe-uninitialized]
+  345 |     HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader , &pTxData);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Drivers/STM32G4xx_HAL_Driver/Inc/stm32g4xx_hal_fdcan.h:1210:19: note: by argument 3 of type 'const uint8_t *' {aka 'const unsigned char *'} to 'HAL_FDCAN_AddMessageToTxFifoQ' declared here
+ 1210 | HAL_StatusTypeDef HAL_FDCAN_AddMessageToTxFifoQ(FDCAN_HandleTypeDef *hfdcan, const FDCAN_TxHeaderTypeDef *pTxHeader,
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:344:13: note: 'pTxData' declared here
+  344 |     uint8_t pTxData;
+      |             ^~~~~~~
+arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: tp6_can.elf
+ 
+arm-none-eabi-size  tp6_can.elf 
+arm-none-eabi-objdump -h -S tp6_can.elf  > "tp6_can.list"
+   text	   data	    bss	    dec	    hex	filename
+  21604	    104	   3768	  25476	   6384	tp6_can.elf
+Finished building: default.size.stdout
+ 
+Finished building: tp6_can.list
+ 
