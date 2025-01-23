@@ -60,8 +60,8 @@ all: main-build
 main-build: tp6_can.elf secondary-outputs
 
 # Tool invocations
-tp6_can.elf tp6_can.map: $(OBJS) $(USER_OBJS) C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\travail\yassine_mesbahi_s3\voiture\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+tp6_can.elf tp6_can.map: $(OBJS) $(USER_OBJS) C:\Users\yassine.mesbahi\Documents\GitHub\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "tp6_can.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\yassine.mesbahi\Documents\GitHub\Course_Voitures_Autonomes\tp6_can\STM32G431KBTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="tp6_can.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

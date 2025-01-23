@@ -1,3 +1,4 @@
+"./Core/Src/deplacement.o"
 "./Core/Src/fdcan.o"
 "./Core/Src/gpio.o"
 "./Core/Src/main.o"
