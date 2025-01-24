@@ -61,11 +61,15 @@ char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
 uint16_t valeur_afficher ;
+
 typedef enum  {TEST_CHOIX,TEST_VITESSE,TEST_LIDAR,TEST_HERKULEX,TEST_BLUETOOTH } etat_test ;
-float vitesse_test = 0.0 ;
-int herkulex_test ;
 etat_test etat_actuelle = TEST_CHOIX;
+
+float herkulex_test= 0.0 ;
+
+float vitesse ;
 bool direction  = true ;
+int valeur_cod = 0 ;
 
 /* USER CODE END PV */
 
@@ -116,39 +120,6 @@ int main(void)
   printf("En vie\n");
 
 
-  // Filter config
-
-/*
-  FDCAN_FilterTypeDef sFilterConfig;
-
-  sFilterConfig.IdType = FDCAN_STANDARD_ID;
-  sFilterConfig.FilterType = FDCAN_FILTER_DUAL;
-  //sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  sFilterConfig.FilterConfig = FDCAN_FILTER_TO_RXFIFO0;
-  sFilterConfig.FilterIndex = 0;
-  sFilterConfig.FilterID1 =  0x791; // Accept
-  sFilterConfig.FilterID2 =  0x2; // Mask
-
-	*/
-
-
-
-  //sFilterConfig.FilterID1 =  0x700; // Accept
-  //sFilterConfig.FilterID2 =  0xF00;// Mask
-
-  /*
-  HAL_StatusTypeDef retour;
-  retour = HAL_FDCAN_ConfigFilter(&hfdcan1, &sFilterConfig);
-
-
-  retour = HAL_FDCAN_ConfigGlobalFilter(&hfdcan1,
-		  	  	  	  	  	   FDCAN_REJECT,          // Rejeter les trames standards non filtrées
-                               FDCAN_REJECT,          // Rejeter les trames étendues non filtrées
-							   FDCAN_FILTER_REMOTE,   // Accepter les trames distantes standard
-							   FDCAN_FILTER_REMOTE);  // Accepter les trames distantes étendues
-
-
-  printf("ConfigGlobalFilter 0x%X\n", retour);*/
 
   HAL_FDCAN_Start(&hfdcan1);
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
@@ -161,7 +132,7 @@ int main(void)
   {
 
     	 JOG_read() ;
-	  COD_read();
+	     COD_read();
 	 automate_decode_IHM();
 
 
@@ -174,7 +145,7 @@ int main(void)
 		  LCD_gotoxy(0,0);
 	   	 LCD_printf("Test a choisir");
 		  LCD_gotoxy(0,1);
-		   	LCD_printf("          ");
+		   	LCD_printf("             ");
 
 		 if (jog_value == 8 )
 		 {
@@ -196,88 +167,74 @@ int main(void)
 
 
 	 case TEST_VITESSE :
-		  HAL_Delay(10);
-		  LCD_gotoxy(0,0);
+		  HAL_Delay(100);
+		  valeur_cod = cod_value %101 ;
+		 vitesse = (float) valeur_cod/100.0 ;
+		  LCD_gotoxy(0, 0);
 		  LCD_printf("choix:vitesse");
-          if (cod_value > 10)
-          {
-        	  cod_value = 0 ;
-          }
+		  LCD_gotoxy(0, 1);
+          LCD_printf("vitesse=%4.2f",vitesse);
 
-
-		  LCD_gotoxy(0,1);
-		  LCD_printf("vitesse = %d ",cod_value);
-
-		  if (jog_value == 16)
+           if (jog_value == 16)
 		  {
-
 			  direction = true ;
-
 		  }
 		  else if (jog_value == 2)
 		  {
 			  direction = false ;
-
 		  }
 
+	    	 set_rapport_cyclique_et_sens(vitesse,direction);
+	    	 //etat_actuelle = TEST_CHOIX ;
 
 
 
-	     if (jog_value == 4)
-	     {
-	    	 set_rapport_cyclique_et_sens(cod_value/10,direction);
-	    	 etat_actuelle = TEST_CHOIX ;
-	     }
 
            break ;
 
 	 case TEST_HERKULEX :
-		  HAL_Delay(10);
-		 LCD_gotoxy(0,0);
+		  HAL_Delay(10) ;
+	     herkulex_test = ((cod_value%41)+80)*(-1) ;
+
+
+		  LCD_gotoxy(0,0);
 	     LCD_printf("choix:herkulex");
 
-	     herkulex_test = cod_value - 128 ;
-         if (herkulex_test<-120)
-         {
-
-        	 herkulex_test = 0 ;
-         }
-         else if (herkulex_test>80)
-         {
-        	 herkulex_test = 0 ;
-         }
 	     LCD_gotoxy(0,1);
-	     LCD_printf("vitesse = %d ",herkulex_test);
+	   	  LCD_printf("%4.4f",herkulex_test);
 
-
-			    if (jog_value == 4)
+    	     if (jog_value == 4)
 				     {
 			    	set_angle(herkulex_test) ;
-			    	etat_actuelle = TEST_CHOIX ;
+			    	//etat_actuelle = TEST_CHOIX ;
 				     }
+
+
 
 	           break ;
 
 	 case TEST_LIDAR :
 		  HAL_Delay(10);
 		 LCD_gotoxy(0,0);
-	     LCD_printf("choix:lidar");
+	     LCD_printf("choix:lidar   ");
 
-			    if (jog_value == 4)
-				     {
-			    	etat_actuelle = TEST_CHOIX ;
-				     }
+			     if (jog_value == 4)
+			     {
+			    	 etat_actuelle = TEST_CHOIX;
+			     }
 
-	           break ;
+
+			     break ;
 	 case TEST_BLUETOOTH :
 		  HAL_Delay(10);
 		 LCD_gotoxy(0,0);
-	     LCD_printf("choix:bluetooth");
+	     LCD_printf("choix:bluetooth   ");
+
 
 			    if (jog_value == 4)
-				     {
-			    	etat_actuelle = TEST_CHOIX ;
-				     }
+			     {
+			    	 etat_actuelle = TEST_CHOIX ;
+			     }
 
 	           break ;
 
@@ -295,10 +252,10 @@ int main(void)
 
 
 
-	  valeur_afficher = cod_value & 0x00FF ;
+	  valeur_afficher = valeur_cod & 0x00FF ;
 
 
-	  BAR_set(valeur_afficher);
+	  BAR_set(valeur_cod);
 
 
     /* USER CODE END WHILE */
@@ -517,6 +474,7 @@ void LCD_printf(const char* format, ...)
 	     HAL_Delay(1);
 	 }
 }
+
 /* USER CODE END 4 */
 
 /**
