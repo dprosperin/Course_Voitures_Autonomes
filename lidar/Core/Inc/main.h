@@ -31,9 +31,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
-#include <automate.h>
-#include <buffer.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -43,7 +40,8 @@ typedef enum {
 	LIDAR_STOP,
 	LIDAR_START_SCAN,
 	LIDAR_GET_HEALTH,
-	LIDAR_UNKNOWN_COMMAND
+	LIDAR_UNKNOWN_COMMAND,
+	LIDAR_SCAN_IN_PROGESS
 } command_lidar_t;
 /* USER CODE END ET */
 
