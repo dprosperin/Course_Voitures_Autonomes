@@ -171,6 +171,13 @@ int main(void)
 
 	  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	  	  }
+
+
+
+	 if (command_requested == LIDAR_SCAN_IN_PROGESS)
+	 {
+		 lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
+	 }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -381,7 +388,12 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 			if (distance > 0)
 			{
 				//printf("(%2.3f,%2.3f)\n", angle, distance);
-				lidar_print_single_point_teleplot_format(angle, distance);
+				if (angle >= 0 && angle <= 359)
+				{
+					data_lidar_mm_main[(uint16_t) angle] = distance;
+				}
+
+				//lidar_print_single_point_teleplot_format(angle, distance);
 			}
 		}
 	}
@@ -448,8 +460,15 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 				if (distance > 0)
 				{
+
+					if (angle >= 0 && angle <= 359)
+					{
+						data_lidar_mm_main[(uint16_t) angle] = distance;
+					}
+
+
 					//printf("(%2.3f,%2.3f)\n", angle, distance);
-					lidar_print_single_point_teleplot_format(angle, distance);
+					//lidar_print_single_point_teleplot_format(angle, distance);
 				}
 			}
 		}

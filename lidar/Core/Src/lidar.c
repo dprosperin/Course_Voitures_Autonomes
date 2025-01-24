@@ -48,3 +48,22 @@ void lidar_print_single_point_teleplot_format(float angle, float distance)
 
 	printf("%.2f:%.2f|xy\n",x,y);
 }
+
+void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan)
+{
+	static float angle_rad = 0,
+			x = 0,
+			y = 0;
+
+	printf(">data:");
+	for(uint16_t i = 0; i < num_points_scan; i++){
+		if(points[i] > 0){
+			angle_rad = ((float) i * 2 * M_PI) / num_points_scan;
+	        x = cos(angle_rad) * (float)points[i];
+	        y = sin(angle_rad) * (float)points[i];
+
+	        printf("%.2f:%.2f;",x,y);
+		}
+	}
+	printf("|xy\n");
+}

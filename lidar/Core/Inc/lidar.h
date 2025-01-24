@@ -41,5 +41,6 @@ typedef struct {
 
 void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance);
 void lidar_print_single_point_teleplot_format(float angle, float distance);
+void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan);
 
 #endif /* INC_LIDAR_H_ */
