@@ -21,7 +21,9 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "remote_gamepad.h"
 #include <string.h>
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -36,7 +38,6 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -59,7 +60,17 @@ static void MX_USART1_UART_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int __io_putchar(int ch)
+{
+  HAL_UART_Transmit(&huart2, (uint8_t*) &ch, 1, 0xFFFF);
+  return ch;
+}
+int __io_getchar(void)
+{
+  int ch;
+  HAL_UART_Receive(&huart2, (uint8_t*) &ch, 1, 0xFFFF);
+  return ch;
+}
 /* USER CODE END 0 */
 
 /**
@@ -295,8 +306,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	// Si on reçoie des trucs depuis le connecteur
 	if (huart->Instance == USART1)
 	{
+		handle_receive_character(buffer_rx_connecteur_bluetooth[0]);
+
 		// On les envoi au pc
-		HAL_UART_Transmit(&huart2, buffer_rx_connecteur_bluetooth, strlen(buffer_rx_connecteur_bluetooth), HAL_MAX_DELAY);
+		printf("BT > %s\n", buffer_rx_connecteur_bluetooth);
 		HAL_UART_Receive_IT(&huart1, buffer_rx_connecteur_bluetooth, 1);
 	}
 }
