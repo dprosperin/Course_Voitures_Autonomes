@@ -1,0 +1,61 @@
+# Doxyfile 1.9.7
+
+# Projet
+PROJECT_NAME           = "Voiture Autonome"
+PROJECT_NUMBER         = "1.0"
+PROJECT_BRIEF          = "Documentation du projet de voiture autonome pour la compétition COVAPSY."
+OUTPUT_DIRECTORY       = docs
+CREATE_SUBDIRS         = NO
+
+# Source Code
+INPUT                  = code_carte_moteur/Core/ lidar/Core multiperiph_base_test_tp/Core/ connecteur_bluetooth/Core
+FILE_PATTERNS          = *.c *.h
+RECURSIVE              = YES
+EXCLUDE                = ./Debug ./Core/Startup ./Drivers
+
+# Documentation Output
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_XML           = NO
+
+# Génération de Graphes
+HAVE_DOT               = YES
+DOT_PATH               =
+CLASS_GRAPH            = YES
+COLLABORATION_GRAPH    = YES
+CALL_GRAPH             = YES
+CALLER_GRAPH           = YES
+
+# Configurations des commentaires
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+EXTRACT_LOCAL_CLASSES  = YES
+EXTRACT_LOCAL_METHODS  = NO
+
+# Options de mise en page
+MARKDOWN_SUPPORT       = YES
+INLINE_SOURCES         = YES
+SOURCE_BROWSER         = YES
+REFERENCES_RELATION    = YES
+REFERENCES_LINK_SOURCE = YES
+
+# Style de la documentation
+GENERATE_TREEVIEW      = YES
+USE_MDFILE_AS_MAINPAGE = README.md
+FULL_PATH_NAMES        = NO
+
+# Personnalisation
+QUIET                  = NO
+WARN_IF_UNDOCUMENTED   = YES
+WARN_IF_DOC_ERROR      = YES
+
+# Langue
+OUTPUT_LANGUAGE        = French
+
+# Charte graphique (optionnel)
+DOT_FONTNAME           = Helvetica
+DOT_FONTSIZE           = 10
+DOT_TRANSPARENT        = YES
