@@ -181,9 +181,21 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		switch (trame_rx.header.Identifier) {
 			case CAN_ID_HERKULEX:
 
-				// Pas de printf car ça fait planter le herculex
-
+        /**
+         * @attention
+         * Pas de printf sur l'USART2 car ça fait planter le herculex
+         */
+        
+        /**
+         * ```plantuml
+         *  Alice -> Bob
+         * ```
+         * 
+         */
 				uint16_t pos_herculex = ((uint16_t) trame_rx.data[0] << 8) | trame_rx.data[1];
+        /**
+         * @todo Mettre la vitesse de rotation au maximum
+         */
 				send_pos_speed(ID_HERKULEX, pos_herculex,0x3c);
 				break;
 			case CAN_ID_MOTEUR:

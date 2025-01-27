@@ -73,9 +73,19 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
+/**
+ * @note ID CAN permettant de controler l'angle du HERKULEX
+ */
 #define CAN_ID_HERKULEX 0x601
+
+/**
+ * @note Adresse de broadcast HERKULEX sur la liaison série USART2
+ */
 #define ID_HERKULEX 254
 
+/**
+ * @note ID CAN permettant de controler la vitesse et le sens de rotation du moteur CC
+ */
 #define CAN_ID_MOTEUR 0x602
 /* USER CODE END Private defines */
 

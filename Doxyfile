@@ -8,7 +8,7 @@ OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 
 # Source Code
-INPUT                  = code_carte_moteur/Core/ lidar/Core multiperiph_base_test_tp/Core/ connecteur_bluetooth/Core
+INPUT                  = code_carte_moteur/Core/ lidar/Core multiperiph_base_test_tp/Core/ connecteur_bluetooth/Core mainpage.dox
 FILE_PATTERNS          = *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ./Debug ./Core/Startup ./Drivers
@@ -44,7 +44,7 @@ REFERENCES_LINK_SOURCE = YES
 
 # Style de la documentation
 GENERATE_TREEVIEW      = YES
-USE_MDFILE_AS_MAINPAGE = README.md
+#USE_MDFILE_AS_MAINPAGE = README.md
 FULL_PATH_NAMES        = NO
 
 # Personnalisation
@@ -59,3 +59,5 @@ OUTPUT_LANGUAGE        = French
 DOT_FONTNAME           = Helvetica
 DOT_FONTSIZE           = 10
 DOT_TRANSPARENT        = YES
+
+PLANTUML_JAR_PATH      = ./plantuml.jar
