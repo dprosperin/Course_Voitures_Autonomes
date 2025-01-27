@@ -65,18 +65,21 @@ typedef enum {
 } etat_test;
 etat_test etat_actuelle = TEST_CHOIX;
 
-typedef enum {
-	APPUYER, RELACHER
-} etat_jog_center;
-etat_jog_center etat_jog = RELACHER;
 
+
+//variable pour test herkulex
 float herkulex_test = 0.0;
 uint8_t ancienne_valeur;
 
+//variable pour test vitesse
 float vitesse;
 bool direction = true;
 bool maintenir = 0;
 int valeur_cod = 0;
+
+//variable pour test lidar ;
+int cod_lidar = 0;
+
 
 /* USER CODE END PV */
 
@@ -128,8 +131,6 @@ int main(void) {
 
 	/* Infinite loop */
 	/* USER CODE BEGIN WHILE */
-	set_angle(-98);
-	set_angle(-120);
 	while (1) {
 
 		JOG_read();
@@ -183,25 +184,12 @@ int main(void) {
 			HAL_Delay(10);
 			LCD_gotoxy(0, 0);
 			LCD_printf("choix:herkulex");
-			LCD_gotoxy(0, 1);
 			herkulex_test = ((cod_value % 41) + 80) * (-1);
 			LCD_gotoxy(0, 1);
 			LCD_printf("%4.4f     ", herkulex_test);
 
-			switch (etat_jog) {
-			case RELACHER:
-				if (jog_value == 4) {
-				//	set_angle(herkulex_test);
-					etat_jog = APPUYER;
-				}
-				break;
-			case APPUYER:
-				if (jog_value != 4) {
-					etat_jog = RELACHER;
-				}
-				break;
+			set_angle(herkulex_test);
 
-			}
 			if (jog_value == 8) {
 				etat_actuelle = TEST_VITESSE;
 			} else if (jog_value == 1) {
@@ -214,7 +202,21 @@ int main(void) {
 		case TEST_LIDAR:
 			HAL_Delay(10);
 			LCD_gotoxy(0, 0);
-			LCD_printf("choix:lidar");
+			LCD_printf("choix:lidar     ");
+			LCD_gotoxy(0,1);
+		    LCD_printf("%d         ",cod_lidar);
+
+		    if (cod_value<128)
+			{
+		   cod_lidar = (cod_value* 90) / 127;
+
+			}
+			else if (cod_value>127)
+			{
+			 cod_lidar = 270 + ((cod_value - 128) * 90) / 127;
+			}
+
+
 			if (jog_value == 8) {
 				etat_actuelle = TEST_VITESSE;
 			} else if (jog_value == 16) {
