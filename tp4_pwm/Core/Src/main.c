@@ -98,10 +98,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  PWM_dir_and_cycle(1,&htim1, TIM_CHANNEL_1, 0.2);
-	  HAL_Delay(10000);
-	  PWM_dir_and_cycle(0,&htim1, TIM_CHANNEL_1, 0.00);
-	  while(1);
+	  if(HAL_GPIO_ReadPin(GPIOB,fourche_Pin))
+	  {
+	  HAL_GPIO_WritePin(GPIOB, led_test_Pin, 1);
+	  }
+	  else HAL_GPIO_WritePin(GPIOB, led_test_Pin, 0);
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }
