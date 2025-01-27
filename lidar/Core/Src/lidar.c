@@ -9,6 +9,13 @@
 #include <math.h>
 #include <stdio.h>
 
+/**
+ * @brief Decode l'angle et la distance
+ * 
+ * @param buffer Tableau de réception des valeurs reçu du LIDAR
+ * @param angle Pointeur vers la variable angle
+ * @param distance Pointeur vers la variable distance
+ */
 void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance)
 {
 	static uint8_t distance_low_byte = 0;
@@ -16,7 +23,6 @@ void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *dista
 
 	static uint8_t angle_low_byte = 0;
 	static uint8_t angle_high_byte = 0;
-
 
 	if (
 			(((rplidar_measurement_data_result_response_t *)(buffer))->S == !((rplidar_measurement_data_result_response_t *)(buffer))->not_S)
