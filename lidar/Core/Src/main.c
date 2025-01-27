@@ -21,7 +21,6 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <string.h>
 #include <stdio.h>
 #include <stdbool.h>
 #include <lidar.h>
@@ -33,12 +32,6 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define LIDAR_HUART huart1
-#define PC_HUART huart2
-
-#define BUFFER_SIZE 20
-#define DATA_LIDAR_MM_MAIN_SIZE 360 + 1
-//#define DO_TESTS 1
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -53,6 +46,7 @@ DMA_HandleTypeDef hdma_usart1_rx;
 
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0;
+uint8_t caractere;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,15 +67,6 @@ PUTCHAR_PROTOTYPE
 
 	return ch;
 }
-
-uint8_t caractere;
-
-command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
-
-uint8_t buffer_scan[10] = {0};
-
-uint8_t buffer[BUFFER_SIZE] = {0};
-int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 /* USER CODE END 0 */
 
 /**
@@ -118,66 +103,19 @@ int main(void)
   printf("Programme interface LIDAR\n");
   printf("Compile le %s\n", __DATE__);
 
-    int i = 0;
-    char message[40] = "";
-
-    HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
+  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  handle_receive_character();
 
-	  if (flag_reception_uart2 == 1) {
-	  		  if (caractere == '\n') {
-	  			  if (strstr(message, "START_SCAN") != NULL)
-	  			  {
-	  				command_requested = LIDAR_START_SCAN;
-	  				printf("Demarrage du scan normal\n");
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
-	  				HAL_UART_Receive_IT(&LIDAR_HUART, buffer, 7);
-	  			  } else if (strstr(message, "STOP") != NULL)
-	  			  {
-	  				command_requested = LIDAR_STOP;
-	  				printf("Arret\n");
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
-	  			  } else if (strstr(message, "RESET") != NULL)
-	  			  {
-	  				command_requested = LIDAR_RESET;
-	  				printf("Reset\n");
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
-	  			  } else if (strstr(message, "GET_INFO") != NULL)
-	  			  {
-	  				printf("RTFM ! <*_*>\n");
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
-	  			  } else if (strstr(message, "GET_HEALTH") != NULL)
-	  			  {
-	  				command_requested = LIDAR_GET_HEALTH;
-	  				printf("GET_HEALTH\n");
-	  				HAL_UART_Receive_IT(&LIDAR_HUART, buffer, 10);
-	  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_HEALTH, LIDAR_COMMAND_GET_HEALTH_LEN, HAL_MAX_DELAY);
-	  			  } else {
-	  				  command_requested = LIDAR_UNKNOWN_COMMAND;
-	  				  printf("Commande non reconnue : %s\n", message);
-	  			  }
-
-	  			  message[0] = '\0';
-	  			  i = 0;
-	  		  }
-
-	  		  message[i++] = caractere;
-	  		  flag_reception_uart2 = 0;
-
-	  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
-	  	  }
-
-
-
-	 if (command_requested == LIDAR_SCAN_IN_PROGESS)
-	 {
-		 lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
-	 }
+	  if (command_requested == LIDAR_SCAN_IN_PROGESS)
+	  {
+		  lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -387,13 +325,10 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 
 			if (distance > 0)
 			{
-				//printf("(%2.3f,%2.3f)\n", angle, distance);
 				if (angle >= 0 && angle <= 359)
 				{
 					data_lidar_mm_main[(uint16_t) angle] = distance;
 				}
-
-				//lidar_print_single_point_teleplot_format(angle, distance);
 			}
 		}
 	}
@@ -414,36 +349,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 			printf("Response descriptor GET_HEALTH\n");
 
-			char status_msg[16] = "";
-
-			uint8_t status = ((rplidar_device_health_data_response_t *)(buffer + 7))->status;
-
-			uint8_t error_code_low_byte = ((rplidar_device_health_data_response_t *)(buffer + 7))->error_code_7_0;
-
-			uint8_t error_code_high_byte = ((rplidar_device_health_data_response_t *)(buffer + 7))->error_code_15_8;
-
-			uint16_t error_code = ((((uint16_t) error_code_high_byte << 8) & 0xFF00 ) | ((uint16_t) error_code_low_byte & 0x00FF));
-
-			    	switch (status) {
-						case 0:
-							sprintf(status_msg, "Good");
-							break;
-						case 1:
-							sprintf(status_msg, "Warning");
-							break;
-						case 2:
-							sprintf(status_msg, "Error");
-							break;
-						default:
-							sprintf(status_msg, "Unknown status");
-							break;
-					}
-			  printf("=== Health Report ===\n"
-			    	 "status : %s\n"
-			    	 "error code : 0x%x\n"
-			    	 "======================\n", status_msg, error_code);
-
-
+			lidar_decode_get_health(buffer);
 		} else if (command_requested == LIDAR_START_SCAN)
 		{
 			printf("Response descriptor SCAN\n");
@@ -458,17 +364,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 				lidar_decode_angle_and_distance(buffer_scan + 5, &angle, &distance);
 
-				if (distance > 0)
+				if (distance > 0 && angle >= 0 && angle <= 359)
 				{
-
-					if (angle >= 0 && angle <= 359)
-					{
-						data_lidar_mm_main[(uint16_t) angle] = distance;
-					}
-
-
-					//printf("(%2.3f,%2.3f)\n", angle, distance);
-					//lidar_print_single_point_teleplot_format(angle, distance);
+					data_lidar_mm_main[(uint16_t) angle] = distance;
 				}
 			}
 		}
