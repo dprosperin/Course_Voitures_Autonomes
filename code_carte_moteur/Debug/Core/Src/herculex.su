@@ -1,9 +1,0 @@
-../Core/Src/herculex.c:8:10:calcul_angle	24	static
-../Core/Src/herculex.c:17:9:calcul_cheksum1	24	static
-../Core/Src/herculex.c:32:9:calcul_checksum2	24	static
-../Core/Src/herculex.c:40:6:send_trame	24	static
-../Core/Src/herculex.c:55:6:read_trame	40	static
-../Core/Src/herculex.c:81:6:send_reboot	16	static
-../Core/Src/herculex.c:86:6:send_torque	16	static
-../Core/Src/herculex.c:92:6:send_pos_speed	32	static
-../Core/Src/herculex.c:102:6:aceleration_rapport	32	static
