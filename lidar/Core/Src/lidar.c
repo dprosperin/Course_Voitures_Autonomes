@@ -15,7 +15,11 @@
  * @param buffer Tableau de réception des valeurs reçu du LIDAR
  * @param angle Pointeur vers la variable angle
  * @param distance Pointeur vers la variable distance
+ * @note  on verifie si la valeur de S est bien differente de la valeur de /S pour pouvoir passer a la suite
+ * @note  on va reprendre les forumles pour calculer les angles et distances de chaques points recu avec extraction des octets d'angle et distancr
+ * 
  */
+
 void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance)
 {
 	static uint8_t distance_low_byte = 0;
@@ -41,6 +45,10 @@ void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *dista
 
 }
 
+/**
+ * @brief Calcul des coordonnées cartésiennes (x, y) sur teleplot
+
+ */
 void lidar_print_single_point_teleplot_format(float angle, float distance)
 {
 	static float x = 0,
@@ -49,12 +57,17 @@ void lidar_print_single_point_teleplot_format(float angle, float distance)
 
 	printf(">single_point:");
 	angle_rad  = angle * (M_PI / 180);
+	
 	x = cos(angle_rad) * distance;
 	y = sin(angle_rad) * distance;
 
 	printf("%.2f:%.2f|xy\n",x,y);
 }
 
+/**
+ * @brief Calcul des coordonnées cartésiennes (x, y) sur teleplot
+
+ */
 void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan)
 {
 	static float angle_rad = 0,
