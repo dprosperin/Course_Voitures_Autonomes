@@ -25,7 +25,7 @@ python3 -m serial.tools.list_ports
 filename = "./lidar.txt"
 mode_ouverture = "r"
 ## Via la liaison série
-port = "/dev/cu.usbmodem1303"
+port = "/dev/cu.usbmodem103"
 baudrate = 1000000
 timeout = 1
 bytesize = 8

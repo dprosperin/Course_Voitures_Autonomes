@@ -31,20 +31,11 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
-#include <automate.h>
-#include <buffer.h>
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
-typedef enum {
-	LIDAR_RESET,
-	LIDAR_STOP,
-	LIDAR_START_SCAN,
-	LIDAR_GET_HEALTH,
-	LIDAR_UNKNOWN_COMMAND
-} command_lidar_t;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -79,17 +70,13 @@ void Error_Handler(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-#define LIDAR_COMMAND_STOP ((uint8_t*)"\xA5\x25")
-#define LIDAR_COMMAND_STOP_LEN 2
-#define LIDAR_COMMAND_START_SCAN ((uint8_t*)"\xA5\x20")
-#define LIDAR_COMMAND_START_SCAN_LEN 2
-#define LIDAR_COMMAND_RESET ((uint8_t*)"\xA5\x40")
-#define LIDAR_COMMAND_RESET_LEN 2
-#define LIDAR_COMMAND_GET_INFO ((uint8_t*)"\xA5\x5")
-#define LIDAR_COMMAND_GET_INFO_LEN 2
-#define LIDAR_COMMAND_GET_HEALTH ((uint8_t*)"\xA5\x52")
-#define LIDAR_COMMAND_GET_HEALTH_LEN 2
+#define LIDAR_HUART huart1
+#define PC_HUART huart2
 
+extern UART_HandleTypeDef huart1;
+extern UART_HandleTypeDef huart2;
+extern uint8_t flag_reception_uart2;
+extern uint8_t caractere;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus
