@@ -68,6 +68,7 @@ void LCD_printf(const char* format, ...);
 void LCD_clear(void);
 void JOG_read(void);
 void COD_read(void);
+void BARGRAPHE_set(uint16_t motif_BAR);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -85,7 +86,8 @@ void COD_read(void);
 #define LD2_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
-
+extern uint8_t jog_value;
+extern uint8_t cod_value;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

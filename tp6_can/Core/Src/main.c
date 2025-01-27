@@ -21,13 +21,13 @@
 #include "fdcan.h"
 #include "usart.h"
 #include "gpio.h"
-#include <deplacement.h>
-
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "ident.h"
 #include <stdio.h>
 #include <stdarg.h>
+#include <deplacement.h>
+#include "test.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -59,28 +59,6 @@ char tableau_ecran[65];
 uint8_t jog_value = 0;
 uint8_t cod_value = 0;
 uint16_t valeur_afficher;
-
-typedef enum {
-	TEST_CHOIX, TEST_VITESSE, TEST_LIDAR, TEST_HERKULEX, TEST_BLUETOOTH
-} etat_test;
-etat_test etat_actuelle = TEST_CHOIX;
-
-
-
-//variable pour test herkulex
-float herkulex_test = 0.0;
-uint8_t ancienne_valeur;
-
-//variable pour test vitesse
-float vitesse;
-bool direction = true;
-bool maintenir = 0;
-int valeur_cod = 0;
-
-//variable pour test lidar ;
-int cod_lidar = 0;
-
-
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -136,118 +114,8 @@ int main(void) {
 		JOG_read();
 		COD_read();
 		automate_decode_IHM();
+		test_composants_voiture () ;
 
-		switch (etat_actuelle) {
-		case TEST_CHOIX:
-			HAL_Delay(10);
-			LCD_gotoxy(0, 0);
-			LCD_printf("Test a choisir");
-			LCD_gotoxy(0, 1);
-			LCD_printf("             ");
-
-			if (jog_value == 8) {
-				etat_actuelle = TEST_VITESSE;
-			} else if (jog_value == 16) {
-				etat_actuelle = TEST_HERKULEX;
-			} else if (jog_value == 1) {
-				etat_actuelle = TEST_LIDAR;
-			} else if (jog_value == 2) {
-				etat_actuelle = TEST_BLUETOOTH;
-			}
-			break;
-
-		case TEST_VITESSE:
-			HAL_Delay(10);
-			valeur_cod = cod_value % 101;
-			vitesse = (float) valeur_cod / 100.0;
-			set_rapport_cyclique_et_sens(vitesse, direction);
-			LCD_gotoxy(0, 0);
-			LCD_printf("choix:vitesse");
-			LCD_gotoxy(0, 1);
-			LCD_printf("vitesse=%4.2f", vitesse);
-
-			if (jog_value == 24) {
-				direction = true;
-			} else if (jog_value == 10) {
-				direction = false;
-			}
-			if (jog_value == 2) {
-				etat_actuelle = TEST_BLUETOOTH;
-			} else if (jog_value == 16) {
-				etat_actuelle = TEST_HERKULEX;
-			} else if (jog_value == 1) {
-				etat_actuelle = TEST_LIDAR;
-			}
-			break;
-
-		case TEST_HERKULEX:
-			HAL_Delay(10);
-			LCD_gotoxy(0, 0);
-			LCD_printf("choix:herkulex");
-			herkulex_test = ((cod_value % 41) + 80) * (-1);
-			LCD_gotoxy(0, 1);
-			LCD_printf("%4.4f     ", herkulex_test);
-
-			set_angle(herkulex_test);
-
-			if (jog_value == 8) {
-				etat_actuelle = TEST_VITESSE;
-			} else if (jog_value == 1) {
-				etat_actuelle = TEST_LIDAR;
-			} else if (jog_value == 2) {
-				etat_actuelle = TEST_BLUETOOTH;
-			}
-			break;
-
-		case TEST_LIDAR:
-			HAL_Delay(10);
-			LCD_gotoxy(0, 0);
-			LCD_printf("choix:lidar     ");
-			LCD_gotoxy(0,1);
-		    LCD_printf("%d         ",cod_lidar);
-
-		    if (cod_value<128)
-			{
-		   cod_lidar = (cod_value* 90) / 127;
-
-			}
-			else if (cod_value>127)
-			{
-			 cod_lidar = 270 + ((cod_value - 128) * 90) / 127;
-			}
-
-
-			if (jog_value == 8) {
-				etat_actuelle = TEST_VITESSE;
-			} else if (jog_value == 16) {
-				etat_actuelle = TEST_HERKULEX;
-			} else if (jog_value == 2) {
-				etat_actuelle = TEST_BLUETOOTH;
-			}
-			break;
-
-		case TEST_BLUETOOTH:
-			HAL_Delay(10);
-			LCD_gotoxy(0, 0);
-			LCD_printf("choix:bluetooth   ");
-			LCD_gotoxy(0, 1);
-			LCD_printf("           ");
-			if (jog_value == 8) {
-				etat_actuelle = TEST_VITESSE;
-			}
-
-			else if (jog_value == 16) {
-				etat_actuelle = TEST_HERKULEX;
-			} else if (jog_value == 1) {
-				etat_actuelle = TEST_LIDAR;
-			}
-
-			break;
-
-		default:
-			break;
-
-		}
 
 		//TODO : Bloque la réception des trames lidar
 
