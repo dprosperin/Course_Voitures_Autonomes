@@ -1,4 +1,0 @@
-../Core/Src/ihm.c:19:6:BAR_set	1
-../Core/Src/ihm.c:42:6:LCD_gotoxy	1
-../Core/Src/ihm.c:47:6:LCD_clear	2
-../Core/Src/ihm.c:75:6:LCD_printf	7

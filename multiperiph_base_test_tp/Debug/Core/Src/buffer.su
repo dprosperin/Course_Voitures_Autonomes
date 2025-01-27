@@ -1,4 +1,0 @@
-../Core/Src/buffer.c:30:6:dequeue	24	static
-../Core/Src/buffer.c:51:6:init_data_lidar_mm_main	16	static
-../Core/Src/buffer.c:64:6:print_init_data_lidar_mm_main	16	static
-../Core/Src/buffer.c:77:6:ajout_mesure	24	static

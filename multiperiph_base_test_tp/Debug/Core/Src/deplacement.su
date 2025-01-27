@@ -1,4 +1,0 @@
-../Core/Src/deplacement.c:26:6:set_rapport_cyclique_et_sens	64	static
-../Core/Src/deplacement.c:72:6:recule	8	static
-../Core/Src/deplacement.c:81:6:avance	8	static
-../Core/Src/deplacement.c:86:6:set_angle	64	static
