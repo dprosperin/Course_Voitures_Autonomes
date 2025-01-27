@@ -27,6 +27,8 @@ void send_reboot(uint8_t id);
 
 void send_torque(uint8_t id, uint8_t torq);
 
+void send_pos(uint8_t id, uint16_t pos);
+
 void send_pos_speed(uint8_t id, uint16_t pos, float speed_in_decimal);
 
 uint16_t calcul_angle(double angle);

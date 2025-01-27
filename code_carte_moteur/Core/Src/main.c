@@ -106,20 +106,16 @@ int main(void)
 
 	HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
 
-
-	// Mettre la vitesse à 0 au démarrage
+	/**
+	 * @note Mettre la vitesse à 0 au démarrage du moteur CC
+	 */
 	PWM_dir_and_cycle(1, &htim1, TIM_CHANNEL_1, 0);
-
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		send_pos_speed(0xfe, calcul_angle(90), 1.0);
-		send_pos_speed(0xfe, calcul_angle(-90), 1.0);
-		send_pos_speed(0xfe, calcul_angle(90), 0.0);
-		send_pos_speed(0xfe, calcul_angle(-90), 0.0);
 
     /* USER CODE END WHILE */
 
@@ -183,20 +179,13 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
         /**
          * @attention
-         * Pas de printf sur l'USART2 car ça fait planter le herculex
-         */
-        
-        /**
-         * ```plantuml
-         *  Alice -> Bob
-         * ```
-         * 
+         * Pas de printf sur l'USART2 car ça fait planter le herkulex
          */
 				uint16_t pos_herculex = ((uint16_t) trame_rx.data[0] << 8) | trame_rx.data[1];
         /**
-         * @todo Mettre la vitesse de rotation au maximum
+         * @Attention Si le Herkulex n'est pas alimenté en 7.2V alors il clignote en rouge
          */
-				send_pos_speed(ID_HERKULEX, pos_herculex,0x3c);
+				send_pos_speed(ID_HERKULEX, pos_herculex,1.0);
 				break;
 			case CAN_ID_MOTEUR:
 					float rapport_cyclique = trame_rx.data[0] / 100.0;
