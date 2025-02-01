@@ -222,6 +222,14 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 				{
 					data_lidar_mm_main[(uint16_t) angle] = distance;
 				}
+
+				if ((uint16_t) angle == 90)
+				{
+					lidar_half_complete_scan_callback();
+				} else if ((uint16_t) angle == 180)
+				{
+					lidar_complete_scan_callback();
+				}
 			}
 		}
 	}
@@ -264,6 +272,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				if (distance > 0 && angle >= 0 && angle <= 359)
 				{
 					data_lidar_mm_main[(uint16_t) angle] = distance;
+
+					if ((uint16_t) angle == 90)
+					{
+						lidar_half_complete_scan_callback();
+					} else if ((uint16_t) angle == 180)
+					{
+						lidar_complete_scan_callback();
+					}
 				}
 			}
 		}

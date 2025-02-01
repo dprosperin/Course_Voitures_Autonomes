@@ -384,3 +384,22 @@ HAL_StatusTypeDef lidar_send_get_info(void)
 {
 	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
 }
+
+/**
+ * @brief Callback déclenché lorsque le scan LiDAR atteint 90°.
+ *
+ */
+__weak void lidar_half_complete_scan_callback()
+{
+
+}
+
+/**
+ * @brief Callback déclenché lorsque le scan LiDAR atteint 180°.
+ *
+ */
+__weak void lidar_complete_scan_callback()
+{
+
+}
+

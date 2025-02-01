@@ -91,15 +91,15 @@ typedef enum {
 #define LIDAR_COMMAND_GET_HEALTH_LEN 2
 #define LIDAR_RESPONSE_SIZE_GET_HEALTH 10
 
-#define BUFFER_SIZE 20
+#define BUFFER_UART_SIZE 20
 #define DATA_LIDAR_MM_MAIN_SIZE 360 + 1
 
 #define BUFFER_DMA_SIZE 10
 
 extern command_lidar_t command_requested;
-extern uint8_t buffer_DMA_scan[10];
+extern uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE];
 
-extern uint8_t buffer_UART[BUFFER_SIZE];
+extern uint8_t buffer_UART[BUFFER_UART_SIZE];
 extern int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
 void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point);
@@ -114,5 +114,8 @@ HAL_StatusTypeDef lidar_send_stop(void);
 HAL_StatusTypeDef lidar_send_get_health(void);
 HAL_StatusTypeDef lidar_send_reset(void);
 HAL_StatusTypeDef lidar_send_get_info(void);
+
+void lidar_half_complete_scan_callback();
+void lidar_complete_scan_callback();
 
 #endif /* INC_LIDAR_H_ */
