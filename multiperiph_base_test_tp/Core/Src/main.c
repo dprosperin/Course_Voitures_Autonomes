@@ -17,6 +17,7 @@
  */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
+#include <conduite_autonome.h>
 #include "main.h"
 #include "dma.h"
 #include "fdcan.h"
@@ -28,10 +29,10 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <lidar.h>
-#include <mymain.h>
 #include <ihm.h>
 #include "test.h"
 #include "deplacement.h"
+#include "utils.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
