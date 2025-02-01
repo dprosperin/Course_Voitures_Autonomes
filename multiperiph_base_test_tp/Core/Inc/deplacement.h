@@ -18,5 +18,9 @@ void set_angle(float nouvelle_angle);
 #define CAN_ID_HERKULEX 0x601
 #define CAN_ID_MOTEUR 0x602
 
+extern float rapport_cyclique;
+extern bool  sens;
+extern float angle;
+
 
 #endif /* INC_DEPLACEMENT_H_ */

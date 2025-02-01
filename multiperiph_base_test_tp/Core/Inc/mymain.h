@@ -10,8 +10,8 @@
 
 #include <stdbool.h>
 
-void setup();
-
-void loop();
+void conduite_autonome(void);
+void print_vitesse_moteur_teleplot();
+void print_angle_herkulex_teleplot();
 
 #endif /* INC_MYMAIN_H_ */

@@ -8,47 +8,8 @@
 #include <stm32g4xx_hal.h>
 #include <stdbool.h>
 #include <stdio.h>
-#include <deplacement.h>
-
-
-void setup()
-{
-}
-
-void loop()
-{
-
-	//set_angle_test();
-
-	set_angle(-120);
-	set_rapport_cyclique_et_sens(0.2, 1);
-    //HAL_Delay(1000 * 2);
-
-    set_angle(-100);
-    //HAL_Delay(1000 * 2);
-
-    set_angle(-90);
-       //HAL_Delay(1000 * 2);
-
-
-    set_angle(-85);
-    HAL_Delay(1000 * 1);
-
-    //set_angle(-80.8);
-    //HAL_Delay(1000 * 2);
-    /*
-    set_angle(90);
-    HAL_Delay(1000 * 2);
-
-
-    set_angle(120);
-    HAL_Delay(1000 * 2);
-
-
-    set_angle(0);
-    HAL_Delay(1000 * 2);*/
-
-}
+#include "deplacement.h"
+#include "lidar.h"
 
 //// Fonctions utilitaire
 float mapf(float value, float fromLow, float fromHigh, float toLow, float toHigh) {
@@ -57,19 +18,25 @@ float mapf(float value, float fromLow, float fromHigh, float toLow, float toHigh
   return result;
 }
 
-////  Fonctions de navigation
-void set_angle_test(void)
+void conduite_autonome(void)
 {
-	 float data_lidar_main[360];
+	 //float difference  = data_lidar_mm_main[345] - data_lidar_mm_main[45] ;
 
-	 data_lidar_main [345] = 1405.0; // Assign float value
-	 data_lidar_main[45] = 1404.0;  // Assign another float value
-
-	 float difference  = data_lidar_main[345]-data_lidar_main [45] ;
+	 float difference  = data_lidar_mm_main[45] - data_lidar_mm_main[345];
 	 float kp = 0.60 ;
 	 float angle = 0.0 ;
 
 	 angle = kp * difference ;
 
 	set_angle(angle);
+}
+
+void print_vitesse_moteur_teleplot()
+{
+	printf(">vitesse_moteur:%f|xy\n", rapport_cyclique);
+}
+
+void print_angle_herkulex_teleplot()
+{
+	printf(">angle_herkulex:%f|xy\n", angle);
 }

@@ -25,20 +25,21 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "mymain.h"
 #include <stdio.h>
-#include <string.h>
+#include <stdbool.h>
+#include <lidar.h>
+#include <mymain.h>
+#include <ihm.h>
+#include "test.h"
+#include "deplacement.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define LIDAR_HUART huart1
-#define PC_HUART huart2
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -49,12 +50,12 @@
 
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0;
+uint8_t caractere;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 /* USER CODE BEGIN PFP */
-
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -66,221 +67,232 @@ PUTCHAR_PROTOTYPE
 
 	return ch;
 }
-
-uint8_t caractere;
 /* USER CODE END 0 */
 
 /**
-  * @brief  The application entry point.
-  * @retval int
-  */
+ * @brief  The application entry point.
+ * @retval int
+ */
 int main(void)
 {
 
-  /* USER CODE BEGIN 1 */
-  /* USER CODE END 1 */
+	/* USER CODE BEGIN 1 */
+	/* USER CODE END 1 */
 
-  /* MCU Configuration--------------------------------------------------------*/
+	/* MCU Configuration--------------------------------------------------------*/
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+	HAL_Init();
 
-  /* USER CODE BEGIN Init */
+	/* USER CODE BEGIN Init */
+	/* USER CODE END Init */
 
-  /* USER CODE END Init */
+	/* Configure the system clock */
+	SystemClock_Config();
 
-  /* Configure the system clock */
-  SystemClock_Config();
+	/* USER CODE BEGIN SysInit */
 
-  /* USER CODE BEGIN SysInit */
+	/* USER CODE END SysInit */
 
-  /* USER CODE END SysInit */
+	/* Initialize all configured peripherals */
+	MX_GPIO_Init();
+	MX_DMA_Init();
+	MX_USART2_UART_Init();
+	MX_FDCAN1_Init();
+	MX_USART1_UART_Init();
+	/* USER CODE BEGIN 2 */
+	printf("Programme interface LIDAR\n");
+	printf("Compile le %s\n", __DATE__);
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DMA_Init();
-  MX_USART2_UART_Init();
-  MX_FDCAN1_Init();
-  MX_USART1_UART_Init();
-  /* USER CODE BEGIN 2 */
-  printf("Programme interface LIDAR\n");
-  printf("Compile le %s\n", __DATE__);
+	HAL_FDCAN_Start(&hfdcan1);
+	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+	LCD_clear();
 
-  HAL_FDCAN_Start(&hfdcan1);
+	set_rapport_cyclique_et_sens(0.2, 1);
 
-  init_data_lidar_mm_main();
+	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
+	/* USER CODE END 2 */
 
-  command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
-
-  int i = 0;
-  char message[40] = "";
-
-  setup();
-  HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
-  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
-  /* USER CODE END 2 */
-
-  /* Infinite loop */
-  /* USER CODE BEGIN WHILE */
+	/* Infinite loop */
+	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
+		//JOG_read();
+		//COD_read();
+		//automate_decode_IHM();
+		//test_composants_voiture();
 
-		if (flag_reception_uart2 == 1) {
-		  		if (caractere == '\n') {
-		  			if (strstr(message, "START_SCAN") != NULL)
-		  			  {
-		  				command_requested = LIDAR_START_SCAN;
-		  				printf("Demarrage du scan normal\n");
-		  				init_data_lidar_mm_main();
-		  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
-		  			  } else if (strstr(message, "STOP") != NULL)
-		  			  {
-		  				command_requested = LIDAR_STOP;
-		  				printf("Arret\n");
-		  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
-		  				init_data_lidar_mm_main();
-		  			  } else if (strstr(message, "RESET") != NULL)
-		  			  {
-		  				command_requested = LIDAR_RESET;
-		  				printf("Reset\n");
-		  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
-		  				init_data_lidar_mm_main();
-		  			  } else if (strstr(message, "GET_INFO") != NULL)
-		  			  {
-		  				printf("RTFM ! <*_*>\n");
-		  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
-		  			  } else if (strstr(message, "GET_HEALTH") != NULL)
-		  			  {
-		  				command_requested = LIDAR_GET_HEALTH;
-		  				printf("GET_HEALTH\n");
-		  				HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_HEALTH, LIDAR_COMMAND_GET_HEALTH_LEN, HAL_MAX_DELAY);
-		  			  } else {
-		  				  command_requested = LIDAR_UNKNOWN_COMMAND;
-		  				  printf("Commande non reconnue : %s\n", message);
-		  			  }
+		//printf("COD Value : %d\n", cod_value);
+		//printf("JOG Value : %d\n", jog_value);
+		handle_receive_character();
 
-		  			  message[0] = '\0';
-		  			  i = 0;
-		  		  }
+		if (command_requested == LIDAR_SCAN_IN_PROGESS)
+		{
+			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
+			conduite_autonome();
+			print_angle_herkulex_teleplot();
+			print_vitesse_moteur_teleplot();
+		}
 
-		  		  message[i++] = caractere;
-		  		  flag_reception_uart2 = 0;
+		//HAL_Delay(100);
+		/* USER CODE END WHILE */
 
-		  		  HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
-		  	  }
-
-			  uint8_t receivedByte = 0;
-
-			  if (dequeue(&receivedByte))
-			  {
-				  switch (command_requested) {
-					case LIDAR_START_SCAN:
-						automate_scan_decode(receivedByte);
-						break;
-					case LIDAR_GET_HEALTH:
-						automate_health_decode(receivedByte);
-						break;
-				}
-			  }
-		loop();
-    /* USER CODE END WHILE */
-
-    /* USER CODE BEGIN 3 */
+		/* USER CODE BEGIN 3 */
 	}
-  /* USER CODE END 3 */
+	/* USER CODE END 3 */
 }
 
 /**
-  * @brief System Clock Configuration
-  * @retval None
-  */
+ * @brief System Clock Configuration
+ * @retval None
+ */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+	RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+	RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
-  */
-  HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
+	/** Configure the main internal regulator output voltage
+	 */
+	HAL_PWREx_ControlVoltageScaling(PWR_REGULATOR_VOLTAGE_SCALE1_BOOST);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
-  RCC_OscInitStruct.PLL.PLLN = 85;
-  RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
-  RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	/** Initializes the RCC Oscillators according to the specified parameters
+	 * in the RCC_OscInitTypeDef structure.
+	 */
+	RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+	RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+	RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+	RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+	RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+	RCC_OscInitStruct.PLL.PLLM = RCC_PLLM_DIV4;
+	RCC_OscInitStruct.PLL.PLLN = 85;
+	RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
+	RCC_OscInitStruct.PLL.PLLQ = RCC_PLLQ_DIV2;
+	RCC_OscInitStruct.PLL.PLLR = RCC_PLLR_DIV2;
+	if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+	{
+		Error_Handler();
+	}
 
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+	/** Initializes the CPU, AHB and APB buses clocks
+	 */
+	RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+			|RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+	RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
+	RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+	RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+	RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
-  {
-    Error_Handler();
-  }
+	if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
+	{
+		Error_Handler();
+	}
 }
 
 /* USER CODE BEGIN 4 */
+/**
+ * @attention La migration du projet vers une version plus récente de Cube IDE ne fait plus fonctionner la réception de trames CAN
+ */
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+	HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0,
+			&buffer_trame_rx[marker1].header,
+			&buffer_trame_rx[marker1].data[0]);
+
+	marker1++;
+
+	if (marker1 == 32) {
+		marker1 = 0;
+	}
+}
+
+void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
+{
+	if (huart->Instance == USART1) {
+		if (command_requested == LIDAR_SCAN_IN_PROGESS)
+		{
+			float angle = 0;
+			float distance = 0;
+
+			lidar_decode_angle_and_distance(buffer_scan, &angle, &distance);
+
+			if (distance > 0)
+			{
+				if (angle >= 0 && angle <= 359)
+				{
+					data_lidar_mm_main[(uint16_t) angle] = distance;
+				}
+			}
+		}
+	}
+}
+
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == USART2) {
 		flag_reception_uart2 = 1;
-		/*
-		 * Relancer la réception dans l'interruption
-	     */
+		/**
+		 * @note Relancer la réception dans l'interruption
+		 */
 		HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	}
 
 	if (huart->Instance == USART1) {
-		HAL_UART_Receive_DMA(&LIDAR_HUART, buffer, BUFFER_SIZE);
+		if (command_requested == LIDAR_GET_HEALTH)
+		{
+			printf("Response descriptor GET_HEALTH\n");
+
+			lidar_decode_get_health(buffer);
+		} else if (command_requested == LIDAR_START_SCAN)
+		{
+			printf("Response descriptor SCAN\n");
+			command_requested = LIDAR_SCAN_IN_PROGESS;
+			HAL_UART_Receive_DMA(&LIDAR_HUART, buffer_scan, 10);
+		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
+		{
+			if (command_requested == LIDAR_SCAN_IN_PROGESS)
+			{
+				float angle = 0;
+				float distance = 0;
+
+				lidar_decode_angle_and_distance(buffer_scan + 5, &angle, &distance);
+
+				if (distance > 0 && angle >= 0 && angle <= 359)
+				{
+					data_lidar_mm_main[(uint16_t) angle] = distance;
+				}
+			}
+		}
 	}
 }
 /* USER CODE END 4 */
 
 /**
-  * @brief  This function is executed in case of error occurrence.
-  * @retval None
-  */
+ * @brief  This function is executed in case of error occurrence.
+ * @retval None
+ */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
+	/* USER CODE BEGIN Error_Handler_Debug */
 	/* User can add his own implementation to report the HAL error return state */
 	__disable_irq();
 	while (1)
 	{
 	}
-  /* USER CODE END Error_Handler_Debug */
+	/* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
 /**
-  * @brief  Reports the name of the source file and the source line number
-  *         where the assert_param error has occurred.
-  * @param  file: pointer to the source file name
-  * @param  line: assert_param error line source number
-  * @retval None
-  */
+ * @brief  Reports the name of the source file and the source line number
+ *         where the assert_param error has occurred.
+ * @param  file: pointer to the source file name
+ * @param  line: assert_param error line source number
+ * @retval None
+ */
 void assert_failed(uint8_t *file, uint32_t line)
 {
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
+	/* USER CODE BEGIN 6 */
+	/* User can add his own implementation to report the file name and line number,
      ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
+	/* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
