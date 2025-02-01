@@ -125,7 +125,7 @@ int main(void)
 
 		//printf("COD Value : %d\n", cod_value);
 		//printf("JOG Value : %d\n", jog_value);
-		handle_receive_character();
+		lidar_handle_receive_character();
 
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
@@ -237,10 +237,13 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	}
 
 	if (huart->Instance == USART1) {
-		if (command_requested == LIDAR_GET_HEALTH)
+		if (command_requested == LIDAR_GET_INFO)
+		{
+			printf("Response descriptor GET_INFO\n");
+			lidar_decode_get_info(buffer);
+		} else if (command_requested == LIDAR_GET_HEALTH)
 		{
 			printf("Response descriptor GET_HEALTH\n");
-
 			lidar_decode_get_health(buffer);
 		} else if (command_requested == LIDAR_START_SCAN)
 		{
