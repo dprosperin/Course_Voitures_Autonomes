@@ -9,6 +9,7 @@
 #define INC_LIDAR_H_
 
 #include <stdint.h>
+#include "stdbool.h"
 #include "stm32g4xx_hal.h"
 
 typedef struct {
@@ -93,13 +94,15 @@ typedef enum {
 #define BUFFER_SIZE 20
 #define DATA_LIDAR_MM_MAIN_SIZE 360 + 1
 
-extern command_lidar_t command_requested;
-extern uint8_t buffer_scan[10];
+#define BUFFER_DMA_SIZE 10
 
-extern uint8_t buffer[BUFFER_SIZE];
+extern command_lidar_t command_requested;
+extern uint8_t buffer_DMA_scan[10];
+
+extern uint8_t buffer_UART[BUFFER_SIZE];
 extern int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
-void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance);
+void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point);
 void lidar_print_single_point_teleplot_format(float angle, float distance);
 void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan);
 void lidar_handle_receive_character();

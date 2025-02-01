@@ -212,8 +212,9 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 		{
 			float angle = 0;
 			float distance = 0;
+			bool is_first_scan_point = 0;
 
-			lidar_decode_angle_and_distance(buffer_scan, &angle, &distance);
+		    lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
 
 			if (distance > 0)
 			{
@@ -240,24 +241,25 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if (command_requested == LIDAR_GET_INFO)
 		{
 			printf("Response descriptor GET_INFO\n");
-			lidar_decode_get_info(buffer);
+			lidar_decode_get_info(buffer_UART);
 		} else if (command_requested == LIDAR_GET_HEALTH)
 		{
 			printf("Response descriptor GET_HEALTH\n");
-			lidar_decode_get_health(buffer);
+			lidar_decode_get_health(buffer_UART);
 		} else if (command_requested == LIDAR_START_SCAN)
 		{
 			printf("Response descriptor SCAN\n");
 			command_requested = LIDAR_SCAN_IN_PROGESS;
-			HAL_UART_Receive_DMA(&LIDAR_HUART, buffer_scan, 10);
+			HAL_UART_Receive_DMA(&LIDAR_HUART, buffer_DMA_scan, BUFFER_DMA_SIZE);
 		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 			if (command_requested == LIDAR_SCAN_IN_PROGESS)
 			{
 				float angle = 0;
 				float distance = 0;
+				bool is_first_scan_point = 0;
 
-				lidar_decode_angle_and_distance(buffer_scan + 5, &angle, &distance);
+				lidar_decode_angle_and_distance(buffer_DMA_scan + 5, &angle, &distance, &is_first_scan_point);
 
 				if (distance > 0 && angle >= 0 && angle <= 359)
 				{

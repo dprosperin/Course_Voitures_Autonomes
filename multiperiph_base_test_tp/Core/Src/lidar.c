@@ -16,9 +16,8 @@
 
 command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
 
-uint8_t buffer_scan[10] = {0};
-
-uint8_t buffer[BUFFER_SIZE] = {0};
+uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE] = {0};
+uint8_t buffer_UART[BUFFER_UART_SIZE] = {0};
 int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
 /**
@@ -32,7 +31,7 @@ int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
  * 
  */
 
-void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance)
+void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point)
 {
 	static uint8_t distance_low_byte = 0;
 	static uint8_t distance_high_byte = 0;
@@ -53,6 +52,7 @@ void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *dista
 
 		*angle = (((uint16_t)(angle_high_byte) << 7) | ((uint16_t)(angle_low_byte) & 0x00FF)) / 64.0;
 		*distance = ((((uint16_t) distance_high_byte << 8) & 0xFF00 ) | ((uint16_t) distance_low_byte & 0x00FF)) / 4.0;
+		*is_first_scan_point = ((rplidar_measurement_data_result_response_t *)(buffer))->S;
 	}
 
 }
@@ -263,7 +263,7 @@ void lidar_handle_receive_character()
 				command_requested = LIDAR_START_SCAN;
 				printf("Demarrage du scan normal\n");
 				lidar_send_start_scan();
-				HAL_UART_Receive_IT(&LIDAR_HUART, buffer, LIDAR_RESPONSE_SIZE_START_SCAN);
+				HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
 			} else if (strstr(message, "STOP") != NULL)
 			{
 				command_requested = LIDAR_STOP;
@@ -282,7 +282,7 @@ void lidar_handle_receive_character()
 			{
 				command_requested = LIDAR_GET_HEALTH;
 				printf("GET_HEALTH\n");
-				HAL_UART_Receive_IT(&LIDAR_HUART, buffer, LIDAR_RESPONSE_SIZE_GET_HEALTH);
+				HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_HEALTH);
 				lidar_send_get_health();
 			} else {
 				command_requested = LIDAR_UNKNOWN_COMMAND;
