@@ -40,5 +40,11 @@ typedef enum {
 } gamepad_button_t;
 
 void handle_receive_character(uint8_t receive_character);
+void send_start_autonomous_driving(void);
+void send_stop_autonomous_driving(void);
+
+#define CAN_START_AUTONOMOUS_DRIVING 0x500
+#define CAN_STOP_AUTONOMOUS_DRIVING 0x501
+
 
 #endif /* INC_REMOTE_GAMEPAD_C_ */

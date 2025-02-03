@@ -6,6 +6,8 @@
  */
 #include "remote_gamepad.h"
 #include <stdint.h>
+#include <stdio.h>
+#include "fdcan.h"
 
 /*
  *	Tableau de correspondance
@@ -27,35 +29,65 @@
 void handle_receive_character(uint8_t receive_character)
 {
 	switch (receive_character) {
-		case GAMEPAD_TOP_ARROW:
-				printf("Marche avant\n");
-			break;
-		case GAMEPAD_BOTTOM_ARROW:
-				printf("Marche arriere\n");
-			break;
-		case GAMEPAD_LEFT_ARROW:
-				printf("Tourner a gauche\n");
-			break;
-		case GAMEPAD_RIGHT_ARROW:
-				printf("Tourner a droite\n");
-			break;
-		case GAMEPAD_L2:
-				printf("Diminuer la vitesse du moteur CC\n");
-			break;
-		case GAMEPAD_L1:
-				printf("Augmenter la vitesse du moteur CC \n");
-			break;
-		case GAMEPAD_START:
-				printf("Démarrer du programme de conduite autonome \n");
-			break;
-		case GAMEPAD_SELECT:
-				printf("Arret du programme de conduite autonome \n");
-			break;
-		case GAMEPAD_B:
-				printf("Arret d'urgence du véhicule \n");
-			break;
-		case GAMEPAD_STOP_PRESSED:
-				printf("GAMEPAD_STOP_PRESSED \n");
-			break;
+	case GAMEPAD_TOP_ARROW:
+		printf("Marche avant\n");
+		break;
+	case GAMEPAD_BOTTOM_ARROW:
+		printf("Marche arriere\n");
+		break;
+	case GAMEPAD_LEFT_ARROW:
+		printf("Tourner a gauche\n");
+		break;
+	case GAMEPAD_RIGHT_ARROW:
+		printf("Tourner a droite\n");
+		break;
+	case GAMEPAD_L2:
+		printf("Diminuer la vitesse du moteur CC\n");
+		break;
+	case GAMEPAD_L1:
+		printf("Augmenter la vitesse du moteur CC \n");
+		break;
+	case GAMEPAD_START:
+		printf("Démarrer du programme de conduite autonome \n");
+		send_start_autonomous_driving();
+		break;
+	case GAMEPAD_SELECT:
+		printf("Arret du programme de conduite autonome \n");
+		send_stop_autonomous_driving();
+		break;
+	case GAMEPAD_B:
+		printf("Arret d'urgence du véhicule \n");
+		break;
+	case GAMEPAD_STOP_PRESSED:
+		printf("GAMEPAD_STOP_PRESSED \n");
+		break;
 	}
 }
+
+void send_start_autonomous_driving(void)
+{
+	FDCAN_TxHeaderTypeDef pTxHeader = { 0 };
+
+	pTxHeader.Identifier = CAN_START_AUTONOMOUS_DRIVING;
+	pTxHeader.IdType = FDCAN_STANDARD_ID;
+	pTxHeader.TxFrameType = FDCAN_REMOTE_FRAME;
+	pTxHeader.DataLength = 0;
+
+	uint8_t pTxData;
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &pTxData);
+}
+
+void send_stop_autonomous_driving(void)
+{
+	FDCAN_TxHeaderTypeDef pTxHeader = { 0 };
+
+	pTxHeader.Identifier = CAN_STOP_AUTONOMOUS_DRIVING;
+	pTxHeader.IdType = FDCAN_STANDARD_ID;
+	pTxHeader.TxFrameType = FDCAN_REMOTE_FRAME;
+	pTxHeader.DataLength = 0;
+
+	uint8_t pTxData;
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &pTxData);
+}
+
+
