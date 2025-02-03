@@ -35,7 +35,16 @@ extern "C" {
 extern FDCAN_HandleTypeDef hfdcan1;
 
 /* USER CODE BEGIN Private defines */
-
+/**
+ * @brief	Définition de la structure FDCAN_trame_rx pour la réception de trames
+ *			CAN
+ */
+typedef struct
+{
+	FDCAN_RxHeaderTypeDef header; /* Spécifie l'en-tête de la trame CAN reçue
+	 (ID, IDE, RTR, DLC) */
+	uint8_t data[8];  /* Spécifie les données de la trame CAN reçue */
+} T_FDCAN_trame_rx;
 /* USER CODE END Private defines */
 
 void MX_FDCAN1_Init(void);

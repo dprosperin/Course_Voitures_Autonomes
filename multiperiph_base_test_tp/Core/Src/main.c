@@ -41,6 +41,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define CAN_START_AUTONOMOUS_DRIVING 0x500
+#define CAN_STOP_AUTONOMOUS_DRIVING 0x501
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,6 +54,7 @@
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0;
 uint8_t caractere;
+bool is_autonomous_driving_started = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -109,7 +112,7 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
-	set_rapport_cyclique_et_sens(0.2, 1);
+	//set_rapport_cyclique_et_sens(0.2, 1);
 
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
 	/* USER CODE END 2 */
@@ -130,7 +133,12 @@ int main(void)
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
-			conduite_autonome();
+
+			if (is_autonomous_driving_started)
+			{
+				conduite_autonome();
+			}
+
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
 		}
@@ -197,6 +205,19 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0,
 			&buffer_trame_rx[marker1].header,
 			&buffer_trame_rx[marker1].data[0]);
+
+	switch (buffer_trame_rx[marker1].header.Identifier)
+	{
+	case CAN_START_AUTONOMOUS_DRIVING:
+		printf("START AUTONOMOUS DRIVING\n");
+		is_autonomous_driving_started = 1;
+	break;
+
+	case CAN_STOP_AUTONOMOUS_DRIVING:
+		printf("STOP AUTONOMOUS DRIVING\n");
+		is_autonomous_driving_started = 0;
+	break;
+	}
 
 	marker1++;
 

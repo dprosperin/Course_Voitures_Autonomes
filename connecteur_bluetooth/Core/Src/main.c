@@ -48,6 +48,10 @@
 /* USER CODE BEGIN PV */
 uint8_t buffer_rx_connecteur_bluetooth[8];
 uint8_t buffer_rx_pc[8];
+
+uint16_t marker1 = 0;
+T_FDCAN_trame_rx trame_rx;
+T_FDCAN_trame_rx buffer_trame_rx[32];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -190,6 +194,18 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		// On les envoi au pc
 		printf("BT > %s\n", buffer_rx_connecteur_bluetooth);
 		HAL_UART_Receive_IT(&huart1, buffer_rx_connecteur_bluetooth, 1);
+	}
+}
+
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+	HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0,
+			&buffer_trame_rx[marker1].header,
+			&buffer_trame_rx[marker1].data[0]);
+
+	marker1++;
+
+	if (marker1 == 32) {
+		marker1 = 0;
 	}
 }
 /* USER CODE END 4 */

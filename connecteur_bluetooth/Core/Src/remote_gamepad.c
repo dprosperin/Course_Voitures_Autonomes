@@ -8,6 +8,7 @@
 #include <stdint.h>
 #include <stdio.h>
 #include "fdcan.h"
+#include "deplacement.h"
 
 /*
  *	Tableau de correspondance
@@ -31,9 +32,13 @@ void handle_receive_character(uint8_t receive_character)
 	switch (receive_character) {
 	case GAMEPAD_TOP_ARROW:
 		printf("Marche avant\n");
+		sens = 1;
+		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_BOTTOM_ARROW:
 		printf("Marche arriere\n");
+		sens = 0;
+		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_LEFT_ARROW:
 		printf("Tourner a gauche\n");
@@ -43,9 +48,13 @@ void handle_receive_character(uint8_t receive_character)
 		break;
 	case GAMEPAD_L2:
 		printf("Diminuer la vitesse du moteur CC\n");
+		rapport_cyclique -= 0.1;
+		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_L1:
 		printf("Augmenter la vitesse du moteur CC \n");
+		rapport_cyclique += 0.1;
+		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_START:
 		printf("Démarrer du programme de conduite autonome \n");
