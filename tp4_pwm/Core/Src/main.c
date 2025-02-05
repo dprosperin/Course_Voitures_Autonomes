@@ -92,13 +92,14 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
+  uint32_t count = 0, old_count = 0,derive = 0 ;
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_GPIO_ReadPin(GPIOB,fourche_Pin))
+	  if(HAL_GPIO_ReadPin(GPIOA,Fourche_optique_Pin))
 	  {
 	  HAL_GPIO_WritePin(GPIOB, led_test_Pin, 1);
 	  }

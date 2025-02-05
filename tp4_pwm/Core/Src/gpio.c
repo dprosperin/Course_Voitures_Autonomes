@@ -51,11 +51,11 @@ void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, dir_Pin|led_test_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : fourche_Pin */
-  GPIO_InitStruct.Pin = fourche_Pin;
+  /*Configure GPIO pin : Fourche_optique_Pin */
+  GPIO_InitStruct.Pin = Fourche_optique_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(fourche_GPIO_Port, &GPIO_InitStruct);
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(Fourche_optique_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : dir_Pin */
   GPIO_InitStruct.Pin = dir_Pin;
