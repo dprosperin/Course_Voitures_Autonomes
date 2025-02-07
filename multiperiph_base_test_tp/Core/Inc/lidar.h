@@ -110,10 +110,10 @@ void lidar_decode_get_health(uint8_t *buffer);
 void lidar_decode_get_info(uint8_t *buffer);
 
 HAL_StatusTypeDef lidar_send_start_scan(void);
-HAL_StatusTypeDef lidar_send_stop(void);
 HAL_StatusTypeDef lidar_send_get_health(void);
-HAL_StatusTypeDef lidar_send_reset(void);
 HAL_StatusTypeDef lidar_send_get_info(void);
+HAL_StatusTypeDef lidar_send_stop(void);
+HAL_StatusTypeDef lidar_send_reset(void);
 
 void lidar_half_complete_scan_callback();
 void lidar_complete_scan_callback();

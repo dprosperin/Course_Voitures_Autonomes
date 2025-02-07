@@ -260,18 +260,14 @@ void lidar_handle_receive_character()
 		if (caractere == '\n') {
 			if (strstr(message, "START_SCAN") != NULL)
 			{
-				command_requested = LIDAR_START_SCAN;
 				printf("Demarrage du scan normal\n");
 				lidar_send_start_scan();
-				HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
 			} else if (strstr(message, "STOP") != NULL)
 			{
-				command_requested = LIDAR_STOP;
 				printf("Arret\n");
 				lidar_send_stop();
 			} else if (strstr(message, "RESET") != NULL)
 			{
-				command_requested = LIDAR_RESET;
 				printf("Reset\n");
 				lidar_send_reset();
 			} else if (strstr(message, "GET_INFO") != NULL)
@@ -280,9 +276,7 @@ void lidar_handle_receive_character()
 				lidar_send_get_info();
 			} else if (strstr(message, "GET_HEALTH") != NULL)
 			{
-				command_requested = LIDAR_GET_HEALTH;
 				printf("GET_HEALTH\n");
-				HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_HEALTH);
 				lidar_send_get_health();
 			} else {
 				command_requested = LIDAR_UNKNOWN_COMMAND;
@@ -306,15 +300,19 @@ void lidar_handle_receive_character()
  * Cette fonction utilise l'interface UART pour envoyer la commande de
  * démarrage de balayage au capteur LiDAR.
  *
- * @return HAL_StatusTypeDef Le statut de la transmission UART.
- *         - HAL_OK : Transmission réussie.
- *         - HAL_ERROR : Erreur de transmission.
- *         - HAL_BUSY : Périphérique occupé.
- *         - HAL_TIMEOUT : Temps d'attente dépassé.
  */
+
 HAL_StatusTypeDef lidar_send_start_scan(void)
 {
-	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY);
+	HAL_StatusTypeDef return_start_scan;
+	command_requested = LIDAR_START_SCAN;
+	if((return_start_scan =  HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_START_SCAN, LIDAR_COMMAND_START_SCAN_LEN, HAL_MAX_DELAY)) == HAL_OK)
+	{
+		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
+	}
+	//HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
+
+	return return_start_scan;
 }
 
 /**
@@ -323,14 +321,10 @@ HAL_StatusTypeDef lidar_send_start_scan(void)
  * Cette fonction utilise l'interface UART pour envoyer la commande d'arrêt
  * au capteur LiDAR.
  *
- * @return HAL_StatusTypeDef Le statut de la transmission UART.
- *         - HAL_OK : Transmission réussie.
- *         - HAL_ERROR : Erreur de transmission.
- *         - HAL_BUSY : Périphérique occupé.
- *         - HAL_TIMEOUT : Temps d'attente dépassé.
  */
 HAL_StatusTypeDef lidar_send_stop(void)
 {
+	command_requested = LIDAR_STOP;
 	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_STOP, LIDAR_COMMAND_STOP_LEN, HAL_MAX_DELAY);
 }
 
@@ -340,15 +334,17 @@ HAL_StatusTypeDef lidar_send_stop(void)
  * Cette fonction utilise l'interface UART pour envoyer la commande de
  * récupération des informations de santé du capteur LiDAR.
  *
- * @return HAL_StatusTypeDef Le statut de la transmission UART.
- *         - HAL_OK : Transmission réussie.
- *         - HAL_ERROR : Erreur de transmission.
- *         - HAL_BUSY : Périphérique occupé.
- *         - HAL_TIMEOUT : Temps d'attente dépassé.
  */
 HAL_StatusTypeDef lidar_send_get_health(void)
 {
-	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_HEALTH, LIDAR_COMMAND_GET_HEALTH_LEN, HAL_MAX_DELAY);
+	HAL_StatusTypeDef return_get_health;
+	command_requested = LIDAR_GET_HEALTH;
+
+	if ((return_get_health = HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_HEALTH, LIDAR_COMMAND_GET_HEALTH_LEN, HAL_MAX_DELAY)) == HAL_OK)
+	{
+		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_HEALTH);
+	}
+	return return_get_health;
 }
 
 /**
@@ -356,15 +352,10 @@ HAL_StatusTypeDef lidar_send_get_health(void)
  *
  * Cette fonction utilise l'interface UART pour envoyer la commande de
  * réinitialisation au capteur LiDAR.
- *
- * @return HAL_StatusTypeDef Le statut de la transmission UART.
- *         - HAL_OK : Transmission réussie.
- *         - HAL_ERROR : Erreur de transmission.
- *         - HAL_BUSY : Périphérique occupé.
- *         - HAL_TIMEOUT : Temps d'attente dépassé.
  */
 HAL_StatusTypeDef lidar_send_reset(void)
 {
+	command_requested = LIDAR_RESET;
 	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_RESET, LIDAR_COMMAND_RESET_LEN, HAL_MAX_DELAY);
 }
 
@@ -374,15 +365,18 @@ HAL_StatusTypeDef lidar_send_reset(void)
  * Cette fonction utilise l'interface UART pour envoyer la commande de
  * récupération des informations générales sur le capteur LiDAR.
  *
- * @return HAL_StatusTypeDef Le statut de la transmission UART.
- *         - HAL_OK : Transmission réussie.
- *         - HAL_ERROR : Erreur de transmission.
- *         - HAL_BUSY : Périphérique occupé.
- *         - HAL_TIMEOUT : Temps d'attente dépassé.
  */
 HAL_StatusTypeDef lidar_send_get_info(void)
 {
-	return HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY);
+	HAL_StatusTypeDef return_get_info;
+
+	command_requested = LIDAR_GET_INFO;
+	if ((return_get_info = HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY)) == HAL_OK)
+	{
+		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_HEALTH);
+	}
+
+	return return_get_info;
 }
 
 /**

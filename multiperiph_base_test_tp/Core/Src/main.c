@@ -112,8 +112,6 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
-	//set_rapport_cyclique_et_sens(0.2, 1);
-
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
 	/* USER CODE END 2 */
 
@@ -121,14 +119,21 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		//JOG_read();
-		//COD_read();
-		//automate_decode_IHM();
-		//test_composants_voiture();
+		/**
+		 * @todo Les Hal_delays font échouer la reception des commandes par UART
+		 */
+		if (!is_autonomous_driving_started)
+		{
+			//JOG_read();
+			//COD_read();
+			//automate_decode_IHM();
+			//test_composants_voiture();
+			//printf("COD Value : %d\n", cod_value);
+			//printf("JOG Value : %d\n", jog_value);
+		}
 
-		//printf("COD Value : %d\n", cod_value);
-		//printf("JOG Value : %d\n", jog_value);
 		lidar_handle_receive_character();
+
 
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
@@ -142,8 +147,6 @@ int main(void)
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
 		}
-
-		//HAL_Delay(100);
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
@@ -239,7 +242,7 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 
 			if (distance > 0)
 			{
-				if (angle >= 0 && angle <= 359)
+				if (angle >= 0 && angle <= 180)
 				{
 					data_lidar_mm_main[(uint16_t) angle] = distance;
 				}
@@ -290,7 +293,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 				lidar_decode_angle_and_distance(buffer_DMA_scan + 5, &angle, &distance, &is_first_scan_point);
 
-				if (distance > 0 && angle >= 0 && angle <= 359)
+				if (distance > 0 && angle >= 0 && angle <= 180)
 				{
 					data_lidar_mm_main[(uint16_t) angle] = distance;
 
