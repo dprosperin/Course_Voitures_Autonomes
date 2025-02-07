@@ -134,6 +134,8 @@ void lidar_decode_get_health(uint8_t *buffer)
  * - **firmware ver** : La version du firmware, séparée en major et minor.
  * - **hardware ver** : La version du matériel.
  * - **serial number** : Une séquence hexadécimale représentant le numéro de série unique.
+ *
+ * @todo Tester et valider la fonction lidar_decode_get_info(uint8_t *buffer)
  */
 void lidar_decode_get_info(uint8_t *buffer)
 {
@@ -324,6 +326,10 @@ void lidar_handle_receive_character()
 			{
 				printf("GET_HEALTH\n");
 				lidar_send_get_health();
+			} else if (strstr(message, "GET_SAMPLERATE") != NULL)
+			{
+				printf("GET_SAMPLERATE\n");
+				lidar_send_get_samplerate();
 			} else {
 				command_requested = LIDAR_UNKNOWN_COMMAND;
 				printf("Commande non reconnue : %s\n", message);
@@ -338,6 +344,20 @@ void lidar_handle_receive_character()
 
 		HAL_UART_Receive_IT(&PC_HUART, &caractere, 1);
 	}
+}
+
+/**
+ * @todo Tester et valider la fonction lidar_send_get_samplerate(void)
+ */
+HAL_StatusTypeDef lidar_send_get_samplerate(void)
+{
+	HAL_StatusTypeDef return_get_samplerate;
+	command_requested = LIDAR_GET_SAMPLERATE;
+	if((return_get_samplerate =  HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_SAMPLERATE, LIDAR_COMMAND_GET_SAMPLERATE_LEN, HAL_MAX_DELAY)) == HAL_OK)
+	{
+		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_SAMPLERATE);
+	}
+	return return_get_samplerate;
 }
 
 /**
@@ -496,7 +516,7 @@ HAL_StatusTypeDef lidar_send_get_info(void)
 
 /**
  * @brief Callback déclenché lorsque le scan LiDAR atteint 90°.
- *
+ * @todo Tester et valider la fonction lidar_half_complete_scan_callback()
  */
 __weak void lidar_half_complete_scan_callback()
 {
@@ -505,7 +525,7 @@ __weak void lidar_half_complete_scan_callback()
 
 /**
  * @brief Callback déclenché lorsque le scan LiDAR atteint 180°.
- *
+ * @todo Tester et valider la fonction void lidar_complete_scan_callback()
  */
 __weak void lidar_complete_scan_callback()
 {

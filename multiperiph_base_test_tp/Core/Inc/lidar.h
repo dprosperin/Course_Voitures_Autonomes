@@ -74,6 +74,7 @@ typedef enum {
 	LIDAR_START_SCAN,
 	LIDAR_GET_HEALTH,
 	LIDAR_GET_INFO,
+	LIDAR_GET_SAMPLERATE,
 	LIDAR_UNKNOWN_COMMAND,
 	LIDAR_SCAN_IN_PROGESS
 } command_lidar_t;
@@ -95,6 +96,18 @@ typedef enum {
 #define LIDAR_COMMAND_GET_HEALTH ((uint8_t*)"\xA5\x52")
 #define LIDAR_COMMAND_GET_HEALTH_LEN 2
 #define LIDAR_RESPONSE_SIZE_GET_HEALTH 10
+
+#define LIDAR_COMMAND_GET_SAMPLERATE ((uint8_t*)"\xA5\x5A")
+#define LIDAR_COMMAND_GET_SAMPLERATE_LEN 2
+/**
+ * @note
+ * Taille du response descriptor  : 7
+ * Taille de Sample Rate Data Response Packet : 4
+ * La taille totale de la réponse est de 11 octets
+ */
+#define LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE 7
+#define LIDAR_RESPONSE_SIZE_SAMPLERATE_DATA 4
+#define LIDAR_RESPONSE_SIZE_GET_SAMPLERATE (LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE + LIDAR_RESPONSE_SIZE_SAMPLERATE_DATA)
 
 #define BUFFER_UART_SIZE 20
 #define DATA_LIDAR_MM_MAIN_SIZE 360 + 1
@@ -120,6 +133,7 @@ HAL_StatusTypeDef lidar_send_get_health(void);
 HAL_StatusTypeDef lidar_send_get_info(void);
 HAL_StatusTypeDef lidar_send_stop(void);
 HAL_StatusTypeDef lidar_send_reset(void);
+HAL_StatusTypeDef lidar_send_get_samplerate(void);
 
 void lidar_half_complete_scan_callback();
 void lidar_complete_scan_callback();

@@ -124,12 +124,12 @@ int main(void)
 		 */
 		if (!is_autonomous_driving_started)
 		{
-			//JOG_read();
-			//COD_read();
-			//automate_decode_IHM();
-			//test_composants_voiture();
-			//printf("COD Value : %d\n", cod_value);
-			//printf("JOG Value : %d\n", jog_value);
+			JOG_read();
+			COD_read();
+			automate_decode_IHM();
+			test_composants_voiture();
+			printf("COD Value : %d\n", cod_value);
+			printf("JOG Value : %d\n", jog_value);
 		}
 
 		lidar_handle_receive_character();
@@ -214,12 +214,12 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	case CAN_START_AUTONOMOUS_DRIVING:
 		printf("START AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 1;
-	break;
+		break;
 
 	case CAN_STOP_AUTONOMOUS_DRIVING:
 		printf("STOP AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 0;
-	break;
+		break;
 	}
 
 	marker1++;
@@ -238,7 +238,7 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 			float distance = 0;
 			bool is_first_scan_point = 0;
 
-		    lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
+			lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
 
 			if (distance > 0)
 			{
@@ -273,16 +273,29 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if (command_requested == LIDAR_GET_INFO)
 		{
 			printf("Response descriptor GET_INFO\n");
+			/**
+			 * @todo Verifer et valider le retour de : lidar_decode_get_info(buffer_UART);
+			 */
 			lidar_decode_get_info(buffer_UART);
 		} else if (command_requested == LIDAR_GET_HEALTH)
 		{
 			printf("Response descriptor GET_HEALTH\n");
+			/**
+			 * @todo Verifer et valider le retour de : lidar_decode_get_health(buffer_UART);
+			 */
 			lidar_decode_get_health(buffer_UART);
 		} else if (command_requested == LIDAR_START_SCAN)
 		{
 			printf("Response descriptor SCAN\n");
 			command_requested = LIDAR_SCAN_IN_PROGESS;
 			HAL_UART_Receive_DMA(&LIDAR_HUART, buffer_DMA_scan, BUFFER_DMA_SIZE);
+		} else if (command_requested == LIDAR_GET_SAMPLERATE)
+		{
+			printf("Response descriptor GET_SAMPLERATE\n");
+			/**
+			 * @todo Verifer et valider le retour de : lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
+			 */
+			lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
 		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 			if (command_requested == LIDAR_SCAN_IN_PROGESS)
