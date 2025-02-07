@@ -295,11 +295,29 @@ void lidar_handle_receive_character()
 }
 
 /**
- * @brief Envoie une commande pour démarrer le balayage du LiDAR.
+ * @brief Envoie une commande pour démarrer un scan avec le LiDAR.
  *
- * Cette fonction utilise l'interface UART pour envoyer la commande de
- * démarrage de balayage au capteur LiDAR.
+ * Cette fonction utilise l'interface UART pour envoyer la commande START_SCAN (0x20)
+ * au LiDAR. Une fois la commande reçue, le LiDAR passe en mode de balayage et commence
+ * à envoyer des paquets de données correspondant aux mesures réalisées.
  *
+ * @details
+ * - Le LiDAR entre dans l'état de balayage sauf s'il est en état de "Protection Stop".
+ * - Si le LiDAR est déjà en état de balayage, il arrête le cycle de mesure en cours et
+ *   démarre un nouveau balayage.
+ * - Une fois la commande acceptée, un descripteur de réponse est envoyé immédiatement par le LiDAR.
+ *   Les données des résultats de mesure sont envoyées en continu après stabilisation de la rotation.
+ * - Chaque résultat de mesure est encapsulé dans un paquet de données avec le format suivant :
+ *   - **Quality** : Qualité de l'échantillon (relié à la force du signal réfléchi).
+ *   - **angle_q6** : Angle de la mesure (0-360 degrés, représenté en point fixe).
+ *   - **distance_q2** : Distance mesurée par rapport au centre de rotation du LiDAR
+ *     (en millimètres, représentée en point fixe).
+ *
+ * @return HAL_StatusTypeDef
+ * - **HAL_OK** : La commande a été envoyée avec succès.
+ * - **HAL_ERROR** : Une erreur de transmission s'est produite.
+ * - **HAL_BUSY** : L'UART est occupé.
+ * - **HAL_TIMEOUT** : La transmission a dépassé le délai maximal autorisé.
  */
 
 HAL_StatusTypeDef lidar_send_start_scan(void)
@@ -310,17 +328,27 @@ HAL_StatusTypeDef lidar_send_start_scan(void)
 	{
 		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
 	}
-	//HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_START_SCAN);
-
 	return return_start_scan;
 }
 
 /**
  * @brief Envoie une commande pour arrêter le LiDAR.
  *
- * Cette fonction utilise l'interface UART pour envoyer la commande d'arrêt
- * au capteur LiDAR.
+ * Cette fonction utilise l'interface UART pour envoyer la commande STOP (0x25)
+ * au LiDAR. Une fois cette commande reçue, le LiDAR quitte l'état de scan en cours,
+ * désactive la diode laser et le système de mesure, et entre dans l'état Idle.
  *
+ * @details
+ * - La commande STOP est ignorée si le LiDAR est déjà dans l'état Idle ou
+ *   dans l'état "Protection Stop".
+ * - Aucune réponse n'est envoyée par le LiDAR suite à cette commande. Par conséquent,
+ *   le système hôte doit attendre au moins **1 milliseconde** avant d'envoyer une autre commande.
+ *
+ * @return HAL_StatusTypeDef
+ * - **HAL_OK** : La commande a été envoyée avec succès.
+ * - **HAL_ERROR** : Une erreur de transmission s'est produite.
+ * - **HAL_BUSY** : L'UART est occupé.
+ * - **HAL_TIMEOUT** : La transmission a dépassé le délai maximal autorisé.
  */
 HAL_StatusTypeDef lidar_send_stop(void)
 {
@@ -329,11 +357,28 @@ HAL_StatusTypeDef lidar_send_stop(void)
 }
 
 /**
- * @brief Envoie une commande pour obtenir l'état de santé du LiDAR.
+ * @brief Envoie une commande pour vérifier l'état de santé du LiDAR.
  *
- * Cette fonction utilise l'interface UART pour envoyer la commande de
- * récupération des informations de santé du capteur LiDAR.
+ * Cette fonction utilise l'interface UART pour envoyer la commande GET_HEALTH
+ * au LiDAR, permettant au système hôte de récupérer son état de santé.
  *
+ * @details
+ * Après réception de cette commande, le LiDAR renvoie un paquet contenant :
+ * - **status** (1 octet) : Indique l'état de santé du LiDAR. Les valeurs possibles sont :
+ *   - 0 : **Good** - Le LiDAR fonctionne normalement.
+ *   - 1 : **Warning** - Un risque potentiel a été détecté, mais le LiDAR peut encore fonctionner.
+ *   - 2 : **Error** - Le LiDAR est en mode "Protection Stop" à cause d'une panne matérielle.
+ * - **error_code** (2 octets) : Contient le code d'erreur lié à l'état Warning ou Error.
+ *
+ * Si le LiDAR entre dans l'état "Protection Stop", il est possible d'envoyer une commande
+ * RESET pour le redémarrer. Cependant, des occurrences répétées de cet état peuvent indiquer
+ * une panne matérielle irréversible.
+ *
+ * @return HAL_StatusTypeDef
+ * - **HAL_OK** : La commande a été envoyée avec succès.
+ * - **HAL_ERROR** : Une erreur de transmission s'est produite.
+ * - **HAL_BUSY** : L'UART est occupé.
+ * - **HAL_TIMEOUT** : La transmission a dépassé le délai maximal autorisé.
  */
 HAL_StatusTypeDef lidar_send_get_health(void)
 {
@@ -350,8 +395,25 @@ HAL_StatusTypeDef lidar_send_get_health(void)
 /**
  * @brief Envoie une commande pour réinitialiser le LiDAR.
  *
- * Cette fonction utilise l'interface UART pour envoyer la commande de
- * réinitialisation au capteur LiDAR.
+ * Cette fonction utilise l'interface UART pour envoyer une commande permettant
+ * de réinitialiser le LiDAR. Cette opération force le LiDAR à redémarrer,
+ * revenant à un état similaire à celui d'un démarrage après mise sous tension.
+ *
+ * @details
+ * - Une réinitialisation est particulièrement utile lorsque le LiDAR entre dans
+ *   l'état de protection ("Protection Stop state") en raison d'une erreur matérielle.
+ * - Après un redémarrage, le LiDAR revient à l'état d'attente (idle state),
+ *   dans lequel il peut accepter de nouvelles commandes, comme une commande de
+ *   démarrage de scan.
+ * - **Aucune réponse** n'est envoyée par le LiDAR suite à cette commande.
+ *   Par conséquent, le système hôte doit attendre au moins 2 millisecondes avant
+ *   d'envoyer une nouvelle requête.
+ *
+ * @return HAL_StatusTypeDef
+ * - **HAL_OK** : La commande a été envoyée avec succès.
+ * - **HAL_ERROR** : Une erreur de transmission s'est produite.
+ * - **HAL_BUSY** : L'UART est occupé.
+ * - **HAL_TIMEOUT** : La transmission a dépassé le délai maximal autorisé.
  */
 HAL_StatusTypeDef lidar_send_reset(void)
 {
@@ -360,11 +422,18 @@ HAL_StatusTypeDef lidar_send_reset(void)
 }
 
 /**
- * @brief Envoie une commande pour obtenir des informations sur le LiDAR.
+ * @brief Envoie une commande pour obtenir des informations générales sur le LiDAR.
  *
- * Cette fonction utilise l'interface UART pour envoyer la commande de
- * récupération des informations générales sur le capteur LiDAR.
+ * Cette fonction utilise l'interface UART pour envoyer une commande au LiDAR,
+ * demandant des informations générales telles que le modèle, la version du firmware,
+ * la version du matériel et le numéro de série. Une fois cette requête reçue,
+ * le LiDAR envoie ses informations au système hôte.
  *
+ * @return HAL_StatusTypeDef
+ * - **HAL_OK** : La commande a été envoyée avec succès.
+ * - **HAL_ERROR** : Une erreur de transmission s'est produite.
+ * - **HAL_BUSY** : L'UART est occupé.
+ * - **HAL_TIMEOUT** : La transmission a dépassé le délai maximal autorisé.
  */
 HAL_StatusTypeDef lidar_send_get_info(void)
 {
