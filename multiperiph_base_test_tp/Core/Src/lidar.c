@@ -143,10 +143,10 @@ void lidar_decode_get_info(uint8_t *buffer)
 	uint8_t hardware = ((rplidar_device_info_data_response_t *)(buffer + 8 * 3))->hardware;
 
 	printf("=== Info ===\n"
-			   "model : %d\n"
-			   "firmware ver : %d.%d\n"
-			   "hardware ver : %d\n"
-			   "serial number : ", model, firmware_major, firmware_minor, hardware);
+			"model : %d\n"
+			"firmware ver : %d.%d\n"
+			"hardware ver : %d\n"
+			"serial number : ", model, firmware_major, firmware_minor, hardware);
 
 	for (size_t i = (8 * 4); i <= (8 * 19); i += 8)
 	{
@@ -159,7 +159,53 @@ void lidar_decode_get_info(uint8_t *buffer)
 		}
 	}
 
-    printf("======================\n");
+	printf("======================\n");
+}
+
+/**
+ * @brief Décode et affiche les durées de mesure pour les modes de scan standard et express.
+ *
+ * Cette fonction extrait les données du paquet de réponse "GET_SAMPLERATE" envoyé par le LiDAR
+ * et affiche les durées de mesure pour chaque mode de balayage.
+ *
+ * @param buffer Pointeur vers le tampon contenant les données brutes du paquet de réponse.
+ *
+ * @details
+ * - **Tstandard** : Durée nécessaire pour effectuer une mesure laser unique en mode standard.
+ *   - Unité : Microsecondes (µs).
+ *   - Utilisée pour calculer la vitesse de rotation du LiDAR en mode de scan standard.
+ * - **Texpress** : Durée nécessaire pour effectuer une mesure laser unique en mode express.
+ *   - Unité : Microsecondes (µs).
+ *   - Utilisée pour calculer la vitesse de rotation du LiDAR en mode de scan express.
+ *
+ * Ces valeurs sont particulièrement utiles pour le débogage et l'ajustement précis
+ * de la vitesse de rotation du LiDAR.
+ *
+ * @note
+ * - Les valeurs décodées sont affichées sous un format lisible via `printf`.
+ * - Le tampon `buffer` doit être correctement initialisé avec une réponse valide
+ *   du LiDAR pour éviter des résultats incorrects.
+ *
+ * @example Exemple de sortie :
+ * Si le paquet de réponse contient les valeurs Tstandard = 500 et Texpress = 250,
+ * la sortie sera :
+ * ```
+ * === GET_SAMPLERATE ===
+ * Tstandard : 500
+ * Texpress  : 250
+ * ======================
+ * ```
+ * @TODO Tester et valider la fonction lidar_decode_get_samplerate(uint8_t *buffer)
+ */
+void lidar_decode_get_samplerate(uint8_t *buffer)
+{
+	uint16_t Tstandard = ((rplidar_sample_rate_data_response_t *)(buffer))->Tstandard;
+	uint16_t Texpress = ((rplidar_sample_rate_data_response_t *)(buffer))->Texpress;
+
+	printf("=== GET_SAMPLERATE ===\n");
+	printf("Tstandard : %d\n", Tstandard);
+	printf("Texpress  : %d\n", Texpress);
+	printf("======================\n");
 }
 
 /**

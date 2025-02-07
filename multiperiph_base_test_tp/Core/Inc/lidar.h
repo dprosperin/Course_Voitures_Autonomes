@@ -63,6 +63,11 @@ typedef struct {
 	uint8_t serialnumber_15 : 8;
 } __attribute__((packed)) rplidar_device_info_data_response_t;
 
+typedef struct {
+	uint16_t Tstandard : 16;
+	uint16_t Texpress  : 16;
+} __attribute__((packed)) rplidar_sample_rate_data_response_t;
+
 typedef enum {
 	LIDAR_RESET,
 	LIDAR_STOP,
@@ -108,6 +113,7 @@ void lidar_print_array_distance_teleplot_format(int16_t *points, float num_point
 void lidar_handle_receive_character();
 void lidar_decode_get_health(uint8_t *buffer);
 void lidar_decode_get_info(uint8_t *buffer);
+void lidar_decode_get_samplerate(uint8_t *buffer);
 
 HAL_StatusTypeDef lidar_send_start_scan(void);
 HAL_StatusTypeDef lidar_send_get_health(void);
