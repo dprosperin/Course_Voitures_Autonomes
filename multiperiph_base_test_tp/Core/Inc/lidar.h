@@ -138,4 +138,6 @@ HAL_StatusTypeDef lidar_send_get_samplerate(void);
 void lidar_half_complete_scan_callback();
 void lidar_complete_scan_callback();
 
+uint8_t lidar_calculate_checksum(uint8_t *buffer, size_t number_of_bytes);
+
 #endif /* INC_LIDAR_H_ */

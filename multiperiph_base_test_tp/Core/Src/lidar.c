@@ -532,3 +532,18 @@ __weak void lidar_complete_scan_callback()
 
 }
 
+/**
+ * @brief Calcul la somme de controle
+ * @todo gérer le cas de dépassement de tableau
+ */
+uint8_t lidar_calculate_checksum(uint8_t *buffer, size_t number_of_bytes)
+{
+	uint8_t checksum = 0;
+
+	for (size_t i = 0; i < number_of_bytes; i++)
+	{
+		checksum ^= buffer[i];
+	}
+
+	return checksum;
+}
