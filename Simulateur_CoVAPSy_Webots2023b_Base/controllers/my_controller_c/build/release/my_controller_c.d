@@ -7,4 +7,5 @@ build/release/my_controller_c.o: my_controller_c.c \
  C:\Program\ Files\Webots/include/controller/c/webots/vehicle/driver.h \
  C:\Program\ Files\Webots/include/controller/c/webots/keyboard.h \
  C:\Program\ Files\Webots/include/controller/c/webots/lidar.h \
- C:\Program\ Files\Webots/include/controller/c/webots/lidar_point.h
+ C:\Program\ Files\Webots/include/controller/c/webots/lidar_point.h \
+ C:\Program\ Files\Webots/include/controller/c/webots/display.h

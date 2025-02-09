@@ -17,12 +17,16 @@
 #include <webots/keyboard.h>
 #include <stdio.h>
 #include <webots/lidar.h>
+#include <webots/display.h>
 /*
  * You may want to add macros here.
  */
 #define TIME_STEP 30
 #define SIZE_TABLEAU 200
 #define MAX_SPEED 6.28  // Vitesse maximale des moteurs
+
+
+
 
 const float* range_donnees;
 //float range_donnees[SIZE_TABLEAU];
@@ -33,11 +37,17 @@ void affichage_consigne();
 void set_vitesse_m_s(float vitesse_m_s);
 unsigned char gestion_appui_clavier(void);
 void recule(void);
-float set_angle() ; 
 //vitesse en km/h
 float speed = 0;
 float maxSpeed = 28; //km/h
 signed int data_lidar_mm_main[360];
+
+void reculer () ; 
+
+float* distance_mur () ;  
+void virage () ; 
+void discontinuite() ; 
+WbDeviceTag lidar;
 
 
   /* main loop
@@ -56,7 +66,7 @@ int main(int argc, char **argv)
   // enable keyboard
   wb_keyboard_enable(TIME_STEP);
   // enable lidar
-  WbDeviceTag lidar = wb_robot_get_device("RpLidarA2");
+  lidar = wb_robot_get_device("RpLidarA2");
   wb_lidar_enable(lidar, TIME_STEP);
   // affichage des points lidar sur la piste
   wb_lidar_enable_point_cloud(lidar);
@@ -90,14 +100,12 @@ int main(int argc, char **argv)
 
     if (modeAuto) 
     {  
-          set_angle(); 
-          vitesse_m_s = 0.8;
+            //distance_mur () ; 
+            //virage () ; 
+          //reculer () ; 
+          discontinuite() ; 
+          vitesse_m_s = 0.0;
           set_vitesse_m_s(vitesse_m_s);
-          if (data_lidar_mm_main[359]<250)
-          {
-          recule(); // Reculer
-          wb_robot_step(2500); // Reculer pendant 2.5s
-          }
     }
   } // Fin de la boucle while
 
@@ -159,31 +167,113 @@ void recule(void){
     wbu_driver_set_cruising_speed(-1);
 }
 
-
-  
-float set_angle()
-{   
-float distance_droite = data_lidar_mm_main[315];   
-float distance_gauche = data_lidar_mm_main[45];   
-float distance  = distance_droite - distance_gauche ; 
-float kp = 0.002;
-float angle = 0.0 ; 
-
-//kp = 0.0002 pour des corrections plus douces ou kp = 0.001 pour des corrections plus agressives.
-
- angle = kp * distance;
-if (angle > 0.31) {angle = 0.31;}   // Limite à droite
-if (angle < -0.31) {angle = -0.31;} // Limite à gauche
-
- // Appliquer l'angle calculé     
-    wbu_driver_set_steering_angle(angle); 
-    
-         if (data_lidar_mm_main[359]<250)
+  void reculer () 
+{
+   if (data_lidar_mm_main[359]<250)
           {
-      wbu_driver_set_steering_angle(-angle); 
+          recule(); // Reculer
+          wb_robot_step(2500);
           }
-    
-    
-    return distance ; 
 }
+
+float* distance_mur () 
+{
+static float distance_au_mur [3] = {0.0} ;
+  float somme_face = 0.0, somme_gauche = 0.0, somme_droite = 0.0;
+  int count_face = 0, count_gauche = 0, count_droite = 0;
+
+    for (int i = 0; i < 360; i++) 
+    {
+        if ((i >= 0 && i <= 45) || (i >= 315 && i < 360)) 
+        {  // Face
+            somme_face += data_lidar_mm_main[i];
+            count_face++;
+        } 
+        else if (i >= 45 && i <= 90) 
+        {  // Gauche
+            somme_gauche += data_lidar_mm_main[i];
+            count_gauche++;
+        } 
+        else if (i >= 270 && i <= 315) {  // Droite
+            somme_droite += data_lidar_mm_main[i];
+            count_droite++;
+        }
+    }
+
+    float distance_face = somme_face / count_face;
+    float distance_gauche = somme_gauche / count_gauche ;
+    float distance_droite = somme_droite / count_droite ;
+    distance_au_mur [0] = distance_gauche  ; 
+    distance_au_mur [1] = distance_face ; 
+    distance_au_mur [2] = distance_droite ; 
+
+
+
+
+   // printf("Distance au mur en face  : %.1f mm\n", distance_face);
+   // printf("Distance au mur à gauche : %.1f mm\n", distance_gauche);
+   // printf("Distance au mur à droite : %.1f mm\n", distance_droite);
+  return distance_au_mur ;
+}
+
+void virage() 
+{
+    float* distances = distance_mur(); 
+
+    // Affichage pour débogage
+    printf("Gauche: %.1f, Face: %.1f, Droite: %.1f\n", distances[0], distances[1], distances[2]);
+
+    // Vérification si la voiture est dans un virage à gauche
+    if (distances[0] < distances[1] && distances[0] < distances[2] && 
+        (distances[1] - distances[0] > 50.0 || distances[2] - distances[0] > 50.0)) {
+        printf("Virage à gauche détecté.\n");
+    } 
+    // Vérification si la voiture est dans un virage à droite
+    else if (distances[2] < distances[1] && distances[2] < distances[0] && 
+             (distances[1] - distances[2] > 50.0 || distances[0] - distances[2] > 50.0)) {
+        printf("Virage à droite détecté.\n");
+    }
+    // Vérification si la voiture est en ligne droite (distances similaires entre gauche, face et droite)
+    else if (fabs(distances[0] - distances[1]) < 50.0 && fabs(distances[1] - distances[2]) < 50.0) {
+        printf("Ligne droite détectée.\n");
+    } 
+    else {
+        printf("Situation ambiguë ou virage serré détecté.\n");
+    } 
+}
+
+float deg_to_rad(float deg) {
+    return deg * M_PI / 180.0;
+}
+
+void discontinuite() {
+    float distance_actuelle = 0.0;
+    float distance_apres = 0.0;
+    float diff = 0.0;
+    float seuil_discontinuite = 100.0;  // Seuil pour considérer une discontinuité
+
+    for (int i = 1; i < 359; i++) {
+        if ((i >= 0 && i <= 45) || (i >= 315 && i <= 359)) {   
+            distance_actuelle = (float) data_lidar_mm_main[i]; 
+            distance_apres = (float) data_lidar_mm_main[i + 1];
+
+            diff = fabs(distance_apres - distance_actuelle);
+
+            if (diff >= seuil_discontinuite) 
+            {
+                if (distance_actuelle < distance_apres) 
+                {
+                    printf("  -> Minimum local à l'angle %d : %4.2f mm\n", i, distance_actuelle);
+                } 
+                else if (distance_actuelle > distance_apres) {
+                    printf("  -> Maximum local à l'angle %d : %4.2f mm\n", i, distance_actuelle);
+
+                }
+            }
+        }
+    }
+}
+
+
+
 
