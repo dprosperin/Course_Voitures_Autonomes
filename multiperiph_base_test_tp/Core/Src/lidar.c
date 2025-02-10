@@ -83,11 +83,11 @@ void lidar_decode_get_health(uint8_t *buffer)
 {
 	char status_msg[16] = "";
 
-	uint8_t status = ((rplidar_device_health_data_response_t *)(buffer + 7))->status;
+	uint8_t status = ((rplidar_device_health_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_HEALTH))->status;
 
-	uint8_t error_code_low_byte = ((rplidar_device_health_data_response_t *)(buffer + 7))->error_code_7_0;
+	uint8_t error_code_low_byte = ((rplidar_device_health_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_HEALTH))->error_code_7_0;
 
-	uint8_t error_code_high_byte = ((rplidar_device_health_data_response_t *)(buffer + 7))->error_code_15_8;
+	uint8_t error_code_high_byte = ((rplidar_device_health_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_HEALTH))->error_code_15_8;
 
 	uint16_t error_code = ((((uint16_t) error_code_high_byte << 8) & 0xFF00 ) | ((uint16_t) error_code_low_byte & 0x00FF));
 
@@ -139,10 +139,10 @@ void lidar_decode_get_health(uint8_t *buffer)
  */
 void lidar_decode_get_info(uint8_t *buffer)
 {
-	uint8_t model = ((rplidar_device_info_data_response_t *)(buffer))->model;
-	uint8_t firmware_minor = ((rplidar_device_info_data_response_t *)(buffer + 8))->firmware_minor;
-	uint8_t firmware_major = ((rplidar_device_info_data_response_t *)(buffer + 8 * 2))->firmware_major;
-	uint8_t hardware = ((rplidar_device_info_data_response_t *)(buffer + 8 * 3))->hardware;
+	uint8_t model = ((rplidar_device_info_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_INFO))->model;
+	uint8_t firmware_minor = ((rplidar_device_info_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_INFO))->firmware_minor;
+	uint8_t firmware_major = ((rplidar_device_info_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_INFO))->firmware_major;
+	uint8_t hardware = ((rplidar_device_info_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_INFO))->hardware;
 
 	printf("=== Info ===\n"
 			"model : %d\n"
@@ -150,9 +150,9 @@ void lidar_decode_get_info(uint8_t *buffer)
 			"hardware ver : %d\n"
 			"serial number : ", model, firmware_major, firmware_minor, hardware);
 
-	for (size_t i = (8 * 4); i <= (8 * 19); i += 8)
+	for (size_t i = (LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_INFO + 4); i < LIDAR_RESPONSE_SIZE_GET_INFO; i++)
 	{
-		if (i == (8 * 19))
+		if (i == LIDAR_RESPONSE_SIZE_GET_INFO - 1)
 		{
 			printf("%X\n", buffer[i]);
 		} else
@@ -201,8 +201,8 @@ void lidar_decode_get_info(uint8_t *buffer)
  */
 void lidar_decode_get_samplerate(uint8_t *buffer)
 {
-	uint16_t Tstandard = ((rplidar_sample_rate_data_response_t *)(buffer))->Tstandard;
-	uint16_t Texpress = ((rplidar_sample_rate_data_response_t *)(buffer))->Texpress;
+	uint16_t Tstandard = ((rplidar_sample_rate_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE))->Tstandard;
+	uint16_t Texpress = ((rplidar_sample_rate_data_response_t *)(buffer+ LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE))->Texpress;
 
 	printf("=== GET_SAMPLERATE ===\n");
 	printf("Tstandard : %d\n", Tstandard);
@@ -508,7 +508,7 @@ HAL_StatusTypeDef lidar_send_get_info(void)
 	command_requested = LIDAR_GET_INFO;
 	if ((return_get_info = HAL_UART_Transmit(&LIDAR_HUART, LIDAR_COMMAND_GET_INFO, LIDAR_COMMAND_GET_INFO_LEN, HAL_MAX_DELAY)) == HAL_OK)
 	{
-		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_HEALTH);
+		HAL_UART_Receive_IT(&LIDAR_HUART, buffer_UART, LIDAR_RESPONSE_SIZE_GET_INFO);
 	}
 
 	return return_get_info;

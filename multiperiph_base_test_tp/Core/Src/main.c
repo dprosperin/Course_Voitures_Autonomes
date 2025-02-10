@@ -273,16 +273,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		if (command_requested == LIDAR_GET_INFO)
 		{
 			printf("Response descriptor GET_INFO\n");
-			/**
-			 * @todo Verifer et valider le retour de : lidar_decode_get_info(buffer_UART);
-			 */
 			lidar_decode_get_info(buffer_UART);
 		} else if (command_requested == LIDAR_GET_HEALTH)
 		{
 			printf("Response descriptor GET_HEALTH\n");
-			/**
-			 * @todo Verifer et valider le retour de : lidar_decode_get_health(buffer_UART);
-			 */
 			lidar_decode_get_health(buffer_UART);
 		} else if (command_requested == LIDAR_START_SCAN)
 		{
@@ -293,9 +287,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		{
 			printf("Response descriptor GET_SAMPLERATE\n");
 			/**
-			 * @todo Verifer et valider le retour de : lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
+			 * @todo Verifer le retour quand le LIDAR est en mode balayage
 			 */
-			lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
+			lidar_decode_get_samplerate(buffer_UART);
 		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 			if (command_requested == LIDAR_SCAN_IN_PROGESS)
