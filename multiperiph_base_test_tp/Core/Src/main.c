@@ -295,7 +295,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			/**
 			 * @todo Verifer et valider le retour de : lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
 			 */
-			lidar_decode_get_samplerate(buffer_UART + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_SAMPLERATE);
+			lidar_decode_get_samplerate(buffer_UART);
 		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 			if (command_requested == LIDAR_SCAN_IN_PROGESS)
