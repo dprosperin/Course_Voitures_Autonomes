@@ -26,12 +26,17 @@
 /* USER CODE BEGIN Includes */
 #include "pwm_api.h"
 #include "herculex.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
 #define avancer 0
 #define reculer 1
+#define TIM_CLOCK 170000000
+#define PRESCALAR 1
+#define ARR 170000000-1
+
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -47,7 +52,13 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+#define PUTCHAR_PROTOTYPE int __io_putchar(int ch)
+PUTCHAR_PROTOTYPE
+{
+	HAL_UART_Transmit(&huart2, (uint8_t*)&ch, 1, HAL_MAX_DELAY);
 
+	return ch;
+}
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -58,6 +69,41 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+float CK_CNT = TIM_CLOCK/(PRESCALAR);
+uint32_t IC_Val1 = 0, IC_Val2 = 0;
+uint32_t Difference = 0;
+char First_rising;
+float Frecuency = 0;
+float m_per_sec = 0;
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
+{
+	if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
+	{
+		if(First_rising == 1)
+		{
+			IC_Val1 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+			First_rising = 0;
+		}
+		else
+		{
+			IC_Val2 = HAL_TIM_ReadCapturedValue(htim, TIM_CHANNEL_3);
+			if(IC_Val2 > IC_Val1)
+			{
+				Difference = IC_Val2 - IC_Val1;
+			}
+			else if (IC_Val1 > IC_Val2)
+			{
+				Difference = ( ARR - IC_Val1) + IC_Val2;
+			}
+
+			Frecuency = CK_CNT/Difference;
+			m_per_sec = 4.9375*0.001*Frecuency;
+
+			__HAL_TIM_SET_COUNTER(htim, 0);
+			First_rising = 1;
+		}
+	}
+}
 /* USER CODE END 0 */
 
 /**
@@ -90,20 +136,21 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM1_Init();
+  MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
   HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-  uint32_t count = 0, old_count = 0,derive = 0 ;
+  HAL_TIM_IC_Start_IT(&htim2,TIM_CHANNEL_3);
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  if(HAL_GPIO_ReadPin(GPIOA,Fourche_optique_Pin))
-	  {
-	  HAL_GPIO_WritePin(GPIOB, led_test_Pin, 1);
-	  }
-	  else HAL_GPIO_WritePin(GPIOB, led_test_Pin, 0);
+	  //printf("Frequence(Hz): %f Vitesse(M/S): %f\n", Frecuency, m_per_sec);
+	  printf(">Frequence:%f\n", Frecuency);
+	  printf(">Vitesse: %f\n", m_per_sec);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
