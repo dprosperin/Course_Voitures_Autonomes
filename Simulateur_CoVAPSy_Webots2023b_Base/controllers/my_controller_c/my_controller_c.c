@@ -41,6 +41,7 @@ void recule(void);
 float speed = 0;
 float maxSpeed = 28; //km/h
 signed int data_lidar_mm_main[360];
+typedef etat_autonome {max_locale , min_locale, vérifie} ; 
 
 void reculer () ; 
 
@@ -250,7 +251,7 @@ void discontinuite() {
     float distance_actuelle = 0.0;
     float distance_apres = 0.0;
     float diff = 0.0;
-    float seuil_discontinuite = 100.0;  // Seuil pour considérer une discontinuité
+    float seuil_discontinuite = 60-.0;  // Seuil pour considérer une discontinuité
 
     for (int i = 1; i < 359; i++) {
         if ((i >= 0 && i <= 45) || (i >= 315 && i <= 359)) {   
