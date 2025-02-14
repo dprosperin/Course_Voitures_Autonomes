@@ -172,7 +172,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	//capteur_obstacles_init();
 	if (huart->Instance == USART1)
 	{
-		capteur_obstacles_decode_frame(buffer_DMA_reception);
+		tof_parameter tof0;
+		capteur_obstacles_decode_frame(buffer_DMA_reception, &tof0);
+		capteur_obstacles_print_frame(&tof0);
 		capteur_obstacles_init();
 	}
 }
