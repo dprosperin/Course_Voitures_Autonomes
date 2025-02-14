@@ -8,6 +8,7 @@
 #include "usart.h"
 #include <stdio.h>
 #include "capteur_obstacles.h"
+#include <stdbool.h>
 
 uint8_t buffer_DMA_reception[BUFFER_DMA_RECEPTION_SIZE] = {0};
 
@@ -28,7 +29,18 @@ void capteur_obstacles_decode_frame(uint8_t *rx_buf)
 {
 	tof_parameter tof0;
 
-	if((rx_buf[0] == TOF_FRAME_HEADER)&&(rx_buf[1] == TOF_FUNCTION_MARK))
+	bool checksum_pass = 0;
+	uint8_t sum_byte = 0;
+
+	for (size_t i = 0; i < 15; i++)
+	{
+		sum_byte += rx_buf[i];
+	}
+
+	checksum_pass = sum_byte == rx_buf[15];
+
+
+	if((rx_buf[0] == TOF_FRAME_HEADER)&&(rx_buf[1] == TOF_FUNCTION_MARK) && (checksum_pass))
 	{
 		tof0.id=rx_buf[3];
 		tof0.system_time=(unsigned long)(((unsigned long)rx_buf[7])<<24|((unsigned long)rx_buf[6])<<16|((unsigned long)rx_buf[5])<<8|(unsigned long)rx_buf[4]);
