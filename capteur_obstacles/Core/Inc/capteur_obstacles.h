@@ -27,6 +27,8 @@ typedef struct {
 HAL_StatusTypeDef capteur_obstacles_init();
 void capteur_obstacles_decode_frame(uint8_t *rx_buf, tof_parameter *tof0);
 void capteur_obstacles_print_frame(tof_parameter *tof0);
-
+uint8_t capteur_obstacles_compute_checksum(uint8_t *rx_buf);
+bool capteur_obstacles_verify_checksum(uint8_t *rx_buf);
+HAL_StatusTypeDef capteur_obstacles_send_read_frame(uint8_t id);
 
 #endif /* INC_CAPTEUR_OBSTACLES_H_ */
