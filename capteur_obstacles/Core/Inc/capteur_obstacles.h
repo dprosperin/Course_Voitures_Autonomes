@@ -29,6 +29,9 @@ typedef enum {
 	TOF_INQUIRE
 } tof_data_output_mode_t;
 
+#define TOF_LEFT_SENSOR_ID 93
+#define TOF_RIGHT_SENSOR_ID 92
+
 HAL_StatusTypeDef capteur_obstacles_init();
 void capteur_obstacles_decode_frame(uint8_t *rx_buf, tof_parameter *tof0);
 void capteur_obstacles_print_frame(tof_parameter *tof0);

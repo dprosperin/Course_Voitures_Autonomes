@@ -107,6 +107,7 @@ int main(void)
    */
   capteur_obstacles_init();
 
+  capteur_obstacles_set_data_output_mode(TOF_LEFT_SENSOR_ID, TOF_ACTIVE);
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -131,6 +131,7 @@ HAL_StatusTypeDef capteur_obstacles_send_read_frame(uint8_t id)
  *
  * Cette fonction envoie une trame pour configurer le mode de sortie des données
  * (actif ou sur requête) pour un capteur TOFSense identifié par son ID.
+ * @attention Le paramétrage met plusieurs secondes à prendre effet
  *
  * @param[in] id Identifiant du capteur TOFSense à configurer.
  * @param[in] tof_data_output_mode Mode de sortie des données (énumération TOF_ACTIVE ou TOF_INQUIRE).
