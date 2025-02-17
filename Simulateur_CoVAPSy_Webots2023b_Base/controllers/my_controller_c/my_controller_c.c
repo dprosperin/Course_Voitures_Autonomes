@@ -41,13 +41,12 @@ void recule(void);
 float speed = 0;
 float maxSpeed = 28; //km/h
 signed int data_lidar_mm_main[360];
-typedef etat_autonome {max_locale , min_locale, vérifie} ; 
+typedef enum {INIT,MIN_LOCAL,MAX_LOCAL,AUGMENTER,DIMINUER} etat_discontuinuite ; 
+static etat_discontuinuite etat  = INIT ; 
 
 void reculer () ; 
+void recherches_locaux() ;
 
-float* distance_mur () ;  
-void virage () ; 
-void discontinuite() ; 
 WbDeviceTag lidar;
 
 
@@ -101,11 +100,9 @@ int main(int argc, char **argv)
 
     if (modeAuto) 
     {  
-            //distance_mur () ; 
-            //virage () ; 
-          //reculer () ; 
-          discontinuite() ; 
-          vitesse_m_s = 0.0;
+      
+          recherches_locaux() ; 
+          vitesse_m_s = 0.8;
           set_vitesse_m_s(vitesse_m_s);
     }
   } // Fin de la boucle while
@@ -177,104 +174,73 @@ void recule(void){
           }
 }
 
-float* distance_mur () 
+void recherches_locaux() 
 {
-static float distance_au_mur [3] = {0.0} ;
-  float somme_face = 0.0, somme_gauche = 0.0, somme_droite = 0.0;
-  int count_face = 0, count_gauche = 0, count_droite = 0;
+    int distance_actuelle = 0;
+    int distance_apres = 0;
 
-    for (int i = 0; i < 360; i++) 
+   
+    
+    // Parcours des angles du lidar (de 1 à 358 pour éviter de sortir du tableau avec i+1)
+    for (int i = 1; i < 359; i++) 
     {
-        if ((i >= 0 && i <= 45) || (i >= 315 && i < 360)) 
-        {  // Face
-            somme_face += data_lidar_mm_main[i];
-            count_face++;
-        } 
-        else if (i >= 45 && i <= 90) 
-        {  // Gauche
-            somme_gauche += data_lidar_mm_main[i];
-            count_gauche++;
-        } 
-        else if (i >= 270 && i <= 315) {  // Droite
-            somme_droite += data_lidar_mm_main[i];
-            count_droite++;
-        }
-    }
+        // Filtrage des angles souhaités (ici 0-90° et 315-359°)
+        if ((i >= 0 && i <= 90) || (i >= 315 && i <= 359))
+        {   
+            distance_actuelle = data_lidar_mm_main[i];     
+            distance_apres = data_lidar_mm_main[i+1];   
+            
+            switch (etat)
+            { 
+                case INIT:
+                    if (distance_actuelle < distance_apres)
+                    {
+                        etat = AUGMENTER;
+                    }
+                    else if (distance_actuelle > distance_apres)
+                    {
+                        etat = DIMINUER;
+                    }
+                    break;
 
-    float distance_face = somme_face / count_face;
-    float distance_gauche = somme_gauche / count_gauche ;
-    float distance_droite = somme_droite / count_droite ;
-    distance_au_mur [0] = distance_gauche  ; 
-    distance_au_mur [1] = distance_face ; 
-    distance_au_mur [2] = distance_droite ; 
+                case AUGMENTER:
+                    if (distance_actuelle < distance_apres)
+                    {
+                        etat = AUGMENTER;
+                    }
+                    else if (distance_actuelle > distance_apres)
+                    {
+                        etat = MAX_LOCAL;
+                    }
+                    break;
 
+                case DIMINUER:
+                    if (distance_actuelle > distance_apres)
+                    {
+                        etat = DIMINUER;
+                    }
+                    else if (distance_actuelle < distance_apres)
+                    {
+                        etat = MIN_LOCAL;
+                    }
+                    break;
 
+                case MIN_LOCAL:
+                    printf("Minimum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
+                    etat = INIT; 
 
+                case MAX_LOCAL:
+                    printf("Maximum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
+                    wbu_driver_set_steering_angle(i) ; 
+                    etat = INIT; // Réinitialiser pour le prochain cycle
+                    break;
 
-   // printf("Distance au mur en face  : %.1f mm\n", distance_face);
-   // printf("Distance au mur à gauche : %.1f mm\n", distance_gauche);
-   // printf("Distance au mur à droite : %.1f mm\n", distance_droite);
-  return distance_au_mur ;
-}
-
-void virage() 
-{
-    float* distances = distance_mur(); 
-
-    // Affichage pour débogage
-    printf("Gauche: %.1f, Face: %.1f, Droite: %.1f\n", distances[0], distances[1], distances[2]);
-
-    // Vérification si la voiture est dans un virage à gauche
-    if (distances[0] < distances[1] && distances[0] < distances[2] && 
-        (distances[1] - distances[0] > 50.0 || distances[2] - distances[0] > 50.0)) {
-        printf("Virage à gauche détecté.\n");
-    } 
-    // Vérification si la voiture est dans un virage à droite
-    else if (distances[2] < distances[1] && distances[2] < distances[0] && 
-             (distances[1] - distances[2] > 50.0 || distances[0] - distances[2] > 50.0)) {
-        printf("Virage à droite détecté.\n");
-    }
-    // Vérification si la voiture est en ligne droite (distances similaires entre gauche, face et droite)
-    else if (fabs(distances[0] - distances[1]) < 50.0 && fabs(distances[1] - distances[2]) < 50.0) {
-        printf("Ligne droite détectée.\n");
-    } 
-    else {
-        printf("Situation ambiguë ou virage serré détecté.\n");
-    } 
-}
-
-float deg_to_rad(float deg) {
-    return deg * M_PI / 180.0;
-}
-
-void discontinuite() {
-    float distance_actuelle = 0.0;
-    float distance_apres = 0.0;
-    float diff = 0.0;
-    float seuil_discontinuite = 60-.0;  // Seuil pour considérer une discontinuité
-
-    for (int i = 1; i < 359; i++) {
-        if ((i >= 0 && i <= 45) || (i >= 315 && i <= 359)) {   
-            distance_actuelle = (float) data_lidar_mm_main[i]; 
-            distance_apres = (float) data_lidar_mm_main[i + 1];
-
-            diff = fabs(distance_apres - distance_actuelle);
-
-            if (diff >= seuil_discontinuite) 
-            {
-                if (distance_actuelle < distance_apres) 
-                {
-                    printf("  -> Minimum local à l'angle %d : %4.2f mm\n", i, distance_actuelle);
-                } 
-                else if (distance_actuelle > distance_apres) {
-                    printf("  -> Maximum local à l'angle %d : %4.2f mm\n", i, distance_actuelle);
-
-                }
+                default:
+                    break;
             }
         }
-    }
+    } 
+    printf("Fin de tour du lidar\n");
 }
-
-
 
 
