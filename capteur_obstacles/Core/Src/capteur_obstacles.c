@@ -16,6 +16,7 @@ uint8_t buffer_DMA_reception[BUFFER_DMA_RECEPTION_SIZE] = {0};
 #define TOF_FUNCTION_MARK 0x00
 #define TOF_FUNCTION_MARK_READ_FRAME 0x10
 #define TOF_SIZE_READ_FRAME 16
+#define TOF_SIZE_PARAMETER 32
 
 /**
  * @brief Démarre le DMA en mode normal pour la réception des trames.
@@ -42,7 +43,7 @@ HAL_StatusTypeDef capteur_obstacles_init()
  */
 void capteur_obstacles_decode_frame(uint8_t *rx_buf, tof_parameter *tof0)
 {
-	tof0->checksum_pass = capteur_obstacles_verify_checksum(rx_buf);
+	tof0->checksum_pass = capteur_obstacles_compute_checksum(rx_buf, TOF_SIZE_READ_FRAME) == rx_buf[15];
 
 	if((rx_buf[0] == TOF_FRAME_HEADER)&&(rx_buf[1] == TOF_FUNCTION_MARK) && (tof0->checksum_pass))
 	{
@@ -76,33 +77,20 @@ void capteur_obstacles_print_frame(tof_parameter *tof0)
 }
 
 /**
- * @brief Vérifie le checksum d'une trame TOFSense.
- *
- * Cette fonction calcule le checksum sur les 15 premiers octets du buffer reçu
- * et le compare au checksum attendu (16ème octet).
- *
- * @param[in] rx_buf Buffer contenant les données reçues via UART.
- * @return bool Retourne true si le checksum est valide, false sinon.
- */
-bool capteur_obstacles_verify_checksum(uint8_t *rx_buf)
-{
-	return capteur_obstacles_compute_checksum(rx_buf) == rx_buf[15];
-}
-
-/**
  * @brief Calcule le checksum d'une trame TOFSense.
  *
- * Cette fonction additionne les 15 premiers octets du buffer reçu
- * pour calculer le checksum.
+ * Cette fonction additionne tous les octets du buffer,
+ * sauf le dernier, pour calculer le checksum attendu.
  *
  * @param[in] rx_buf Buffer contenant les données reçues via UART.
+ * @param[in] rx_buf_length Longueur totale du buffer rx_buf.
  * @return uint8_t Valeur calculée du checksum.
  */
-uint8_t capteur_obstacles_compute_checksum(uint8_t *rx_buf)
+uint8_t capteur_obstacles_compute_checksum(uint8_t *rx_buf, size_t rx_buf_length)
 {
 	uint8_t sum_byte = 0;
 
-	for (size_t i = 0; i < 15; i++)
+	for (size_t i = 0; i < (rx_buf_length - 1); i++)
 	{
 		sum_byte += rx_buf[i];
 	}
@@ -133,8 +121,70 @@ HAL_StatusTypeDef capteur_obstacles_send_read_frame(uint8_t id)
 			0
 	};
 
-	read_frame[15] = capteur_obstacles_compute_checksum(read_frame);
+	read_frame[15] = capteur_obstacles_compute_checksum(read_frame, TOF_SIZE_READ_FRAME);
 
 	return HAL_UART_Transmit(&huart1, read_frame, TOF_SIZE_READ_FRAME, HAL_MAX_DELAY);
 }
 
+/**
+ * @brief Configure le mode de sortie des données du capteur TOFSense.
+ *
+ * Cette fonction envoie une trame pour configurer le mode de sortie des données
+ * (actif ou sur requête) pour un capteur TOFSense identifié par son ID.
+ *
+ * @param[in] id Identifiant du capteur TOFSense à configurer.
+ * @param[in] tof_data_output_mode Mode de sortie des données (énumération TOF_ACTIVE ou TOF_INQUIRE).
+ * @return HAL_StatusTypeDef Retourne le statut de la transmission UART.
+ *         HAL_OK si la transmission a réussi, ou un autre code d'erreur sinon.
+ */
+HAL_StatusTypeDef capteur_obstacles_set_data_output_mode(uint8_t id, tof_data_output_mode_t tof_data_output_mode)
+{
+	uint8_t write_frame[TOF_SIZE_PARAMETER] = {
+			0x54,
+			0x20,
+			0x00,
+			0xFF,
+			id,
+			0x00,
+			0x00,
+			0x00,
+			0x00,
+			0x00, // Data output mode
+			0xFF,
+			0xFF,
+			0x00,
+			0x10,
+			0x0E,
+			0x1B,
+			0x1B,
+			0x00,
+			0x00,
+			0x00,
+			0x00,
+			0x00,
+			0x00,
+			0xFF,
+			0x01,
+			0x00,
+			0xFF,
+			0xFF,
+			0xFF,
+			0xFF,
+			0xFF,
+			0x00
+	};
+
+	if (tof_data_output_mode == TOF_ACTIVE)
+	{
+		write_frame[9] = 0x08;
+	} else if (tof_data_output_mode == TOF_INQUIRE)
+	{
+		write_frame[9] = 0x0A;
+	} else {
+		return HAL_ERROR;
+	}
+
+	write_frame[31] = capteur_obstacles_compute_checksum(write_frame, TOF_SIZE_PARAMETER);
+
+	return HAL_UART_Transmit(&huart1, write_frame, TOF_SIZE_PARAMETER, HAL_MAX_DELAY);
+}
