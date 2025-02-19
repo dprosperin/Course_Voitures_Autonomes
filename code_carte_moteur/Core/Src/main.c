@@ -32,6 +32,7 @@
 #define TIM_CLOCK 170000000
 #define PRESCALAR 1
 #define ARR 170000000-1
+#define CAN_ID_FOURCHE_OPTIQUE 27
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,6 +62,7 @@ uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
 float m_per_sec = 0;
+FDCAN_TxHeaderTypeDef header;
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
@@ -83,7 +85,22 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			}
 
 			Frecuency = CK_CNT/Difference;
-			m_per_sec = 4.9375*0.001*Frecuency;
+			m_per_sec = 4.9375*Frecuency;
+			/******************* NE PAS TOUCHER **************************************/
+			header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+			header.BitRateSwitch = FDCAN_BRS_OFF;
+			header.FDFormat = FDCAN_CLASSIC_CAN;
+			header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+			header.MessageMarker = 0;
+			/*************************************************************************/
+
+			header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
+			header.IdType = FDCAN_STANDARD_ID; // Standard ID
+			header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
+			header.DataLength = 1; // Data length
+
+			/*************************************************************************/
+			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, (uint8_t)m_per_sec);
 
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
@@ -115,6 +132,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
   /* USER CODE END 1 */
 
@@ -149,15 +167,16 @@ int main(void)
 	/**
 	 * @note Mettre la vitesse à 0 au démarrage du moteur CC
 	 */
-	PWM_dir_and_cycle(1, &htim1, TIM_CHANNEL_1, 0.7);
+	PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, 0.1);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+
 	while (1)
 	{
-		  printf(">Frequence:%f\n", Frecuency);
-		  printf(">Vitesse: %f\n", m_per_sec);
+		  //printf(">Frequence:%f\n", Frecuency);
+		  printf(">Vitesse: %f\n", m_per_sec/1000);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -226,7 +245,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
         /**
          * @Attention Si le Herkulex n'est pas alimenté en 7.2V alors il clignote en rouge
          */
-				send_pos_speed(ID_HERKULEX, pos_herculex,1.0);
+				send_pos(ID_HERKULEX, pos_herculex);
 				break;
 			case CAN_ID_MOTEUR:
 					float rapport_cyclique = trame_rx.data[0] / 100.0;

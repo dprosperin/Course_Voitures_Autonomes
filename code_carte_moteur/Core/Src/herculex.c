@@ -2,7 +2,7 @@
 
 uint8_t reboot [7] = {0xFF, 0xFF, 0x07, 0, 0x09, 0,0}; // Trame de la fonction reboot
 uint8_t torque[10] = {0xFF, 0xFF, 0x0A, 0, 0x03, 0,0, 0x34, 0x01,0}; //Trame pour la fonction send_torque
-uint8_t Iposition[12] = {0xFF, 0xFF, 0x0c, 0, 0x05, 0,0, 0,0, 0x04,0 , 0x3c}; //Trame pour la fonction send_Iposition
+uint8_t Iposition[12] = {0xFF, 0xFF, 0x0c, 0, 0x05, 0,0, 0,0, 0x04,0 , 0x00}; //Trame pour la fonction send_Iposition
 uint8_t change_acele[9]={0xff,0xff,0,0x01,0,0,14,1,0x00};
 
 uint16_t calcul_angle(double angle) // Calcul la valeur à envoyé en fonction d'un angle donné (+ ou - 90° de chaque côté)
