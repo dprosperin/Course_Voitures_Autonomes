@@ -63,6 +63,8 @@ char First_rising;
 float Frecuency = 0;
 float m_per_sec = 0;
 FDCAN_TxHeaderTypeDef header;
+int8_t	txData[2];
+//au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
 	if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
@@ -86,6 +88,8 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 			Frecuency = CK_CNT/Difference;
 			m_per_sec = 4.9375*Frecuency;
+			txData[0] = ((int16_t)m_per_sec) >> 8;
+			txData[1] = ((int16_t)m_per_sec) & 0x00FF;
 			/******************* NE PAS TOUCHER **************************************/
 			header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 			header.BitRateSwitch = FDCAN_BRS_OFF;
@@ -97,10 +101,10 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
 			header.IdType = FDCAN_STANDARD_ID; // Standard ID
 			header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
-			header.DataLength = 1; // Data length
+			header.DataLength = 2; // Data length
 
 			/*************************************************************************/
-			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, (uint8_t)m_per_sec);
+			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
 
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
@@ -177,6 +181,7 @@ int main(void)
 	{
 		  //printf(">Frequence:%f\n", Frecuency);
 		  printf(">Vitesse: %f\n", m_per_sec/1000);
+		  printf(">Frecuency: %f\n", Frecuency);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

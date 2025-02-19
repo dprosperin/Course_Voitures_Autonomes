@@ -63,8 +63,6 @@ void Error_Handler(void);
 #define USART2_RX_GPIO_Port GPIOA
 #define Fourche_optique_Pin GPIO_PIN_9
 #define Fourche_optique_GPIO_Port GPIOA
-#define test_out_Pin GPIO_PIN_10
-#define test_out_GPIO_Port GPIOA
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14
