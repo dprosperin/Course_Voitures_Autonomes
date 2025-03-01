@@ -23,12 +23,23 @@ values = []
 
 # Paramètres du graphique
 plt.ion()  # Mode interactif pour mettre à jour le graphique en temps réel
-fig, ax = plt.subplots()
-line, = ax.plot(times, values, label="Donnée simulée")
-ax.set_title("Graphique en temps réel avec Webots")
-ax.set_xlabel("Temps (s)")
-ax.set_ylabel("Valeur")
-ax.legend()
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+line, = ax1.plot(times, values, label="Donnée simulée")
+ax1.set_title("Graphique en temps réel avec Webots")
+ax1.set_xlabel("Temps (s)")
+ax1.set_ylabel("Valeur")
+ax1.grid(True)
+ax1.legend()
+
+ax2 = fig.add_subplot(122, projection='polar')
+tableau_lidar_mm=[0]*360
+theta = np.linspace(0, 2 * np.pi, 360)
+ax2.plot(theta, tableau_lidar_mm, label="Lidar")
+ax2.set_title("Projection Polaire")
+ax2.grid(True)
+ax2.legend()
+
+plt.ylim(-1000, 1000)  # Min = 0, Max = 40
 
 #Lidar
 lidar = Lidar("RpLidarA2")
@@ -51,8 +62,6 @@ maxangle_degre = 16
 # mise a zéro de la vitesse et de la direction
 driver.setSteeringAngle(angle)
 driver.setCruisingSpeed(speed)
-
-tableau_lidar_mm=[0]*360
 
 def set_vitesse_m_s(vitesse_m_s):
     speed = vitesse_m_s*3.6
@@ -121,11 +130,10 @@ while driver.step() != -1:
     #######################################################
    
         #un secteur par tranche de 20° donc 10 secteurs numérotés de 0 à 9    
-        angle_degre = 0.02*(tableau_lidar_mm[60]-tableau_lidar_mm[-60])
-        set_direction_degre(angle_degre)
-        vitesse_m_s = 0.5
+        vitesse_m_s = 0
         set_vitesse_m_s(vitesse_m_s)
-        value = angle_degre  # Par exemple, le temps courant
+        value = tableau_lidar_mm[0]   # Par exemple, le temps courant
+
         # Mettre à jour les données
         times.append(current_time)
         values.append(value)
@@ -134,16 +142,24 @@ while driver.step() != -1:
         if len(times) > 50:  # Garder seulement 50 points
             times.pop(0)
             values.pop(0)
-    
+            ax2.clear()
+
+        if len(times) > 3:  # Garder seulement 3 points
+            ax2.clear()
+
+        line2 = ax2.scatter(theta, tableau_lidar_mm, s=2)
+        line2.set_array(tableau_lidar_mm)
+
         # Mettre à jour le graphique
         line.set_xdata(times)
         line.set_ydata(values)
-        ax.relim()  # Réajuster les limites
-        ax.autoscale_view()
+        ax1.relim()  # Réajuster les limites
+        ax1.autoscale_view()
         plt.pause(0.01)  # Pause pour afficher le graphique
  
     #########################################################
 
 # Fermer proprement le graphique à la fin
 plt.ioff()
+plt.tight_layout()
 plt.show()
