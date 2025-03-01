@@ -37,8 +37,8 @@ unsigned char gestion_appui_clavier(void);
 void recule(void);
  
 //vitesse en km/h
-float speed = 75;
-float maxSpeed = 150; //km/h
+float speed = 0;
+float maxSpeed = 28; //km/h
 
 // angle max de la direction
 float maxangle_degre = 16; 
@@ -72,7 +72,6 @@ int main(int argc, char **argv)
     float distance;
     /* lire le lidar et traiter les données :   */
     range_donnees=wb_lidar_get_range_image(lidar);
-        
     distance = range_donnees[0];
     if((distance > 0.0) && (distance <20.0))
       data_lidar_mm_main[0]=1000*distance;
@@ -94,7 +93,7 @@ int main(int argc, char **argv)
         /*  - la fonction set_vitesse_m_s(...)  */
         /*  - la fonction recule()              */
         /****************************************/
-        angle_degre = 0.02*(data_lidar_mm_main[45]-data_lidar_mm_main[300]); //distance à 60° - distance à -60°
+        angle_degre = 0.02*(data_lidar_mm_main[60]-data_lidar_mm_main[300]); //distance à 60° - distance à -60°
         set_direction_degres(angle_degre);
         vitesse_m_s = 0.5;
         set_vitesse_m_s(vitesse_m_s);

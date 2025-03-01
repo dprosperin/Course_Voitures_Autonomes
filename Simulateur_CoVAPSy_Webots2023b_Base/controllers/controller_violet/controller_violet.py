@@ -63,7 +63,7 @@ while driver.step() != -1:
                 modeManuel = False
                 modeAuto = False
                 print("--------Modes Manuel et Auto Désactivé-------")
-        elif currentKey == ord('P') or currentKey == ord('P'):
+        elif currentKey == ord('a') or currentKey == ord('A'):
             if not modeAuto : 
                 modeAuto = True
                 modeManuel = False
@@ -73,7 +73,7 @@ while driver.step() != -1:
                 for i in range(len(donnees_lidar)) :
                     print(f"{donnees_lidar[i]:.3f}   ", end='')
                     if (i+1)%10 == 0 :        
-                       print(lidar.getNumberOfLayers(), lidar.getHorizontalResolution())
+                       print()
                 print()
       
         # Controle en mode manuel

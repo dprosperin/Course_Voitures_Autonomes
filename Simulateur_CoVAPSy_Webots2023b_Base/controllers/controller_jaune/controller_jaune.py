@@ -5,22 +5,37 @@
 # Kévin Hoarau, Anthony Juton, Bastien Lhopitallier, Martin Raynaud
 # août 2023
 
+import matplotlib.pyplot as plt
 from vehicle import Driver
 from controller import Lidar
 import numpy as np
 import time
+
 
 driver = Driver()
 
 basicTimeStep = int(driver.getBasicTimeStep())
 sensorTimeStep = 4 * basicTimeStep
 
+# Données pour le graphique
+times = []
+values = []
+
+# Paramètres du graphique
+plt.ion()  # Mode interactif pour mettre à jour le graphique en temps réel
+fig, ax = plt.subplots()
+line, = ax.plot(times, values, label="Donnée simulée")
+ax.set_title("Graphique en temps réel avec Webots")
+ax.set_xlabel("Temps (s)")
+ax.set_ylabel("Valeur")
+ax.legend()
+
 #Lidar
 lidar = Lidar("RpLidarA2")
 lidar.enable(sensorTimeStep)
 lidar.enablePointCloud() 
 
-#claviera
+#clavier
 keyboard = driver.getKeyboard()
 keyboard.enable(sensorTimeStep)
 
@@ -63,7 +78,10 @@ modeAuto = False
 print("cliquer sur la vue 3D pour commencer")
 print("a pour mode auto (pas de mode manuel sur TT02_jaune), n pour stop")
 
+start_time = time.time()
 while driver.step() != -1:
+    # Récupérer le temps écoulé
+    current_time = time.time() - start_time
     while True:
     #acquisition des donnees du lidar
          # recuperation de la touche clavier
@@ -76,7 +94,7 @@ while driver.step() != -1:
             if modeAuto :
                 modeAuto = False
                 print("--------Modes Auto TT-02 jaune Désactivé-------")
-        elif currentKey == ord('P') or currentKey == ord('p'):
+        elif currentKey == ord('a') or currentKey == ord('A'):
             if not modeAuto : 
                 modeAuto = True
                 print("------------Mode Auto TT-02 jaune Activé-----------------")
@@ -107,6 +125,25 @@ while driver.step() != -1:
         set_direction_degre(angle_degre)
         vitesse_m_s = 0.5
         set_vitesse_m_s(vitesse_m_s)
+        value = angle_degre  # Par exemple, le temps courant
+        # Mettre à jour les données
+        times.append(current_time)
+        values.append(value)
+        
+         # Limiter le nombre de points affichés
+        if len(times) > 50:  # Garder seulement 50 points
+            times.pop(0)
+            values.pop(0)
+    
+        # Mettre à jour le graphique
+        line.set_xdata(times)
+        line.set_ydata(values)
+        ax.relim()  # Réajuster les limites
+        ax.autoscale_view()
+        plt.pause(0.01)  # Pause pour afficher le graphique
  
     #########################################################
 
+# Fermer proprement le graphique à la fin
+plt.ioff()
+plt.show()
