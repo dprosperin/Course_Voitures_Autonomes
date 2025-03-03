@@ -67,9 +67,11 @@ driver.setCruisingSpeed(speed)
 tab_discontinuite = [[0, 0] for _ in range(100)]
 
 def discontinuite(data_lidar_mm_main):
-    seuil_discontinuite = 100  # Seuil pour considérer une discontinuité
+    seuil_discontinuite = 150  # Seuil pour considérer une discontinuité
     cpt = 0
     
+   
+
     for i in range(1, 359):
         if 0 <= i <= 90 or 270 <= i <= 359:
             distance_courante = data_lidar_mm_main[i]
@@ -155,9 +157,11 @@ while driver.step() != -1:
         set_vitesse_m_s(vitesse_m_s)
         value = tableau_lidar_mm[0]   # Par exemple, le temps courant
 
-        pprint(tab_discontinuite)
-
+        
         discontinuite(tableau_lidar_mm)
+        pprint(tab_discontinuite)
+        tab_discontinuite = [[0, 0] for _ in range(100)]
+
         # Mettre à jour les données
         times.append(current_time)
         values.append(value)
