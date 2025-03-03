@@ -59,6 +59,10 @@ maxSpeed = 28 #km/h
 angle = 0
 maxangle_degre = 16
 
+tableau_min_locaux = [[0, 0] for _ in range(100)]
+tableau_max_locaux = [[0, 0] for _ in range(100)]
+
+etat = "INIT"
 
 # mise a zéro de la vitesse et de la direction
 driver.setSteeringAngle(angle)
@@ -69,9 +73,6 @@ tab_discontinuite = [[0, 0] for _ in range(100)]
 def discontinuite(data_lidar_mm_main):
     seuil_discontinuite = 150  # Seuil pour considérer une discontinuité
     cpt = 0
-    
-   
-
     for i in range(1, 359):
         if 0 <= i <= 90 or 270 <= i <= 359:
             distance_courante = data_lidar_mm_main[i]
@@ -84,7 +85,64 @@ def discontinuite(data_lidar_mm_main):
                 tab_discontinuite[cpt][1] = i
                 #print(f"{tab_discontinuite[cpt][0]},{tab_discontinuite[cpt][1]}")
                 cpt += 1
-                
+
+def recherches_locaux(data_lidar_mm_main):
+    distance_actuelle = 0
+    distance_apres = 0
+    cpt_min_locaux = 0
+    cpt_max_locaux = 0
+    global etat
+    
+    # Parcours des angles du lidar (de 1 à 358 pour éviter de sortir du tableau avec i+1)
+    for i in range(1, 359):
+        # Filtrage des angles souhaités (ici 0-90° et 315-359°)
+        if (0 <= i <= 90) or (315 <= i <= 359):
+            distance_actuelle = data_lidar_mm_main[i]
+            distance_apres = data_lidar_mm_main[i + 1]
+            
+            if etat == "INIT":
+                if distance_actuelle < distance_apres:
+                    etat = "AUGMENTER"
+                elif distance_actuelle > distance_apres:
+                    etat = "DIMINUER"
+            
+            elif etat == "AUGMENTER":
+                if distance_actuelle < distance_apres:
+                    etat = "AUGMENTER"
+                else:
+                    etat = "MAX_LOCAL"
+            
+            elif etat == "DIMINUER":
+                if distance_actuelle > distance_apres:
+                    etat = "DIMINUER"
+                else:
+                    etat = "MIN_LOCAL"
+            
+            elif etat == "MIN_LOCAL":
+                #print(f"Minimum local (distance = {distance_actuelle} mm à l'angle {i}°)")
+                tableau_min_locaux[cpt_min_locaux][0] = distance_actuelle
+                tableau_min_locaux[cpt_min_locaux][1] = i
+                cpt_min_locaux += 1
+                etat = "INIT"
+            
+            elif etat == "MAX_LOCAL":
+                tableau_max_locaux[cpt_max_locaux][0] = distance_actuelle
+                tableau_max_locaux[cpt_max_locaux][1] = i
+                cpt_max_locaux += 1
+                #print(f"Maximum local (distance = {distance_actuelle} mm à l'angle {i}°)")
+                etat = "INIT"  # Réinitialiser pour le prochain cycle
+
+def clean_tab_discontinuite():
+    global tab_discontinuite
+    tab_discontinuite = [[0, 0] for _ in range(100)]
+
+def clean_tableau_min_locaux():
+    global tableau_min_locaux
+    tableau_min_locaux = [[0, 0] for _ in range(100)]
+
+def clean_tableau_max_locaux():
+    global tableau_max_locaux
+    tableau_max_locaux = [[0, 0] for _ in range(100)]
 
 def set_vitesse_m_s(vitesse_m_s):
     speed = vitesse_m_s*3.6
@@ -159,8 +217,14 @@ while driver.step() != -1:
 
         
         discontinuite(tableau_lidar_mm)
-        pprint(tab_discontinuite)
-        tab_discontinuite = [[0, 0] for _ in range(100)]
+        #pprint(tab_discontinuite)
+        clean_tab_discontinuite()
+
+        recherches_locaux(tableau_lidar_mm)
+        pprint(tableau_min_locaux)
+        #pprint(tableau_min_locaux)
+        clean_tableau_min_locaux()
+        clean_tableau_max_locaux()
 
         # Mettre à jour les données
         times.append(current_time)
