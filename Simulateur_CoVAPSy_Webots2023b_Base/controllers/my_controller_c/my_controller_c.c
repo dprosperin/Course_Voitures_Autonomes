@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <webots/lidar.h>
 #include <webots/display.h>
+
 /*
  * You may want to add macros here.
  */
@@ -44,8 +45,12 @@ signed int data_lidar_mm_main[360];
 typedef enum {INIT,MIN_LOCAL,MAX_LOCAL,AUGMENTER,DIMINUER} etat_discontuinuite ; 
 static etat_discontuinuite etat  = INIT ; 
 
+
 void reculer () ; 
 void recherches_locaux() ;
+void discontinuite() ;
+int tab_discontuinuite [50][2] = {0} ; 
+
 
 WbDeviceTag lidar;
 
@@ -102,7 +107,8 @@ int main(int argc, char **argv)
     {  
       
           recherches_locaux() ; 
-          vitesse_m_s = 0.8;
+          discontinuite() ; 
+          vitesse_m_s = 0.0;
           set_vitesse_m_s(vitesse_m_s);
     }
   } // Fin de la boucle while
@@ -174,6 +180,38 @@ void recule(void){
           }
 }
 
+
+void discontinuite() {
+    int distance_courante = 0;
+    int distance_suivante = 0 ; 
+    int diff = 0 ;
+    int seuil_discontinuite = 100;  // Seuil pour considérer une discontinuité
+    int cpt = 0; 
+    
+    for (int i = 1; i < 359; i++) 
+    {
+        if ((i >= 0 && i <= 90) || (i >= 270 && i <= 359)) 
+        {   
+            distance_courante = data_lidar_mm_main[i]; 
+            distance_suivante =  data_lidar_mm_main[i + 1];
+
+            diff = (int)fabs(distance_suivante - distance_courante);
+
+            if (diff >= seuil_discontinuite) 
+            {
+              tab_discontuinuite [cpt][0]  = diff ; 
+               tab_discontuinuite [cpt][1]  = i ; 
+              cpt = cpt + 1 ; 
+            //printf ("%d,%d\n",tab_discontuinuite [cpt][0],tab_discontuinuite [cpt][1]) ; 
+            }
+        }
+    }
+}
+
+
+
+
+
 void recherches_locaux() 
 {
     int distance_actuelle = 0;
@@ -226,12 +264,12 @@ void recherches_locaux()
                     break;
 
                 case MIN_LOCAL:
-                    printf("Minimum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
+                   // printf("Minimum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
                     etat = INIT; 
 
                 case MAX_LOCAL:
-                    printf("Maximum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
-                    wbu_driver_set_steering_angle(i) ; 
+                   // printf("Maximum local (distance = %d mm à l'angle %d°)\n", distance_actuelle, i) ; 
+                    wbu_driver_set_steering_angle(0) ; 
                     etat = INIT; // Réinitialiser pour le prochain cycle
                     break;
 
@@ -240,7 +278,5 @@ void recherches_locaux()
             }
         }
     } 
-    printf("Fin de tour du lidar\n");
+ //   printf("Fin de tour du lidar\n");
 }
-
-
