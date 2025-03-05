@@ -23,24 +23,24 @@ times = []
 values = []
 
 # Paramètres du graphique
-plt.ion()  # Mode interactif pour mettre à jour le graphique en temps réel
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
-line, = ax1.plot(times, values, label="Donnée simulée")
-ax1.set_title("Graphique en temps réel avec Webots")
-ax1.set_xlabel("Temps (s)")
-ax1.set_ylabel("Valeur")
-ax1.grid(True)
-ax1.legend()
+#plt.ion()  # Mode interactif pour mettre à jour le graphique en temps réel
+#fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 6))
+#line, = ax1.plot(times, values, label="Donnée simulée")
+#ax1.set_title("Graphique en temps réel avec Webots")
+#ax1.set_xlabel("Temps (s)")
+#ax1.set_ylabel("Valeur")
+#ax1.grid(True)
+#ax1.legend()
 
-ax2 = fig.add_subplot(122, projection='polar')
+#ax2 = fig.add_subplot(122, projection='polar')
 tableau_lidar_mm=[0]*360
-theta = np.linspace(0, 2 * np.pi, 360)
-ax2.plot(theta, tableau_lidar_mm, label="Lidar")
-ax2.set_title("Projection Polaire")
-ax2.grid(True)
-ax2.legend()
+#theta = np.linspace(0, 2 * np.pi, 360)
+#ax2.plot(theta, tableau_lidar_mm, label="Lidar")
+#ax2.set_title("Projection Polaire")
+#ax2.grid(True)
+#ax2.legend()
 
-plt.ylim(-1000, 1000)  # Min = 0, Max = 40
+#plt.ylim(-1000, 1000)  # Min = 0, Max = 40
 
 #Lidar
 lidar = Lidar("RpLidarA2")
@@ -54,6 +54,11 @@ keyboard.enable(sensorTimeStep)
 # vitesse en km/h
 speed = 0
 maxSpeed = 28 #km/h
+
+vitesse_moyenne = 1
+#kp_vitesse = 0.0002
+kp_vitesse = 0
+kp_rotation = 3.5
 
 # angle de la direction
 angle = 0
@@ -69,10 +74,39 @@ driver.setSteeringAngle(angle)
 driver.setCruisingSpeed(speed)
 
 tab_discontinuite = [[0, 0] for _ in range(100)]
+nombre_discontinuite = 0
+
+def get_angle_cap(angle_mapped):
+    if angle_mapped >= 0 and angle_mapped <= 180:
+        return map(angle_mapped, 0, 180, 16, -16)
+    else:
+        return 0
+
+def map(x, in_min, in_max, out_min, out_max):
+      return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
+
+def get_mapped_angle(angle_unmapped):
+    if angle_unmapped >= 0 and angle_unmapped <= 90:
+        return 90 - angle_unmapped
+    elif angle_unmapped >= 270 and angle <= 359:
+        return 450 - angle_unmapped
+    else:
+        return angle_unmapped
+
+def get_unmapped_angle(angle_mapped):
+    if angle_mapped >= 0 and angle_mapped <= 90:
+        return 90 - angle_mapped
+    elif angle_mapped >= 91 and angle_mapped <= 180:
+        return 450 - angle_mapped
+    else:
+        return 0
 
 def discontinuite(data_lidar_mm_main):
     seuil_discontinuite = 150  # Seuil pour considérer une discontinuité
-    cpt = 0
+    global nombre_discontinuite
+
+    nombre_discontinuite = 0
+
     for i in range(1, 359):
         if 0 <= i <= 90 or 270 <= i <= 359:
             distance_courante = data_lidar_mm_main[i]
@@ -81,10 +115,24 @@ def discontinuite(data_lidar_mm_main):
             diff = abs(distance_suivante - distance_courante)
             
             if diff >= seuil_discontinuite:
-                tab_discontinuite[cpt][0] = diff
-                tab_discontinuite[cpt][1] = i
+                tab_discontinuite[nombre_discontinuite][0] = diff
+                tab_discontinuite[nombre_discontinuite][1] = get_mapped_angle(i)
                 #print(f"{tab_discontinuite[cpt][0]},{tab_discontinuite[cpt][1]}")
-                cpt += 1
+                nombre_discontinuite += 1
+
+def cap_navigation():
+    global tab_discontinuite
+    global nombre_discontinuite
+    
+    if nombre_discontinuite == 0:
+        return 0
+    
+    somme_angle = 0
+
+    for i in range(nombre_discontinuite):
+        somme_angle += tab_discontinuite[i][1]
+
+    return somme_angle / nombre_discontinuite
 
 def recherches_locaux(data_lidar_mm_main):
     distance_actuelle = 0
@@ -95,8 +143,8 @@ def recherches_locaux(data_lidar_mm_main):
     
     # Parcours des angles du lidar (de 1 à 358 pour éviter de sortir du tableau avec i+1)
     for i in range(1, 359):
-        # Filtrage des angles souhaités (ici 0-90° et 315-359°)
-        if (0 <= i <= 90) or (315 <= i <= 359):
+        # Filtrage des angles souhaités (ici 0-90° et 270-359°)
+        if (0 <= i <= 90) or (270 <= i <= 359):
             distance_actuelle = data_lidar_mm_main[i]
             distance_apres = data_lidar_mm_main[i + 1]
             
@@ -209,45 +257,47 @@ while driver.step() != -1:
     #    - la fonction set_vitesse_m_s(...)
     #    - la fonction recule()
     #######################################################
-   
-        #un secteur par tranche de 20° donc 10 secteurs numérotés de 0 à 9    
-        vitesse_m_s = 0
+    
+        vitesse_m_s = vitesse_moyenne + tableau_lidar_mm[i] * kp_vitesse
         set_vitesse_m_s(vitesse_m_s)
-        value = tableau_lidar_mm[0]   # Par exemple, le temps courant
-
-        
+    
         discontinuite(tableau_lidar_mm)
         #pprint(tab_discontinuite)
+        value = get_unmapped_angle(cap_navigation()) #Valeur à observer au cours du temps
+        #value = cap_navigation()
+        print("Angle navigation mapped : %d Angle navigation unmapped %d Angle cap reelle %d nb disc %d" %  (cap_navigation(), value, get_angle_cap(cap_navigation()),  nombre_discontinuite))
+
+        set_direction_degre(kp_rotation * get_angle_cap(cap_navigation()))
         clean_tab_discontinuite()
 
-        recherches_locaux(tableau_lidar_mm)
-        pprint(tableau_min_locaux)
+        #recherches_locaux(tableau_lidar_mm)
         #pprint(tableau_min_locaux)
+        #pprint(tableau_max_locaux)
         clean_tableau_min_locaux()
         clean_tableau_max_locaux()
 
         # Mettre à jour les données
-        times.append(current_time)
-        values.append(value)
+        #times.append(current_time)
+        #values.append(value)
         
          # Limiter le nombre de points affichés
-        if len(times) > 50:  # Garder seulement 50 points
-            times.pop(0)
-            values.pop(0)
-            ax2.clear()
+        #if len(times) > 50:  # Garder seulement 50 points
+         #   times.pop(0)
+         #   values.pop(0)
+        #    ax2.clear()
 
-        if len(times) > 3:  # Garder seulement 3 points
-            ax2.clear()
+        #if len(times) > 3:  # Garder seulement 3 points
+        #    ax2.clear()
 
-        line2 = ax2.scatter(theta, tableau_lidar_mm, s=2)
-        line2.set_array(tableau_lidar_mm)
+        #line2 = ax2.scatter(theta, tableau_lidar_mm, s=2)
+        #line2.set_array(tableau_lidar_mm)
 
         # Mettre à jour le graphique
-        line.set_xdata(times)
-        line.set_ydata(values)
-        ax1.relim()  # Réajuster les limites
-        ax1.autoscale_view()
-        plt.pause(0.01)  # Pause pour afficher le graphique
+        #line.set_xdata(times)
+        #line.set_ydata(values)
+        #ax1.relim()  # Réajuster les limites
+        #ax1.autoscale_view()
+        #plt.pause(0.01)  # Pause pour afficher le graphique
  
     #########################################################
 
