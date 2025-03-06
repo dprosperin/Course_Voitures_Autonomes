@@ -32,6 +32,7 @@
 #include "test.h"
 #include "deplacement.h"
 #include "utils.h"
+#include "conduite_autonome.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,6 +44,7 @@
 #define CAN_START_AUTONOMOUS_DRIVING 0x500
 #define CAN_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
+#undef  AUTONOMOUS_DRIVING_STARTED
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -54,7 +56,7 @@
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0;
 uint8_t caractere;
-bool is_autonomous_driving_started = 0;
+bool is_autonomous_driving_started = 1;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -122,6 +124,8 @@ int main(void)
 		/**
 		 * @todo Les Hal_delays font échouer la reception des commandes par UART
 		 */
+
+#ifdef AUTONOMOUS_DRIVING_STARTED
 		if (!is_autonomous_driving_started)
 		{
 			JOG_read();
@@ -131,7 +135,7 @@ int main(void)
 			printf("COD Value : %d\n", cod_value);
 			printf("JOG Value : %d\n", jog_value);
 		}
-
+#endif
 		lidar_handle_receive_character();
 
 
@@ -147,6 +151,7 @@ int main(void)
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
 		}
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

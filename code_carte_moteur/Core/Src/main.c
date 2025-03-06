@@ -42,7 +42,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-
+#undef DEBUG_FOURCHE_OPTIQUE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -171,7 +171,7 @@ int main(void)
 	/**
 	 * @note Mettre la vitesse à 0 au démarrage du moteur CC
 	 */
-	PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, 0.1);
+	PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, 0);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -179,9 +179,11 @@ int main(void)
 
 	while (1)
 	{
-		  //printf(">Frequence:%f\n", Frecuency);
-		  printf(">Vitesse: %f\n", m_per_sec/1000);
-		  printf(">Frecuency: %f\n", Frecuency);
+
+#ifdef DEBUG_FOURCHE_OPTIQUE
+		printf(">Vitesse: %f\n", m_per_sec/1000);
+		printf(">Frecuency: %f\n", Frecuency);
+#endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
