@@ -68,6 +68,7 @@ tableau_min_locaux = [[0, 0] for _ in range(100)]
 tableau_max_locaux = [[0, 0] for _ in range(100)]
 
 etat = "INIT"
+cpt_min_locaux = 0
 
 # mise a zéro de la vitesse et de la direction
 driver.setSteeringAngle(angle)
@@ -119,25 +120,11 @@ def discontinuite(data_lidar_mm_main):
                 tab_discontinuite[nombre_discontinuite][1] = get_mapped_angle(i)
                 #print(f"{tab_discontinuite[cpt][0]},{tab_discontinuite[cpt][1]}")
                 nombre_discontinuite += 1
-
-def cap_navigation():
-    global tab_discontinuite
-    global nombre_discontinuite
-    
-    if nombre_discontinuite == 0:
-        return 0
-    
-    somme_angle = 0
-
-    for i in range(nombre_discontinuite):
-        somme_angle += tab_discontinuite[i][1]
-
-    return somme_angle / nombre_discontinuite
-
+ 
 def recherches_locaux(data_lidar_mm_main):
     distance_actuelle = 0
     distance_apres = 0
-    cpt_min_locaux = 0
+    global cpt_min_locaux 
     cpt_max_locaux = 0
     global etat
     
@@ -179,6 +166,54 @@ def recherches_locaux(data_lidar_mm_main):
                 cpt_max_locaux += 1
                 #print(f"Maximum local (distance = {distance_actuelle} mm à l'angle {i}°)")
                 etat = "INIT"  # Réinitialiser pour le prochain cycle
+
+def cap_navigation():
+    global tab_discontinuite
+    global nombre_discontinuite
+    
+    if nombre_discontinuite == 0:
+        return 0
+      
+    max1 = 0
+    max2 = 0
+    max3 = 0 
+    angle_max1 = 0
+    angle_max2 = 0
+    angle_max3 = 0
+    min = 0 
+    min2 = 0
+    
+    if nombre_discontinuite > 1  : 
+        for i in range(nombre_discontinuite):  # Itérer sur le nombre de discontinuités
+          diff = tab_discontinuite[i][0]  # La distance (diff)
+          angle = tab_discontinuite[i][1]  # L'angle correspondant
+        if diff > max1:
+            max2 = max1
+            angle_max2 = angle_max1
+            max1 = diff
+            angle_max1 = angle  
+        elif diff > max2:
+            max2 = diff
+            angle_max2 = angle  
+        return (angle_max1 + angle_max2) / 2  # Retourner la moyenne des angles
+    
+    elif nombre_discontinuite == 1 : 
+        for i in range(nombre_discontinuite):  # Itérer sur le nombre de discontinuités
+          difff = tab_discontinuite[i][0]  
+          angles = tab_discontinuite[i][1]  
+          if difff > max1:
+            max3 = diff
+            angle_max3 = angles
+        else : 
+            max3 = max3
+            angle_max3=angle_max3
+    for i in range(100):
+        min = tableau_min_locaux[cpt_min_locaux][0] 
+        if min > min2 :
+            min = min 
+        elif min2 > min : 
+            min = min2
+    return (angle_max3+min)/2
 
 def clean_tab_discontinuite():
     global tab_discontinuite
