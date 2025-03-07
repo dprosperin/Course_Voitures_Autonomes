@@ -182,6 +182,7 @@ def cap_navigation():
     angle_max3 = 0
     min = 0 
     min2 = 0
+    difff = 0 
     
     if nombre_discontinuite > 1  : 
         for i in range(nombre_discontinuite):  # Itérer sur le nombre de discontinuités
@@ -300,7 +301,7 @@ while driver.step() != -1:
         #pprint(tab_discontinuite)
         value = get_unmapped_angle(cap_navigation()) #Valeur à observer au cours du temps
         #value = cap_navigation()
-        print("Angle navigation mapped : %d Angle navigation unmapped %d Angle cap reelle %d nb disc %d" %  (cap_navigation(), value, get_angle_cap(cap_navigation()),  nombre_discontinuite))
+        #print("Angle navigation mapped : %d Angle navigation unmapped %d Angle cap reelle %d nb disc %d" %  (cap_navigation(), value, get_angle_cap(cap_navigation()),  nombre_discontinuite))
 
         set_direction_degre(kp_rotation * get_angle_cap(cap_navigation()))
         clean_tab_discontinuite()
