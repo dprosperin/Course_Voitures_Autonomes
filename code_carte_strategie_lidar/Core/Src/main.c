@@ -151,7 +151,6 @@ int main(void)
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
 		}
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
