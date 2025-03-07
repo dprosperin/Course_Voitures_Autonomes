@@ -14,8 +14,7 @@ void conduite_autonome(void)
 {
 	//float difference  = data_lidar_mm_main[345] - data_lidar_mm_main[45] ;
 
-	float difference  = data_lidar_mm_main[45] - data_lidar_mm_main[135];
-	float kp = 0.60;
+	float difference  = data_lidar_mm_main[135] - data_lidar_mm_main[45];
 	float angle = 0.0;
 	float angle_mapped = 0.0;
 

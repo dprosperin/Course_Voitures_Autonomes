@@ -52,6 +52,8 @@ uint8_t buffer_rx_pc[8];
 uint16_t marker1 = 0;
 T_FDCAN_trame_rx trame_rx;
 T_FDCAN_trame_rx buffer_trame_rx[32];
+
+float kp = 0.6;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -73,6 +75,7 @@ int __io_getchar(void)
 	HAL_UART_Receive(&huart2, (uint8_t*) &ch, 1, 0xFFFF);
 	return ch;
 }
+
 /* USER CODE END 0 */
 
 /**

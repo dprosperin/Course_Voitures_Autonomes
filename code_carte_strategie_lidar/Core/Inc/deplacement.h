@@ -24,6 +24,8 @@ void set_angle(float nouvelle_angle);
 extern float rapport_cyclique;
 extern bool  sens;
 extern float angle;
+extern float kp;
+extern float vitesse_lineaire;
 
 
 #endif /* INC_DEPLACEMENT_H_ */

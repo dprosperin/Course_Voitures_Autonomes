@@ -13,7 +13,8 @@
 float rapport_cyclique = 0.0;
 bool  sens = 0;
 float angle = -100;
-
+float kp = 0.6;
+float vitesse_lineaire = 0;
 
 ////  Fonctions de déplacements
 

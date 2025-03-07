@@ -41,9 +41,10 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define CAN_START_AUTONOMOUS_DRIVING 0x500
-#define CAN_STOP_AUTONOMOUS_DRIVING 0x501
+#define CAN_ID_START_AUTONOMOUS_DRIVING 0x500
+#define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
+#define CAN_ID_SET_KP_VALUE 0x300
 #undef  AUTONOMOUS_DRIVING_STARTED
 /* USER CODE END PD */
 
@@ -124,7 +125,6 @@ int main(void)
 		/**
 		 * @todo Les Hal_delays font échouer la reception des commandes par UART
 		 */
-
 #ifdef AUTONOMOUS_DRIVING_STARTED
 		if (!is_autonomous_driving_started)
 		{
@@ -132,8 +132,8 @@ int main(void)
 			COD_read();
 			automate_decode_IHM();
 			test_composants_voiture();
-			printf("COD Value : %d\n", cod_value);
-			printf("JOG Value : %d\n", jog_value);
+			printf(">cod_value:%d\n", cod_value);
+			printf(">jog_value:%d\n", jog_value);
 		}
 #endif
 		lidar_handle_receive_character();
@@ -216,18 +216,30 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	switch (buffer_trame_rx[marker1].header.Identifier)
 	{
-	case CAN_START_AUTONOMOUS_DRIVING:
+	case CAN_ID_START_AUTONOMOUS_DRIVING:
 		printf("START AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 1;
 		break;
 
-	case CAN_STOP_AUTONOMOUS_DRIVING:
+	case CAN_ID_STOP_AUTONOMOUS_DRIVING:
 		printf("STOP AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 0;
 		break;
 	case CAN_ID_FOURCHE_OPTIQUE:
 		//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
-		float m_per_sec = (float)buffer_trame_rx[marker1].data[0]/1000;
+		/**
+		 * @note Il faudra probablement passer sur une taille de données de deux octets
+		 */
+		vitesse_lineaire = (float)buffer_trame_rx[marker1].data[0]/1000.0;
+		printf(">vitesse_lineaire:%2.5f\n", vitesse_lineaire);
+		break;
+	case CAN_ID_SET_KP_VALUE:
+		/**
+		 * @note Les valeurs de kp négatifs ne fonctionne pas
+		 */
+		kp = (((uint16_t) buffer_trame_rx[marker1].data[0] << 8) | buffer_trame_rx[marker1].data[1]) / 1000.0;
+		printf(">kp:%2.5f|xy\n", kp);
+		break;
 	}
 
 	marker1++;
