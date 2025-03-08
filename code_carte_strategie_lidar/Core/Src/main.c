@@ -45,7 +45,9 @@
 #define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
 #define CAN_ID_SET_KP_VALUE 0x300
-#undef  AUTONOMOUS_DRIVING_STARTED
+#undef TESTS_COMPOSANTS
+#define PRINT_LIDAR_MEASURES
+#define PRINT_HERKULEX_SPEED
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -115,6 +117,19 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
+
+	// Start lidar scan
+	/**
+	 * @warning L'appel de la fonction lidar_send_reset() fait planter la liaison avec le LiDAR
+	 */
+	lidar_send_stop();
+	HAL_Delay(1000);
+
+	lidar_send_get_health();
+	HAL_Delay(5000);
+
+	lidar_send_start_scan();
+
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
@@ -125,7 +140,7 @@ int main(void)
 		/**
 		 * @todo Les Hal_delays font échouer la reception des commandes par UART
 		 */
-#ifdef AUTONOMOUS_DRIVING_STARTED
+#ifdef TESTS_COMPOSANTS
 		if (!is_autonomous_driving_started)
 		{
 			JOG_read();
@@ -141,15 +156,18 @@ int main(void)
 
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
+#ifdef PRINT_LIDAR_MEASURES
 			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
-
+#endif
 			if (is_autonomous_driving_started)
 			{
 				conduite_autonome();
 			}
 
+#ifdef PRINT_HERKULEX_SPEED
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
+#endif
 		}
     /* USER CODE END WHILE */
 
