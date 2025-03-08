@@ -115,6 +115,7 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
+	float angle = -120;
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
@@ -150,6 +151,12 @@ int main(void)
 
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
+		}
+
+		while (1)
+		for (int i = -180; i < 180; i++){
+			set_angle(i);
+			HAL_Delay(100);
 		}
 
     /* USER CODE END WHILE */
