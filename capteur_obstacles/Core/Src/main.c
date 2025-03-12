@@ -107,6 +107,13 @@ int main(void)
    */
   capteur_obstacles_init();
 
+
+  /**
+   * @todo Vérifier si c'est fonction change l'ID du capteur d'obstacle capteur_obstacles_set_data_output_mode()
+   * @todo Faire un test avec connecteur bluetooth sur l'uart 2 avec le capteur d'obstacles
+   * @warning Le code ne gère pas la reconnexion à chaud
+   * @warning Au bout d'un certain temps la reception en dma circulaire sur 16bits ne fonctionne plus -> passage à un automate de décodage
+   */
   capteur_obstacles_set_data_output_mode(TOF_LEFT_SENSOR_ID, TOF_ACTIVE);
   /* USER CODE END 2 */
 
