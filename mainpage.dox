@@ -1,0 +1,10 @@
+/**
+ * @mainpage Page principale de la documentation du projet course de Voiture Autonome : COVAPSY
+ * @startuml{myimage.png} "Diagramme de communication réseau de la voiture" width=5cm
+ * nwdiag {
+ *  network dmz {
+ *     address = "210.x.x.x/24"
+ * }
+ * }
+ * @enduml
+ */
