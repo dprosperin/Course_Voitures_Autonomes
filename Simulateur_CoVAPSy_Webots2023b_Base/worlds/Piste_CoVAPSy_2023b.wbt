@@ -1,0 +1,2570 @@
+#VRML_SIM R2023b utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2022b/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "../protos/TT02_2023b.proto"
+
+WorldInfo {
+}
+Viewpoint {
+  orientation -0.04654789462092845 0.9971351333918141 0.059622305071577085 1.3285835563705473
+  position -8.018163873673032 -1.0418359905584589 29.37492212271304
+  followType "Mounted Shot"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Group {
+  children [
+    Solid {
+      translation 4.5 -4 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_rouge"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.382894 4.9359 0.185
+      rotation 0 0 -1 1.5708
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.90289 4.9359 0.185
+      rotation 0 0 -1 1.5708
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(47)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 5.29 -3.75 0.185
+      rotation 0 0 0.9999999999999999 1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(42)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.387216 4.94135 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(45)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.89722 4.94135 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(46)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.39 5.02 0.185
+      rotation 0 0 -1 8.23753e-07
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(43)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.9 5.02 0.185
+      rotation 0 0 -1 8.23753e-07
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(49)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.38 5.03 0.185
+      rotation 0 0 0.9999999999999999 1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(44)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.89 5.03 0.185
+      rotation 0 0 0.9999999999999999 1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(48)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 5.55 -0.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_rouge"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 5.53 2 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_vert"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 5.5 0.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m_rouge"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 5.63 -1.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_vert"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+  ]
+}
+Group {
+  children [
+    Solid {
+      translation -1 1.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(1)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.499998 0.5 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(10)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 3.75 5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_vert(2)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2.75 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_vert(1)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 0 0.5 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(6)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 0 0.5 0.185
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(11)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.25 0 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(3)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1 2.5 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(38)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 1.5 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(25)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2 1.5 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(34)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -4.5 -3 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(3)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -2 -0.500004 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(13)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 -1 0.185
+      rotation 0 0 1 1.57079
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(16)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2 -0.509999 0.185
+      rotation 0 0 1 1.57079
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(32)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 3.51 0.185
+      rotation 0 0 1 1.57079
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(22)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 1.5 3.5 0.185
+      rotation 0 0 1 1.57079
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(31)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -3 2 0.185
+      rotation 0 0 1 -1.5708053071795867
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(8)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -2.99269 0.599606 0.185
+      rotation 0 0 -1 6.53317e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(7)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -3.2196 -0.357286 0.195
+      rotation 0 0 1 -3.1415853071795863
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(12)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -2.51254 -1.65737 0.185
+      rotation 3.70154e-09 8.93629e-09 1 2.87979
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(41)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.5296 -1.78229 0.155
+      rotation 0.005246468161176334 -0.0030290589383514606 0.9999816495185206 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(15)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.54736 -1.77905 0.195
+      rotation -5.88409e-09 2.19599e-08 1 1.57079
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(26)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -0.580215 -2.0068 0.195
+      rotation -2.19597e-08 -5.88405e-09 -1 1.57081
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(40)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -2.24814 -0.693203 0.185
+      rotation 6.78762e-08 -2.81153e-08 1 -0.2618053071795865
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(14)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 2.51 0.185
+      rotation 0 0 1 -1.5708053071795867
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(23)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 3.47 0.185
+      rotation 0 0 1 -1.5708053071795867
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(30)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 1 2.5 0.185
+      rotation 0 0 1 -1.5708053071795867
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(39)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -3 2 0.185
+      rotation 0 0 1 3.14158
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(9)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.5 0.5 0.185
+      rotation 0 0 1 3.14158
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(24)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2 0.5 0.185
+      rotation 0 0 1 3.14158
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(33)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 2.49 3.46 0.185
+      rotation 0 0 1 3.14158
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(21)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 1 1.5 0.185
+      rotation 0 0 1 3.14158
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0.9 0 0
+              emissiveColor 0.9 0 0
+              specularColor 0.9 0 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(37)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 0 1.5 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(27)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 2 0.185
+      rotation 0 0 1 -5.307179586466759e-06
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(28)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 -1.5 0.185
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(58)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 3 0.185
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(19)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -1.5 3.00001 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(5)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 4.5 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(17)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 1 0.185
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(29)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 3 -3 0.185
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(2)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 0 4.5 0.185
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(35)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 -2.5 0.185
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(1)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4 2 0.185
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(20)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation -4.5 3 0.185
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(4)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 1 4.5 0.185
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(18)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 0 3.5 0.185
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              ambientIntensity 0.5
+              diffuseColor 0 0.6 0
+              emissiveColor 0 0.6 0
+              specularColor 0 0.6 0
+            }
+          }
+          geometry Mesh {
+            url [
+              "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+            ]
+          }
+        }
+      ]
+      name "virage_vert(36)"
+      boundingObject Mesh {
+        url [
+          "https://raw.githubusercontent.com/ajuton-ens/CourseVoituresAutonomesSaclay/main/Simulateur/SimulateurWebotsENS2022/ImageToStl.com_virage.obj"
+        ]
+      }
+    }
+    Solid {
+      translation 4.5 -1 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 4.5 0 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(30)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 4.5 3.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(27)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.5 2 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(35)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 4.5 0.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_3"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(1)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(2)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1 -1.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(16)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2 -1.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(25)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 0.02 -1.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(17)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.12 -1.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(18)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 0.500001 -1 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(28)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1 -1 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(24)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1.5 -1 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(29)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.5 0.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(26)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.7193 -0.570569 0.1
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(12)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.25 -1 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(5)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1.75 -1 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(8)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1.25 3 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(25)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 3 0.25 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(2)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -3.5 1.75 0.1
+      rotation 0 0 -1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(20)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 0 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(3)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(4)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(5)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2 3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(14)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 3 5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(32)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2 5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(38)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 1.25 5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(24)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation 4.5 4.25 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(6)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.5 3.25 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm(7)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -3 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(6)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -4 -3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(39)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -3 3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(12)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -4 3.5 0.1
+      rotation 0 0 1 3.14159
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(37)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 -1.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(7)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 -2.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(15)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 -0.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(8)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 3 -0.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(33)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2.5 0 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(36)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 2 2 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(31)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.5 1.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(23)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -2.5 0 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 1 0 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(26)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 0.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(9)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 1.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(10)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -5 2.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(11)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1 2.5 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(13)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation -1 1 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 1 0.1 0.2
+          }
+        }
+      ]
+      name "droit_1m(34)"
+      boundingObject Box {
+        size 1 0.1 0.2
+      }
+    }
+    Solid {
+      translation 3.5 -2.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm_2(1)"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+    Solid {
+      translation -0.5 2.75 0.1
+      rotation 0 0 1 -1.5707953071795862
+      children [
+        Shape {
+          appearance PBRAppearance {
+            baseColor 0 1 0
+            metalness 0
+          }
+          geometry Box {
+            size 0.5 0.1 0.2
+          }
+        }
+      ]
+      name "droit_50cm"
+      boundingObject Box {
+        size 0.5 0.1 0.2
+      }
+    }
+  ]
+}
+Solid {
+  translation 0 0.5 -0.05
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 10 10 0.1
+      }
+    }
+  ]
+  name "sol_piste"
+  boundingObject Shape {
+    geometry Box {
+      size 10 10 0.1
+    }
+  }
+}
+Solid {
+  translation -3.51 1.11 0.1
+  rotation 0 0 1 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 1 0 0
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.1 0.2
+      }
+    }
+  ]
+  name "droit_1m_rouge(1)"
+  boundingObject Box {
+    size 1 0.1 0.2
+  }
+}
+TT02_2023b {
+  translation -1.8214183041612504 5.009221827322906 0.038811406326898834
+  rotation 0.004124101973522789 -0.004582709048922113 0.9999809950997492 0.7053842533202512
+  name "TT02_violette"
+  controller "my_controller_c"
+  color 0.5 0 0.6
+}
+TT02_2023b {
+  translation 0.892424 -2.4933 0.0531457
+  rotation 0.005238610002014948 -0.026314000010121262 -0.9996400003844956 -0.13329530717958615
+  name "TT02_bleue_C"
+  controller "my_controller_c"
+  color 0.2 0.2 1
+}
+TT02_2023b {
+  translation -0.3110427918214488 5.008436054408618 0.03866358677744285
+  rotation 0.0037321364226145736 -0.006015368273489083 0.9999749429372006 0.7294670070759088
+  name "TT02_jaune_python"
+  controller "controller_jaune"
+  color 0.69 0.7 0.2
+}
