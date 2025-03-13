@@ -19,16 +19,17 @@
 #include <webots/lidar.h>
 #include <webots/display.h>
 
-
 /*
  * You may want to add macros here.
  */
 #define TIME_STEP 30
 #define SIZE_TABLEAU 200
 #define MAX_SPEED 6.28 // Vitesse maximale des moteurs
-#define N 180 
+#define N 180
 #define min(a, b) ((a) < (b) ? (a) : (b))
 #define max(a, b) ((a) > (b) ? (a) : (b))
+#define MAX_DROITE 16
+#define MAX_GAUCHE -16
 
 const float *range_donnees;
 // float range_donnees[SIZE_TABLEAU];
@@ -39,11 +40,13 @@ void affichage_consigne();
 void set_vitesse_m_s(float vitesse_m_s);
 unsigned char gestion_appui_clavier(void);
 void recule(void);
-double radius_to_degrees(double radius, double angle_deg);
+
 // vitesse en km/h
 float speed = 0;
 float maxSpeed = 28; // km/h
 signed int data_lidar_mm_main[360];
+
+// Code Etudiant
 typedef enum
 {
   INIT,
@@ -54,19 +57,28 @@ typedef enum
 } etat_discontuinuite;
 static etat_discontuinuite etat = INIT;
 
+
+
 double map(double x, double in_min, double in_max, double out_min, double out_max);
 int get_mapped_angle(int angle_unmapped);
 int get_unmapped_angle(int angle_mapped);
 double get_angle_cap(double angle_mapped);
-void reculer();
+void marche_arriere();
 void recherches_locaux();
 void discontinuite();
-int tab_discontuinuite[180][2] = {0};
-void clear();
-int cpt_discontuinuiter = 0;
-int min_locaux[180][2] = {0};
-int cpt_min_locaux = 0;
 void conduite_autonome();
+void clear();
+double radius_to_degrees(double radius, double angle_deg);
+void set_direction_degre(float angle_degre);
+
+#define TAB_DISCONTINUITE_TAILLE 180
+int tab_discontinuite[TAB_DISCONTINUITE_TAILLE][2] = {0};
+
+int cpt_discontuinuiter = 0;
+
+#define MIN_LOCAUX_TAILLE 180
+int min_locaux[MIN_LOCAUX_TAILLE][2] = {0};
+int cpt_min_locaux = 0;
 
 WbDeviceTag lidar;
 
@@ -188,7 +200,7 @@ void recule(void)
   wbu_driver_set_cruising_speed(-1);
 }
 
-void reculer()
+void marche_arriere()
 {
   if (data_lidar_mm_main[359] < 250)
   {
@@ -248,7 +260,6 @@ double get_angle_cap(double angle_mapped)
 
 void discontinuite()
 {
-  printf("--------------------------------\n") ; 
   int distance_courante = 0;
   int distance_suivante = 0;
   int diff = 0;
@@ -265,19 +276,18 @@ void discontinuite()
 
       if (diff >= seuil_discontinuite)
       {
-        tab_discontuinuite[cpt_discontuinuiter][0] = diff;
-        tab_discontuinuite[cpt_discontuinuiter][1] = get_mapped_angle(i);
+        tab_discontinuite[cpt_discontuinuiter][0] = diff;
+        tab_discontinuite[cpt_discontuinuiter][1] = get_mapped_angle(i);
         cpt_discontuinuiter = cpt_discontuinuiter + 1;
       }
     }
   }
-  printf("--------------------------------\n") ; 
 }
 
 void recherches_locaux()
 {
   int distance_actuelle = 0;
-  int distance_apres = 0;
+  int distance_suivante = 0;
 
   for (int i = 1; i < 359; i++)
   {
@@ -285,38 +295,38 @@ void recherches_locaux()
     if ((i >= 0 && i <= 90) || (i >= 315 && i <= 359))
     {
       distance_actuelle = data_lidar_mm_main[i];
-      distance_apres = data_lidar_mm_main[i + 1];
+      distance_suivante = data_lidar_mm_main[i + 1];
 
       switch (etat)
       {
       case INIT:
-        if (distance_actuelle < distance_apres)
+        if (distance_actuelle < distance_suivante)
         {
           etat = AUGMENTER;
         }
-        else if (distance_actuelle > distance_apres)
+        else if (distance_actuelle > distance_suivante)
         {
           etat = DIMINUER;
         }
         break;
 
       case AUGMENTER:
-        if (distance_actuelle < distance_apres)
+        if (distance_actuelle < distance_suivante)
         {
           etat = AUGMENTER;
         }
-        else if (distance_actuelle > distance_apres)
+        else if (distance_actuelle > distance_suivante)
         {
           etat = MAX_LOCAL;
         }
         break;
 
       case DIMINUER:
-        if (distance_actuelle > distance_apres)
+        if (distance_actuelle > distance_suivante)
         {
           etat = DIMINUER;
         }
-        else if (distance_actuelle < distance_apres)
+        else if (distance_actuelle < distance_suivante)
         {
           etat = MIN_LOCAL;
         }
@@ -330,7 +340,7 @@ void recherches_locaux()
         break;
 
       case MAX_LOCAL:
-        etat = INIT; 
+        etat = INIT;
         break;
 
       default:
@@ -338,94 +348,57 @@ void recherches_locaux()
       }
     }
   }
-  //   printf("Fin de tour du lidar\n");
 }
 
 void conduite_autonome()
 {
-    float angle = 0;
-    int max_discontuinuite_1 = 0;
-    int max_discontuinuite_2 = 0;
+  /**
+   * @note Cas avec plusieurs discontinuitées
+   */
+  int max_distance_discontinuite_1 = 0;
+  int max_distance_discontinuite_2 = 0;
 
-    int max_min_locaux_1 = 0;
-    int angle_max_min_locaux_1 = 0;
+  int max_distance_discontinuite_angle_1 = 0, max_distance_discontinuite_angle_2 = 0;
 
-    int max_min_locaux_2 = 0;
-    int angle_max_min_locaux_2 = 0;
+  int angle = 0;
 
-    int angle_1 = 0;
-    int angle_2 = 0;
-
-    if (cpt_discontuinuiter == 1)
+  if (cpt_discontuinuiter > 1)
+  {
+    for (int i = 0; i < TAB_DISCONTINUITE_TAILLE; i++)
     {
-        for (int j = 0; j < min(180, N); j++)
-        {
-            if (tab_discontuinuite[j][0] > max_discontuinuite_1)
-            {
-                max_discontuinuite_1 = tab_discontuinuite[j][0];
-                angle_1 = tab_discontuinuite[j][1];
-            }
-        }
-
-        for (int i = angle_1; i > max(0, angle_1 - 20); i--)
-        {
-            if (min_locaux[i][1] > max_min_locaux_1)
-            {
-                max_min_locaux_1 = min_locaux[i][1];
-                angle_max_min_locaux_1 = min_locaux[cpt_min_locaux][1];
-            }
-        }
-
-        for (int k = angle_1; k < min(N, angle_1 + 20); k++)
-        {
-            if (min_locaux[k][1] > max_min_locaux_2)
-            {
-                max_min_locaux_2 = min_locaux[k][1];
-                angle_max_min_locaux_2 = min_locaux[cpt_min_locaux][1];
-            }
-        }
-
-        if (max_min_locaux_1 > max_min_locaux_2)
-        {
-            angle_2 = angle_max_min_locaux_1;
-        }
-        else if (max_min_locaux_1 < max_min_locaux_2)
-        {
-            angle_2 = angle_max_min_locaux_2;
-        }
-
-        angle = ((angle_1 + angle_2) /2);
+      if (tab_discontinuite[i][0] > max_distance_discontinuite_1)
+      {
+        max_distance_discontinuite_2 = max_distance_discontinuite_1;
+        max_distance_discontinuite_angle_2 = tab_discontinuite[i][1];
+        max_distance_discontinuite_1 = tab_discontinuite[i][0];
+        max_distance_discontinuite_angle_1 = tab_discontinuite[i][1];
+      }
+      else if (tab_discontinuite[i][0] >= max_distance_discontinuite_2 && tab_discontinuite[i][0] <= max_distance_discontinuite_1)
+      {
+        max_distance_discontinuite_2 = tab_discontinuite[i][0];
+        max_distance_discontinuite_angle_2 = tab_discontinuite[i][1];
+      }
+      else if (tab_discontinuite[i][0] == max_distance_discontinuite_1)
+      {
+        max_distance_discontinuite_2 = max_distance_discontinuite_1;
+        max_distance_discontinuite_angle_2 = tab_discontinuite[i][1];
+      }
     }
+    angle = ((max_distance_discontinuite_angle_1 + max_distance_discontinuite_angle_2) / 2);
+  }
+  printf("angle : %d\n", angle);
 
-    else if (cpt_discontuinuiter > 1)
-    {
-        for (int i = 0; i < min(50, N); i++)
-        {
-            if (tab_discontuinuite[i][0] > max_discontuinuite_1)
-            {
-                max_discontuinuite_2 = max_discontuinuite_1;
-                angle_2 = angle_1;
-                max_discontuinuite_1 = tab_discontuinuite[i][0];
-                angle_1 = tab_discontuinuite[i][1];
-            }
-            else if (tab_discontuinuite[i][0] > max_discontuinuite_2)
-            {
-                max_discontuinuite_2 = tab_discontuinuite[i][0];  
-                angle_2 = tab_discontuinuite[i][1];
-            }
-        }
-        angle = (angle_1 + angle_2) / 2;
-    }
-    printf("%4.4f\n", (-(get_angle_cap(angle * 0.9))*180.0/M_PI )      );
-    wbu_driver_set_steering_angle(-(get_angle_cap(angle * 0.9)));
+  float commande_servomoteur = map(angle, 0, 180, -16, 16);
+
+  set_direction_degre(commande_servomoteur);
 }
 
 void clear()
 {
-  for (int i = 0; i < 50; i++)
+  for (int i = 0; i < MIN_LOCAUX_TAILLE; i++)
   {
-    tab_discontuinuite[i][0] = 0;
-    tab_discontuinuite[i][1] = 0;
+    tab_discontinuite[i][0] = 0;
+    tab_discontinuite[i][1] = 0;
   }
 
   for (int i = 0; i < 180; i++)
@@ -438,4 +411,17 @@ void clear()
   cpt_min_locaux = 0;
 }
 
-
+void set_direction_degre(float angle_degre)
+{
+  if (angle_degre > MAX_DROITE)
+  {
+    angle_degre = MAX_DROITE;
+  }
+  else if (angle_degre < MAX_GAUCHE)
+  {
+    angle_degre = MAX_GAUCHE;
+  }
+  angle_degre = angle_degre * 3.14 / 180.0;
+  printf("angle_degre : %f\n", angle_degre);
+  wbu_driver_set_steering_angle(angle_degre);
+}
