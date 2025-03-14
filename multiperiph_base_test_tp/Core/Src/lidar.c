@@ -18,7 +18,10 @@ command_lidar_t command_requested = LIDAR_UNKNOWN_COMMAND;
 
 uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE] = {0};
 uint8_t buffer_UART[BUFFER_UART_SIZE] = {0};
-int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
+uint16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
+
+float X[360];
+float Y[360];
 
 /**
  * @brief Decode l'angle et la distance
@@ -31,7 +34,7 @@ int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
  * 
  */
 
-void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point)
+void lidar_decode_angle_and_distance(uint8_t *buffer, uint16_t *angle, uint16_t *distance, bool *is_first_scan_point)
 {
 	static uint8_t distance_low_byte = 0;
 	static uint8_t distance_high_byte = 0;
@@ -265,9 +268,11 @@ void lidar_print_array_distance_teleplot_format(int16_t *points, float num_point
 			x = 0,
 			y = 0;
 
-	printf(">data:");
+	//printf(">data:");
 	for(uint16_t i = 0; i < num_points_scan; i++){
-		if(points[i] > 0){
+		if(points[i] > 0)
+
+		{
 			angle_rad = ((float) i * 2 * M_PI) / num_points_scan;
 			x = cos(angle_rad) * (float)points[i];
 			y = sin(angle_rad) * (float)points[i];
@@ -275,8 +280,15 @@ void lidar_print_array_distance_teleplot_format(int16_t *points, float num_point
 			printf("%.2f:%.2f;",x,y);
 		}
 	}
-	printf("|xy\n");
+	//printf("|xy\n");
 }
+
+
+void PolairesACartesiens(uint16_t* data_lidar_mm_main, uint16_t* angle){
+	X[*angle] = ((float)data_lidar_mm_main[*angle])*cos((((float)*angle) * M_PI) / 180.0);
+	Y[*angle] = ((float)data_lidar_mm_main[*angle])*sin((((float)*angle) * M_PI) / 180.0);
+}
+
 
 /**
  * @brief Gère la réception de caractères pour interpréter les commandes du LiDAR.
@@ -309,6 +321,7 @@ void lidar_handle_receive_character()
 			if (strstr(message, "START_SCAN") != NULL)
 			{
 				printf("Demarrage du scan normal\n");
+				memset(buffer_DMA_scan, 0, BUFFER_DMA_SIZE);
 				lidar_send_start_scan();
 			} else if (strstr(message, "STOP") != NULL)
 			{

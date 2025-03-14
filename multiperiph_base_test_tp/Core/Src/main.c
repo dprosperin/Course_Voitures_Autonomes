@@ -43,6 +43,10 @@
 /* USER CODE BEGIN PD */
 #define CAN_START_AUTONOMOUS_DRIVING 0x500
 #define CAN_STOP_AUTONOMOUS_DRIVING 0x501
+
+
+extern float X[360];
+extern float Y[360];
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -71,6 +75,8 @@ PUTCHAR_PROTOTYPE
 
 	return ch;
 }
+
+
 /* USER CODE END 0 */
 
 /**
@@ -112,6 +118,19 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
+	//pour éviter de faire le start scan, demarrage automatique
+	lidar_send_stop();
+	HAL_Delay(1000);
+
+	lidar_send_get_health();
+	HAL_Delay(5000);
+
+	lidar_send_start_scan();
+
+	//fin
+
+
+
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
 	/* USER CODE END 2 */
 
@@ -119,37 +138,30 @@ int main(void)
 	/* USER CODE BEGIN WHILE */
 	while (1)
 	{
-		/**
-		 * @todo Les Hal_delays font échouer la reception des commandes par UART
-		 */
-		if (!is_autonomous_driving_started)
-		{
-			JOG_read();
-			COD_read();
-			automate_decode_IHM();
-			test_composants_voiture();
-			printf("COD Value : %d\n", cod_value);
-			printf("JOG Value : %d\n", jog_value);
-		}
 
 		lidar_handle_receive_character();
 
-
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
-			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
-
-			if (is_autonomous_driving_started)
-			{
-				conduite_autonome();
-			}
-
-			print_angle_herkulex_teleplot();
-			print_vitesse_moteur_teleplot();
+			//lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
 		}
+
+		//on met dans le while pour que ça se repete en continue à chaque fois
+
+			//printf("Coordonnées cartésiennes : x = %.2f, y = %.2f\n" , x, y); //juste faire un print pour verifier si ça fonctionne bien
+
+		printf(">val:");
+		for (int i = 0; i<360; i++)
+		{
+			if(i < 180) printf("%.2f:%.2f;", X[i],Y[i]);
+		}
+		printf("|xy,clr\n");
+
+
 		/* USER CODE END WHILE */
 
 		/* USER CODE BEGIN 3 */
+
 	}
 	/* USER CODE END 3 */
 }
@@ -234,27 +246,15 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 	if (huart->Instance == USART1) {
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
-			float angle = 0;
-			float distance = 0;
+			uint16_t angle = 0;
+			uint16_t distance = 0;
 			bool is_first_scan_point = 0;
 
 			lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
 
-			if (distance > 0)
-			{
-				if (angle >= 0 && angle <= 180)
-				{
-					data_lidar_mm_main[(uint16_t) angle] = distance;
-				}
+			data_lidar_mm_main[angle] = distance;
 
-				if ((uint16_t) angle == 90)
-				{
-					lidar_half_complete_scan_callback();
-				} else if ((uint16_t) angle == 180)
-				{
-					lidar_complete_scan_callback();
-				}
-			}
+			PolairesACartesiens(data_lidar_mm_main, &angle);
 		}
 	}
 }
@@ -290,32 +290,23 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			 * @todo Verifer le retour quand le LIDAR est en mode balayage
 			 */
 			lidar_decode_get_samplerate(buffer_UART);
-		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
-		{
-			if (command_requested == LIDAR_SCAN_IN_PROGESS)
-			{
-				float angle = 0;
-				float distance = 0;
-				bool is_first_scan_point = 0;
+		} else if (command_requested == LIDAR_SCAN_IN_PROGESS) {
+			uint16_t angle = 0;
+			uint16_t distance = 0;
+			bool is_first_scan_point = 0;
 
-				lidar_decode_angle_and_distance(buffer_DMA_scan + 5, &angle, &distance, &is_first_scan_point);
+			lidar_decode_angle_and_distance(buffer_DMA_scan + 5, &angle, &distance, &is_first_scan_point);
 
-				if (distance > 0 && angle >= 0 && angle <= 180)
-				{
-					data_lidar_mm_main[(uint16_t) angle] = distance;
+			data_lidar_mm_main[angle] = distance;
 
-					if ((uint16_t) angle == 90)
-					{
-						lidar_half_complete_scan_callback();
-					} else if ((uint16_t) angle == 180)
-					{
-						lidar_complete_scan_callback();
-					}
-				}
-			}
+			PolairesACartesiens(data_lidar_mm_main, &angle);
 		}
 	}
 }
+
+
+
+
 /* USER CODE END 4 */
 
 /**

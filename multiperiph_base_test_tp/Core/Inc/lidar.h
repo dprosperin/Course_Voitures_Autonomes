@@ -122,15 +122,17 @@ extern command_lidar_t command_requested;
 extern uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE];
 
 extern uint8_t buffer_UART[BUFFER_UART_SIZE];
-extern int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
+extern uint16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
-void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point);
+void lidar_decode_angle_and_distance(uint8_t *buffer, uint16_t *angle, uint16_t *distance, bool *is_first_scan_point);
 void lidar_print_single_point_teleplot_format(float angle, float distance);
 void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan);
 void lidar_handle_receive_character();
 void lidar_decode_get_health(uint8_t *buffer);
 void lidar_decode_get_info(uint8_t *buffer);
 void lidar_decode_get_samplerate(uint8_t *buffer);
+
+void PolairesACartesiens(uint16_t* data_lidar_mm_main, uint16_t* angle);
 
 HAL_StatusTypeDef lidar_send_start_scan(void);
 HAL_StatusTypeDef lidar_send_get_health(void);
