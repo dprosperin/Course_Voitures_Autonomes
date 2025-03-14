@@ -114,7 +114,8 @@ int main(void)
    * @warning Le code ne gère pas la reconnexion à chaud
    * @warning Au bout d'un certain temps la reception en dma circulaire sur 16bits ne fonctionne plus -> passage à un automate de décodage
    */
-  capteur_obstacles_set_data_output_mode(TOF_LEFT_SENSOR_ID, TOF_ACTIVE);
+  //capteur_obstacles_set_data_output_mode(TOF_LEFT_SENSOR_ID, TOF_ACTIVE);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -177,7 +178,6 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	//capteur_obstacles_init();
 	if (huart->Instance == USART1)
 	{
 		tof_parameter tof0;
