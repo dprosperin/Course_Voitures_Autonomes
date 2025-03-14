@@ -154,6 +154,7 @@ int main(void)
 		for (int i = 0; i<360; i++)
 		{
 			if(i < 180) printf("%.2f:%.2f;", X[i],Y[i]);
+
 		}
 		printf("|xy,clr\n");
 
