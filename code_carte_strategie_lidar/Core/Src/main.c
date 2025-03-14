@@ -46,7 +46,7 @@
 #define CAN_ID_FOURCHE_OPTIQUE 27
 #define CAN_ID_SET_KP_VALUE 0x300
 #undef TESTS_COMPOSANTS
-#undef PRINT_LIDAR_MEASURES
+#define PRINT_LIDAR_MEASURES
 #undef PRINT_HERKULEX_SPEED
 /* USER CODE END PD */
 
@@ -282,7 +282,7 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 				flag_demi_tour = true;
 			}
 
-			if (distance > 0 && angle >= 0 && angle <= 180)
+			if (distance > 0 && ((angle >= 0 && angle <= 190) || (angle <= 359 && angle >= 349)))
 			{
 				data_lidar_mm_main[angle] = distance;
 
@@ -341,7 +341,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				}
 
 
-				if (distance > 0 && angle >= 0 && angle <= 180)
+				if (distance > 0 && ((angle >= 0 && angle <= 190) || (angle <= 359 && angle >= 349)))
 				{
 					data_lidar_mm_main[angle] = distance;
 

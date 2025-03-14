@@ -32,5 +32,5 @@ void conduite_autonome(void)
  */
 void lidar_complete_scan_callback()
 {
-	printf(">demi_tour:%lu|xy\n", HAL_GetTick());
+	//printf(">demi_tour:%lu|xy\n", HAL_GetTick());
 }
