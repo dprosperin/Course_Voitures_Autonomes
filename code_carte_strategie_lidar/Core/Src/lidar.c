@@ -20,6 +20,8 @@ uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE] = {0};
 uint8_t buffer_UART[BUFFER_UART_SIZE] = {0};
 int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
+bool flag_demi_tour = 0;
+
 /**
  * @brief Decode l'angle et la distance
  * 
@@ -31,7 +33,7 @@ int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
  * 
  */
 
-void lidar_decode_angle_and_distance(uint8_t *buffer, float *angle, float *distance, bool *is_first_scan_point)
+void lidar_decode_angle_and_distance(uint8_t *buffer, uint16_t *angle, uint16_t *distance, bool *is_first_scan_point)
 {
 	static uint8_t distance_low_byte = 0;
 	static uint8_t distance_high_byte = 0;
@@ -512,24 +514,6 @@ HAL_StatusTypeDef lidar_send_get_info(void)
 	}
 
 	return return_get_info;
-}
-
-/**
- * @brief Callback déclenché lorsque le scan LiDAR atteint 90°.
- * @todo Tester et valider la fonction lidar_half_complete_scan_callback()
- */
-__weak void lidar_half_complete_scan_callback()
-{
-
-}
-
-/**
- * @brief Callback déclenché lorsque le scan LiDAR atteint 180°.
- * @todo Tester et valider la fonction void lidar_complete_scan_callback()
- */
-__weak void lidar_complete_scan_callback()
-{
-
 }
 
 /**

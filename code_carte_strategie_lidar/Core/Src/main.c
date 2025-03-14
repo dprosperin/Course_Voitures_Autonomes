@@ -46,8 +46,8 @@
 #define CAN_ID_FOURCHE_OPTIQUE 27
 #define CAN_ID_SET_KP_VALUE 0x300
 #undef TESTS_COMPOSANTS
-#define PRINT_LIDAR_MEASURES
-#define PRINT_HERKULEX_SPEED
+#undef PRINT_LIDAR_MEASURES
+#undef PRINT_HERKULEX_SPEED
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -271,24 +271,24 @@ void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart)
 	if (huart->Instance == USART1) {
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
-			float angle = 0;
-			float distance = 0;
+			uint16_t angle = 0;
+			uint16_t distance = 0;
 			bool is_first_scan_point = 0;
 
 			lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
 
-			if (distance > 0)
+			if (is_first_scan_point == true)
 			{
-				if (angle >= 0 && angle <= 180)
-				{
-					data_lidar_mm_main[(uint16_t) angle] = distance;
-				}
+				flag_demi_tour = true;
+			}
 
-				if ((uint16_t) angle == 90)
+			if (distance > 0 && angle >= 0 && angle <= 180)
+			{
+				data_lidar_mm_main[angle] = distance;
+
+				if (angle == 180 && flag_demi_tour == true)
 				{
-					lidar_half_complete_scan_callback();
-				} else if ((uint16_t) angle == 180)
-				{
+					flag_demi_tour = false;
 					lidar_complete_scan_callback();
 				}
 			}
@@ -329,27 +329,29 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			lidar_decode_get_samplerate(buffer_UART);
 		} else if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
-			if (command_requested == LIDAR_SCAN_IN_PROGESS)
-			{
-				float angle = 0;
-				float distance = 0;
+				uint16_t angle = 0;
+				uint16_t distance = 0;
 				bool is_first_scan_point = 0;
 
 				lidar_decode_angle_and_distance(buffer_DMA_scan + 5, &angle, &distance, &is_first_scan_point);
 
+				if (is_first_scan_point == true)
+				{
+						flag_demi_tour = true;
+				}
+
+
 				if (distance > 0 && angle >= 0 && angle <= 180)
 				{
-					data_lidar_mm_main[(uint16_t) angle] = distance;
+					data_lidar_mm_main[angle] = distance;
 
-					if ((uint16_t) angle == 90)
+					if (angle == 180 && flag_demi_tour == true)
 					{
-						lidar_half_complete_scan_callback();
-					} else if ((uint16_t) angle == 180)
-					{
+						flag_demi_tour = false;
 						lidar_complete_scan_callback();
 					}
 				}
-			}
+
 		}
 	}
 }
