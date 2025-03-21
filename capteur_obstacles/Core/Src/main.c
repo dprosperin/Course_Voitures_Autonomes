@@ -18,13 +18,13 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
-#include "dma.h"
 #include "usart.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "capteur_obstacles.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -98,16 +98,13 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
-  MX_DMA_Init();
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-  /**
-   * @note démarrage du dma en reception
-   */
   capteur_obstacles_init();
 
-
+  printf("Programme capteur d'obstacles\n");
+  printf("Compile le %s\n", __DATE__);
   /**
    * @todo Vérifier si c'est fonction change l'ID du capteur d'obstacle capteur_obstacles_set_data_output_mode()
    * @todo Faire un test avec connecteur bluetooth sur l'uart 2 avec le capteur d'obstacles
@@ -122,6 +119,17 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	 if (flag_decoding_frame_complete)
+	 {
+		 capteur_obstacles_print_frame(&global_tf0);
+
+		 /**
+		  * @todo Faire algo de detection d'objets à l'arrière
+		  * @todo Envoyer en CAN la distance de l'objet détecté et son type si possible
+		  */
+
+		 flag_decoding_frame_complete = false;
+	 }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -180,11 +188,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == USART1)
 	{
-		tof_parameter tof0;
-		capteur_obstacles_decode_frame(buffer_DMA_reception, &tof0);
-		capteur_obstacles_print_frame(&tof0);
-		capteur_obstacles_init();
+		capteur_obstacles_automate_decode(buffer_DMA_reception[0]);
 	}
+	capteur_obstacles_init();
 }
 /* USER CODE END 4 */
 

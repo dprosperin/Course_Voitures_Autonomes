@@ -11,6 +11,8 @@
 #include <stdbool.h>
 
 uint8_t buffer_DMA_reception[BUFFER_DMA_RECEPTION_SIZE] = {0};
+bool flag_decoding_frame_complete = false;
+tof_parameter global_tf0 = {0};
 
 #define TOF_FRAME_HEADER 0x57
 #define TOF_FUNCTION_MARK 0x00
@@ -19,42 +21,137 @@ uint8_t buffer_DMA_reception[BUFFER_DMA_RECEPTION_SIZE] = {0};
 #define TOF_SIZE_PARAMETER 32
 
 /**
- * @brief Démarre le DMA en mode normal pour la réception des trames.
+ * @brief Démarre la réception par interruption
  *
- * Cette fonction initialise la réception DMA des trames du capteur TOFSense
- * en utilisant l'UART configuré préalablement.
+ * Cette fonction initialise la réception UART octet par octet.
  *
- * @return HAL_StatusTypeDef Retourne le statut de l'initialisation DMA.
+ * @return HAL_StatusTypeDef Retourne le statut de l'initialisation UART par interruption.
  *         HAL_OK si l'initialisation a réussi, ou un autre code d'erreur sinon.
  */
 HAL_StatusTypeDef capteur_obstacles_init()
 {
-	return HAL_UART_Receive_DMA(&huart1, buffer_DMA_reception, BUFFER_DMA_RECEPTION_SIZE);
+	return HAL_UART_Receive_IT(&huart1, buffer_DMA_reception, BUFFER_DMA_RECEPTION_SIZE);
 }
 
-/**
- * @brief Décode une trame reçue du capteur TOFSense.
- *
- * Cette fonction analyse le buffer reçu par UART, vérifie le checksum
- * et extrait les paramètres pertinents (distance, signal, etc.).
- *
- * @param[in] rx_buf Buffer contenant les données reçues via UART.
- * @param[out] tof0 Structure dans laquelle les paramètres extraits seront stockés.
- */
-void capteur_obstacles_decode_frame(uint8_t *rx_buf, tof_parameter *tof0)
+
+void capteur_obstacles_automate_decode(uint8_t received_char)
 {
-	tof0->checksum_pass = capteur_obstacles_compute_checksum(rx_buf, TOF_SIZE_READ_FRAME) == rx_buf[15];
+	static uint8_t cpt_octet = 0;
+    static tof_automate_frame etat_futur = TOF_STATE_FRAME_HEADER; //ligne exécutée une seule fois au premier appel de robot_fsm.
+    tof_automate_frame etat_actuel;
 
-	if((rx_buf[0] == TOF_FRAME_HEADER)&&(rx_buf[1] == TOF_FUNCTION_MARK) && (tof0->checksum_pass))
-	{
-		tof0->id=rx_buf[3];
-		tof0->system_time=(unsigned long)(((unsigned long)rx_buf[7])<<24|((unsigned long)rx_buf[6])<<16|((unsigned long)rx_buf[5])<<8|(unsigned long)rx_buf[4]);
-		tof0->dis=((float)(((long)(((unsigned long)rx_buf[10]<<24)|((unsigned long)rx_buf[9]<<16)|((unsigned long)rx_buf[8]<<8)))/256))/1000.0;
-		tof0->dis_status=rx_buf[11];
-		tof0->signal_strength=(unsigned int)(((unsigned int)rx_buf[13]<<8)|(unsigned int)rx_buf[12]);
-		tof0->range_precision=rx_buf[14];
-	}
+    static tof_parameter tf0 = {0};
 
+    static uint8_t system_time_octets[4] = {0};
+    static uint8_t dis_octets[3] = {0};
+
+    static uint8_t sum_byte = 0;
+
+    etat_actuel = etat_futur; //on met à jour l'état actuel
+
+    switch(etat_actuel){
+          case TOF_STATE_FRAME_HEADER:
+                if (received_char == TOF_FRAME_HEADER)
+                {
+                	etat_futur = TOF_STATE_FUNCTION_MARK;
+                	sum_byte += received_char;
+                }
+                else
+                	sum_byte = 0;
+              break;
+          case TOF_STATE_FUNCTION_MARK:
+                if (received_char == TOF_FUNCTION_MARK)
+                {
+                	etat_futur = TOF_STATE_ID;
+                	sum_byte += received_char;
+                }
+                else
+                {
+                	sum_byte = 0;
+                	etat_futur = TOF_STATE_FRAME_HEADER;
+                }
+              break;
+          case TOF_STATE_ID:
+        	  sum_byte += received_char;
+
+        	  if (cpt_octet == 0)
+        	  {
+        		  cpt_octet++;
+        	  }
+        	  else if (cpt_octet == 1)
+        	  {
+        		  cpt_octet = 0;
+        		  tf0.id = received_char;
+        		  etat_futur = TOF_STATE_SYSTEM_TIME;
+        	  }
+          break;
+
+          case TOF_STATE_SYSTEM_TIME:
+        	  sum_byte += received_char;
+        	  system_time_octets[cpt_octet] = received_char;
+        	  cpt_octet++;
+
+        	  if (cpt_octet >= 4)
+        	  {
+        		  cpt_octet = 0;
+        		  // Décodage de system time
+        		  tf0.system_time = (uint32_t)(((uint32_t)system_time_octets[3]) << 24
+        				  |((uint32_t)system_time_octets[2]) << 16 |
+						  ((uint32_t)system_time_octets[1]) << 8
+						  |(uint32_t)system_time_octets[0]);
+
+        		  etat_futur = TOF_STATE_DIS;
+        	  }
+          break;
+
+          case TOF_STATE_DIS:
+        	  sum_byte += received_char;
+        	  dis_octets[cpt_octet] = received_char;
+        	  cpt_octet++;
+
+        	  if (cpt_octet >= 3)
+        	  {
+        		  cpt_octet = 0;
+        		  tf0.dis = (((uint32_t)dis_octets[2]<<24)
+        				  | ((uint32_t)dis_octets[1] << 16)
+						  | ((uint32_t)dis_octets[0]<<8));
+
+        		  etat_futur = TOF_STATE_DIS_STATUS;
+        	  }
+          break;
+
+          case TOF_STATE_DIS_STATUS:
+        	  sum_byte += received_char;
+        	  tf0.dis_status = received_char;
+
+        	  etat_futur = TOF_STATE_SIGNAL_STRENGTH;
+          break;
+
+          case TOF_STATE_SIGNAL_STRENGTH:
+        	  sum_byte += received_char;
+        	  tf0.signal_strength = received_char;
+
+        	  etat_futur = TOF_STATE_RANGE_PRECISION;
+          break;
+
+          case TOF_STATE_RANGE_PRECISION:
+        	  sum_byte += received_char;
+        	  tf0.range_precision = received_char;
+
+        	  etat_futur = TOF_STATE_SUMCHECK;
+          break;
+
+          case TOF_STATE_SUMCHECK:
+        	  tf0.checksum_pass = (received_char == TOF_STATE_SUMCHECK);
+
+        	  // Fin du décodage
+        	  flag_decoding_frame_complete = true;
+        	  global_tf0 = tf0;
+
+
+        	  etat_futur = TOF_STATE_FRAME_HEADER;
+          break;
+    }
 }
 
 /**
@@ -69,7 +166,7 @@ void capteur_obstacles_print_frame(tof_parameter *tof0)
 {
 	printf("\nid: %d", tof0->id);
 	printf("\nsystem_time: %lu", tof0->system_time);
-	printf("\ndis: %f", tof0->dis);
+	printf("\ndis: %f", tof0->dis/1000.0);
 	printf("\ndis_status: %d", tof0->dis_status);
 	printf("\nsignal_strength: %d", tof0->signal_strength);
 	printf("\nrange_precision: %d", tof0->range_precision);
