@@ -51,13 +51,12 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
 
     switch(etat_actuel){
           case TOF_STATE_FRAME_HEADER:
+        	    sum_byte = 0;
                 if (received_char == TOF_FRAME_HEADER)
                 {
                 	etat_futur = TOF_STATE_FUNCTION_MARK;
                 	sum_byte += received_char;
                 }
-                else
-                	sum_byte = 0;
               break;
           case TOF_STATE_FUNCTION_MARK:
                 if (received_char == TOF_FUNCTION_MARK)
@@ -130,8 +129,14 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
           case TOF_STATE_SIGNAL_STRENGTH:
         	  sum_byte += received_char;
         	  tf0.signal_strength = received_char;
+        	  cpt_octet++;
 
-        	  etat_futur = TOF_STATE_RANGE_PRECISION;
+        	  if (cpt_octet == 2)
+        	  {
+        		  cpt_octet = 0;
+        		  etat_futur = TOF_STATE_RANGE_PRECISION;
+        	  }
+
           break;
 
           case TOF_STATE_RANGE_PRECISION:
@@ -142,12 +147,14 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
           break;
 
           case TOF_STATE_SUMCHECK:
-        	  tf0.checksum_pass = (received_char == TOF_STATE_SUMCHECK);
+        	  tf0.checksum_pass = sum_byte == received_char;
 
-        	  // Fin du décodage
-        	  flag_decoding_frame_complete = true;
-        	  global_tf0 = tf0;
-
+        	  if (tf0.checksum_pass == 1)
+        	  {
+        		  // Fin du décodage
+        		  flag_decoding_frame_complete = true;
+        		  global_tf0 = tf0;
+        	  }
 
         	  etat_futur = TOF_STATE_FRAME_HEADER;
           break;
@@ -171,6 +178,11 @@ void capteur_obstacles_print_frame(tof_parameter *tof0)
 	printf("\nsignal_strength: %d", tof0->signal_strength);
 	printf("\nrange_precision: %d", tof0->range_precision);
 	printf("\nchecksum_pass: %d", tof0->checksum_pass);
+}
+
+void capteur_obstacles_print_frame_teleplot_format(tof_parameter *tof0)
+{
+	printf(">capteur_obstacles_%d:%lu|xy\n", tof0->id, tof0->dis);
 }
 
 /**
