@@ -57,16 +57,20 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define USART2_TX_Pin GPIO_PIN_2
-#define USART2_TX_GPIO_Port GPIOA
-#define USART2_RX_Pin GPIO_PIN_3
-#define USART2_RX_GPIO_Port GPIOA
+#define CONNECTEUR_BLUETOOTH_TX_Pin GPIO_PIN_2
+#define CONNECTEUR_BLUETOOTH_TX_GPIO_Port GPIOA
+#define CONNECTEUR_BLUETOOTH_RX_Pin GPIO_PIN_3
+#define CONNECTEUR_BLUETOOTH_RX_GPIO_Port GPIOA
 #define T_SWDIO_Pin GPIO_PIN_13
 #define T_SWDIO_GPIO_Port GPIOA
 #define T_SWCLK_Pin GPIO_PIN_14
 #define T_SWCLK_GPIO_Port GPIOA
 #define T_SWO_Pin GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
+#define CAPTEUR_OBSTACLES_TX_Pin GPIO_PIN_6
+#define CAPTEUR_OBSTACLES_TX_GPIO_Port GPIOB
+#define CAPTEUR_OBSTACLES_RX_Pin GPIO_PIN_7
+#define CAPTEUR_OBSTACLES_RX_GPIO_Port GPIOB
 #define LD2_Pin GPIO_PIN_8
 #define LD2_GPIO_Port GPIOB
 

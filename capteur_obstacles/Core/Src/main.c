@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "fdcan.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -25,6 +26,7 @@
 /* USER CODE BEGIN Includes */
 #include "capteur_obstacles.h"
 #include <stdio.h>
+#include "remote_gamepad.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -55,7 +57,11 @@ int __io_getchar(void)
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+uint8_t buffer_rx_connecteur_bluetooth[8];
 
+uint16_t marker1 = 0;
+T_FDCAN_trame_rx trame_rx;
+T_FDCAN_trame_rx buffer_trame_rx[32];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -100,10 +106,15 @@ int main(void)
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_USART1_UART_Init();
+  MX_FDCAN1_Init();
   /* USER CODE BEGIN 2 */
   capteur_obstacles_init();
+  HAL_UART_Receive_IT(&huart2, buffer_rx_connecteur_bluetooth, 1);
 
-  printf("Programme capteur d'obstacles\n");
+  HAL_FDCAN_Start(&hfdcan1);
+  HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
+
+  printf("Programme capteur d'obstacles et connecteur BLUETOOTH\n");
   printf("Compile le %s\n", __DATE__);
   /**
    * @todo Vérifier si c'est fonction change l'ID du capteur d'obstacle capteur_obstacles_set_data_output_mode()
@@ -121,7 +132,7 @@ int main(void)
   {
 	 if (flag_decoding_frame_complete)
 	 {
-		 capteur_obstacles_print_frame(&global_tf0);
+		 capteur_obstacles_print_frame_teleplot_format(&global_tf0);
 
 		 /**
 		  * @todo Faire algo de detection d'objets à l'arrière
@@ -189,8 +200,29 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if (huart->Instance == USART1)
 	{
 		capteur_obstacles_automate_decode(buffer_DMA_reception[0]);
+		capteur_obstacles_init();
 	}
-	capteur_obstacles_init();
+
+	if (huart->Instance == USART2)
+	{
+		handle_receive_character(buffer_rx_connecteur_bluetooth[0]);
+
+		printf("BT > %s\n", buffer_rx_connecteur_bluetooth);
+		HAL_UART_Receive_IT(&huart2, buffer_rx_connecteur_bluetooth, 1);
+	}
+
+}
+
+void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs) {
+	HAL_FDCAN_GetRxMessage(&hfdcan1, FDCAN_RX_FIFO0,
+			&buffer_trame_rx[marker1].header,
+			&buffer_trame_rx[marker1].data[0]);
+
+	marker1++;
+
+	if (marker1 == 32) {
+		marker1 = 0;
+	}
 }
 /* USER CODE END 4 */
 
