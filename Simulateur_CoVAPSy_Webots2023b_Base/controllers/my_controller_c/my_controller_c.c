@@ -42,7 +42,7 @@ void recule(void);
 float speed = 0;
 float maxSpeed = 28; // km/h
 signed int data_lidar_mm_main[360];
-signed int tab_mapped[180] = {0};
+int tab_mapped[180] = {0};
 
 typedef enum
 {
@@ -55,11 +55,12 @@ typedef enum
 static etat_discontuinuite etat = INIT;
 
 double map(double x, double in_min, double in_max, double out_min, double out_max);
-int get_mapped_tableau(signed int data_lidar[360], signed int data_maped[180]);
+int get_mapped_tableau(signed int data_lidar[360], int data_maped[180]);
 int get_unmapped_angle(int angle_mapped);
 double get_angle_cap(double angle_mapped);
 //
 //
+float limite_angle(float angle);
 void recherches_locaux();
 void discontinuite();
 int tab_discontuinuite[180][2] = {0};
@@ -69,8 +70,9 @@ void reculer();
 void conduite_autonome();
 //
 //
-int cpt_discontuinuiter = 0;
-int cpt_min_locaux = 0;
+int cpt_discontuinuiter;
+int cpt_min_locaux;
+int angle_1_discontinuite = 0;
 //
 void clear();
 
@@ -126,13 +128,12 @@ int main(int argc, char **argv)
     if (modeAuto)
     {
       get_mapped_tableau(data_lidar_mm_main, tab_mapped);
-
-      // recherches_locaux();
-      // discontinuite();
-      // conduite_autonome();
-      vitesse_m_s = 0.0;
+      recherches_locaux();
+      discontinuite();
+      conduite_autonome();
+      vitesse_m_s = 0.7;
       set_vitesse_m_s(vitesse_m_s);
-      // clear();
+      clear();
     }
   } // Fin de la boucle while
 
@@ -210,7 +211,7 @@ double map(double x, double in_min, double in_max, double out_min, double out_ma
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-int get_mapped_tableau(signed int data_lidar[360], signed int data_maped[180])
+int get_mapped_tableau(signed int data_lidar[360],int data_maped[180])
 {
   for (int i = 1; i < 90; i++)
   {
@@ -237,28 +238,30 @@ double get_angle_cap(double angle_mapped)
 
 void discontinuite()
 {
-  printf("--------------------------------\n");
-  int distance_courante = 0;
-  int distance_suivante = 0;
-  int diff = 0;
-  int seuil_discontinuite = 200; // Seuil pour considérer une discontinuité
+    int distance_courante = 0  ; 
+    int distance_suivante = 0 ; 
+    int diff = 0 ;
+    int seuil_discontinuite = 250; 
+    cpt_discontuinuiter = 0;
+    angle_1_discontinuite = 0;
 
-  for (int i = 0; i < 179; i++)
-  {
-
-    distance_courante = tab_mapped[i];
-    distance_suivante = tab_mapped[i + 1];
-
-    diff = (int)fabs(distance_suivante - distance_courante);
-
-    if (diff >= seuil_discontinuite)
+    for (int i = 0; i < 179; i++)
     {
-      tab_discontuinuite[i][0] = distance_suivante;
-      tab_discontuinuite[cpt_discontuinuiter][1] = i;
-      cpt_discontuinuiter = cpt_discontuinuiter + 1;
+        distance_courante = tab_mapped[i];
+        distance_suivante = tab_mapped[i + 1];
+        diff = (int)fabs(distance_suivante - distance_courante);
+
+        if (diff >= seuil_discontinuite)
+        {
+            tab_discontuinuite[i][0] = distance_courante;
+            tab_discontuinuite[i][1] = i;
+            cpt_discontuinuiter++;
+            angle_1_discontinuite = i;
+        }
     }
-  }
+  printf("%d\n",cpt_discontuinuiter);
 }
+
 
 void recherches_locaux()
 {
@@ -269,7 +272,6 @@ void recherches_locaux()
   {
     distance_actuelle = tab_mapped[i];
     distance_apres = tab_mapped[i + 1];
-
     switch (etat)
     {
     case INIT:
@@ -320,73 +322,87 @@ void recherches_locaux()
       break;
     }
   }
-  //   printf("Fin de tour du lidar\n");
 }
 
 void conduite_autonome()
 {
-  
   int angle = 0;
-
+  //
+  int max_discontinuite_2_distance_1 = 0;
+  int max_discontinuite_2_distance_2 = 0;
+  int angle_discontinuite_2_1 = 0;
+  int angle_discontinuite_2_2 = 0;
+  //
+  int max_distance_min_locaux_1 = 0;
+  int angle_min_locaux_1 = 0;
+  int max_distance_min_locaux_2 = 0;
+  int angle_min_locaux_2 = 0;
+  int max_distance_1_discontinuite = 0;
   
-  int max_distance_min_locaux_1 = 0  ; 
-  int angle_min_locaux_1 = 0 ;
-  int max_distance_min_locaux_2 = 0 ; 
-  int angle_min_locaux_2 = 0 ;
-
-  int max_distance_1_discontinuite = 0 ; 
-  int angle_1_discontinuite = 0;
   //
   int max_distance_0_discontinuite = 0;
   int angle_0_discontinuite = 0;
- //
-  if (cpt_discontuinuiter > 2)
+  //
+  if (cpt_discontuinuiter >= 1)
   {
-    /* code */
+    for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
+    {
+      if (max_discontinuite_2_distance_1 < tab_discontuinuite[i][0])
+      {
+        max_discontinuite_2_distance_2 = max_discontinuite_2_distance_1;
+        angle_discontinuite_2_2 = angle_discontinuite_2_1;
+        max_discontinuite_2_distance_1 = tab_discontuinuite[i][0];
+        angle_discontinuite_2_1 = i;
+      }
+      else if (max_discontinuite_2_distance_2 < tab_discontuinuite[i][0] && max_discontinuite_2_distance_1 > tab_discontuinuite[i][0])
+      {
+        max_discontinuite_2_distance_2 = tab_discontuinuite[i][0];
+        angle_discontinuite_2_2 = i;
+      }
+      else if (max_discontinuite_2_distance_1 == tab_discontuinuite[i][0] && max_discontinuite_2_distance_2 < tab_discontuinuite[i][0])
+      {
+        max_discontinuite_2_distance_2 = tab_discontuinuite[i][0];
+        angle_discontinuite_2_2 = i;
+      }
+    }
+    angle = (angle_discontinuite_2_1 + angle_discontinuite_2_2) / 2;
   }
 
   else if (cpt_discontuinuiter == 1)
   {
- for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
+    for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
     {
       if (tab_discontuinuite[i][0] > max_distance_1_discontinuite)
       {
-      max_distance_1_discontinuite = tab_discontuinuite[i][0];
-      angle_1_discontinuite = i ; 
+        max_distance_1_discontinuite = tab_discontuinuite[i][0];
       }
     }
-  
-for (int i = angle_1_discontinuite; i > (angle_1_discontinuite - 40); i--)
-{
-    if (min_locaux[i][0] > max_distance_min_locaux_1)
-    {
-      max_distance_min_locaux_1 = min_locaux[i][0];
-      angle_min_locaux_1 = i;
-    }  
-}
-for (int i = angle_1_discontinuite; i < (angle_1_discontinuite + 10); i++)
-{
-      if (min_locaux[i][0] > max_distance_min_locaux_2)
-    {
-      max_distance_min_locaux_2 = min_locaux[i][0];
-      angle_min_locaux_2 = i;
-    }  
-}
 
-if(max_distance_min_locaux_1 > max_distance_min_locaux_2)
-{
-angle = (angle_min_locaux_1 + angle_1_discontinuite)/2 ; 
-}
-else if (max_distance_min_locaux_2> max_distance_min_locaux_1)
-{
-angle = (angle_min_locaux_2 + angle_1_discontinuite)/2 ; 
-}
-  
-  
-  
-  
-  
-  
+    for (int i = angle_1_discontinuite; i > (angle_1_discontinuite - 30); i--)
+    {
+      if (min_locaux[i][0] > max_distance_min_locaux_1)
+      {
+        max_distance_min_locaux_1 = min_locaux[i][0];
+        angle_min_locaux_1 = i;
+      }
+    }
+    for (int i = angle_1_discontinuite; i < (angle_1_discontinuite + 30); i++)
+    {
+      if (min_locaux[i][0] > max_distance_min_locaux_2)
+      {
+        max_distance_min_locaux_2 = min_locaux[i][0];
+        angle_min_locaux_2 = i;
+      }
+    }
+
+    if (max_distance_min_locaux_1 > max_distance_min_locaux_2)
+    {
+      angle = (angle_min_locaux_1 + angle_1_discontinuite) / 2;
+    }
+    else if (max_distance_min_locaux_2 > max_distance_min_locaux_1)
+    {
+      angle = (angle_min_locaux_2 + angle_1_discontinuite) / 2;
+    }
   }
 
   else if (cpt_discontuinuiter == 0)
@@ -395,20 +411,36 @@ angle = (angle_min_locaux_2 + angle_1_discontinuite)/2 ;
     {
       if (tab_mapped[i] > max_distance_0_discontinuite)
       {
-      max_distance_0_discontinuite = tab_mapped[i];
-      angle_0_discontinuite = i;
+        max_distance_0_discontinuite = tab_mapped[i];
+        angle_0_discontinuite = i;
       }
     }
-  if (0 <= angle_0_discontinuite && angle_0_discontinuite <= 89)
-  {
-    angle = -16 ; 
+    if (0 <= angle_0_discontinuite && angle_0_discontinuite <= 89)
+    {
+      angle = -16;
+    }
+    else if (90 <= angle_0_discontinuite && angle_0_discontinuite <= 179)
+    {
+      angle = 16;
+    }
   }
-  else if (90 <= angle_0_discontinuite && angle_0_discontinuite <= 179)
-  {
-    angle = 16 ;
-  }
- }
+  float commande_moteur = get_angle_cap(angle);
+  wbu_driver_set_steering_angle(commande_moteur);
 }
+
+float limite_angle(float angle)
+{
+  if (angle > 0.31)
+  {
+    angle = 0.31;
+  }
+  else if (angle < -0.31)
+  {
+    angle = -0.31;
+  }
+return angle ; 
+}
+
 void clear()
 {
   for (int i = 0; i < 50; i++)
@@ -422,7 +454,5 @@ void clear()
     min_locaux[i][0] = 0;
     min_locaux[i][1] = 0;
   }
-
-  cpt_discontuinuiter = 0;
   cpt_min_locaux = 0;
 }
