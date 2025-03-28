@@ -33,6 +33,7 @@
 #define PRESCALAR 1
 #define ARR 170000000-1
 #define CAN_ID_FOURCHE_OPTIQUE 27
+#define MAX_SPEED 4.03
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -42,7 +43,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#undef DEBUG_FOURCHE_OPTIQUE
+#define DEBUG_FOURCHE_OPTIQUE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -61,7 +62,7 @@ uint32_t IC_Val1 = 0, IC_Val2 = 0;
 uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
-float m_per_sec = 0;
+float measured_speed = 0;
 FDCAN_TxHeaderTypeDef header;
 int8_t	txData[2];
 //au moment de changement du projet le tim interrupt se désactive
@@ -87,24 +88,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			}
 
 			Frecuency = CK_CNT/Difference;
-			m_per_sec = 4.9375*Frecuency;
-			txData[0] = ((int16_t)m_per_sec) >> 8;
-			txData[1] = ((int16_t)m_per_sec) & 0x00FF;
-			/******************* NE PAS TOUCHER **************************************/
-			header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-			header.BitRateSwitch = FDCAN_BRS_OFF;
-			header.FDFormat = FDCAN_CLASSIC_CAN;
-			header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-			header.MessageMarker = 0;
-			/*************************************************************************/
-
-			header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
-			header.IdType = FDCAN_STANDARD_ID; // Standard ID
-			header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
-			header.DataLength = 2; // Data length
-
-			/*************************************************************************/
-			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
+			measured_speed = 4.9375*Frecuency*0.75;
 
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
@@ -171,19 +155,32 @@ int main(void)
 	/**
 	 * @note Mettre la vitesse à 0 au démarrage du moteur CC
 	 */
-	PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, 0);
+  PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, 0.0);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  	float speed = 0.0;
+	float error = 0;
+	float error_1 = 0;
+	float pwm = 0;
 
 	while (1)
 	{
-
 #ifdef DEBUG_FOURCHE_OPTIQUE
-		printf(">Vitesse: %f\n", m_per_sec/1000);
-		printf(">Frecuency: %f\n", Frecuency);
+		printf(">Vitesse: %f\n", measured_speed/1000);
+		//printf(">Frecuency: %f\n", Frecuency);
 #endif
+		error = speed - (measured_speed/1000);
+		error = error*0.8;
+		printf(">error: %f\n", error);
+		//pwm_1 = error - error_1;
+		//printf(">pwm_1: %f\n", pwm_1);
+		pwm = (speed/MAX_SPEED) + error;
+		printf(">pwm: %f\n", pwm);
+		PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, pwm);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
