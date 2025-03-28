@@ -29,11 +29,13 @@
 #include <stdbool.h>
 #include "herculex.h"
 #include "pwm_api.h"
-#define TIM_CLOCK 170000000
-#define PRESCALAR 1
-#define ARR 170000000-1
+#define TIM_CLOCK_FOURCHE_OPTIQUE 170000000
+#define PRESCALAR_FOURCHE_OPTIQUE 1
+#define ARR_FOURCHE_OPTIQUE 170000000-1
 #define CAN_ID_FOURCHE_OPTIQUE 27
-#define MAX_SPEED 4.03
+#define MAX_SPEED 4.14
+#define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 4.14)
+#define KP 2.5
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -57,7 +59,7 @@ PUTCHAR_PROTOTYPE
 }
 
 //Interruption pour mesurer la vitesse du moteur
-float CK_CNT = TIM_CLOCK/(PRESCALAR);
+float CK_CNT = TIM_CLOCK_FOURCHE_OPTIQUE/(PRESCALAR_FOURCHE_OPTIQUE);
 uint32_t IC_Val1 = 0, IC_Val2 = 0;
 uint32_t Difference = 0;
 char First_rising;
@@ -84,7 +86,7 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			}
 			else if (IC_Val1 > IC_Val2)
 			{
-				Difference = ( ARR - IC_Val1) + IC_Val2;
+				Difference = ( ARR_FOURCHE_OPTIQUE - IC_Val1) + IC_Val2;
 			}
 
 			Frecuency = CK_CNT/Difference;
@@ -161,9 +163,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  	float speed = 0.0;
+  	float consigne = 0.8;
 	float error = 0;
-	float error_1 = 0;
 	float pwm = 0;
 
 	while (1)
@@ -172,12 +173,15 @@ int main(void)
 		printf(">Vitesse: %f\n", measured_speed/1000);
 		//printf(">Frecuency: %f\n", Frecuency);
 #endif
-		error = speed - (measured_speed/1000);
-		error = error*0.8;
-		printf(">error: %f\n", error);
-		//pwm_1 = error - error_1;
-		//printf(">pwm_1: %f\n", pwm_1);
-		pwm = (speed/MAX_SPEED) + error;
+
+		/**
+		 * @note Vitesse asservie de 6.8V à 8.5V pour une consigne de 0.8 m/s
+		 */
+		error = consigne - (measured_speed/1000);
+		printf(">error_vitesse_lineaire: %2.5f m/s\n", error);
+		error = error * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE * KP;
+		printf(">error_rapport_cyclique: %2.5f m/s\n", error);
+		pwm = consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
 		printf(">pwm: %f\n", pwm);
 		PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, pwm);
 
