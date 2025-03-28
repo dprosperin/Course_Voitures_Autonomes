@@ -41,10 +41,13 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define CAN_START_AUTONOMOUS_DRIVING 0x500
-#define CAN_STOP_AUTONOMOUS_DRIVING 0x501
+#define CAN_ID_START_AUTONOMOUS_DRIVING 0x500
+#define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
-#undef  AUTONOMOUS_DRIVING_STARTED
+#define CAN_ID_SET_KP_VALUE 0x300
+#undef TESTS_COMPOSANTS
+#define PRINT_LIDAR_MEASURES
+#define PRINT_HERKULEX_SPEED
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -114,6 +117,19 @@ int main(void)
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
 	LCD_clear();
 
+
+	// Start lidar scan
+	/**
+	 * @warning L'appel de la fonction lidar_send_reset() fait planter la liaison avec le LiDAR
+	 */
+	lidar_send_stop();
+	HAL_Delay(1000);
+
+	lidar_send_get_health();
+	HAL_Delay(5000);
+
+	lidar_send_start_scan();
+
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
 
@@ -124,16 +140,15 @@ int main(void)
 		/**
 		 * @todo Les Hal_delays font échouer la reception des commandes par UART
 		 */
-
-#ifdef AUTONOMOUS_DRIVING_STARTED
+#ifdef TESTS_COMPOSANTS
 		if (!is_autonomous_driving_started)
 		{
 			JOG_read();
 			COD_read();
 			automate_decode_IHM();
 			test_composants_voiture();
-			printf("COD Value : %d\n", cod_value);
-			printf("JOG Value : %d\n", jog_value);
+			printf(">cod_value:%d\n", cod_value);
+			printf(">jog_value:%d\n", jog_value);
 		}
 #endif
 		lidar_handle_receive_character();
@@ -141,17 +156,19 @@ int main(void)
 
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
+#ifdef PRINT_LIDAR_MEASURES
 			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
-
+#endif
 			if (is_autonomous_driving_started)
 			{
 				conduite_autonome();
 			}
 
+#ifdef PRINT_HERKULEX_SPEED
 			print_angle_herkulex_teleplot();
 			print_vitesse_moteur_teleplot();
+#endif
 		}
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -216,18 +233,30 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 
 	switch (buffer_trame_rx[marker1].header.Identifier)
 	{
-	case CAN_START_AUTONOMOUS_DRIVING:
+	case CAN_ID_START_AUTONOMOUS_DRIVING:
 		printf("START AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 1;
 		break;
 
-	case CAN_STOP_AUTONOMOUS_DRIVING:
+	case CAN_ID_STOP_AUTONOMOUS_DRIVING:
 		printf("STOP AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 0;
 		break;
 	case CAN_ID_FOURCHE_OPTIQUE:
 		//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
-		float m_per_sec = (float)buffer_trame_rx[marker1].data[0]/1000;
+		/**
+		 * @note Il faudra probablement passer sur une taille de données de deux octets
+		 */
+		vitesse_lineaire = (float)buffer_trame_rx[marker1].data[0]/1000.0;
+		printf(">vitesse_lineaire:%2.5f\n", vitesse_lineaire);
+		break;
+	case CAN_ID_SET_KP_VALUE:
+		/**
+		 * @note Les valeurs de kp négatifs ne fonctionne pas
+		 */
+		kp = (((uint16_t) buffer_trame_rx[marker1].data[0] << 8) | buffer_trame_rx[marker1].data[1]) / 1000.0;
+		printf(">kp:%2.5f|xy\n", kp);
+		break;
 	}
 
 	marker1++;
