@@ -18,8 +18,8 @@ void set_angle(float nouvelle_angle);
 #define CAN_ID_HERKULEX 0x601
 #define CAN_ID_MOTEUR 0x602
 
-#define ANGLE_HERKULEX_MIN -150.0f
-#define ANGLE_HERKULEX_MAX -79.0f
+#define ANGLE_HERKULEX_MIN -120.8f
+#define ANGLE_HERKULEX_MAX -80.8f
 
 extern float rapport_cyclique;
 extern bool  sens;
