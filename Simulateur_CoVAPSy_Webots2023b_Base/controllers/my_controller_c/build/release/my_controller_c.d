@@ -1,10 +1,11 @@
 build/release/my_controller_c.o: my_controller_c.c \
- /usr/local/webots/include/controller/c/webots/robot.h \
- /usr/local/webots/include/controller/c/webots/types.h \
- /usr/local/webots/include/controller/c/webots/nodes.h \
- /usr/local/webots/include/controller/c/webots/vehicle/car.h \
- /usr/local/webots/include/controller/c/webots/types.h \
- /usr/local/webots/include/controller/c/webots/vehicle/driver.h \
- /usr/local/webots/include/controller/c/webots/keyboard.h \
- /usr/local/webots/include/controller/c/webots/lidar.h \
- /usr/local/webots/include/controller/c/webots/lidar_point.h
+  include/my_controller_c.h include/lib_voiture.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/robot.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/types.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/nodes.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/vehicle/car.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/vehicle/driver.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/keyboard.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/lidar.h \
+  /Applications/Webots.app/Contents/include/controller/c/webots/lidar_point.h \
+  include/ma_bibli.h

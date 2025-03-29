@@ -65,6 +65,11 @@
 ###
 ###-----------------------------------------------------------------------------
 
+# My custom config
+C_SOURCES = src/ma_bibli.c src/lib_voiture.c my_controller_c.c
+INCLUDE = -I"include"
+VERBOSE = 1
+
 ### Do not modify: this includes Webots global Makefile.include
 null :=
 space := $(null) $(null)
