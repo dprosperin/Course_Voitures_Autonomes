@@ -22,19 +22,15 @@ int main(int argc, char **argv)
 
     if(modeAuto)
     {
-        /****************************************/
-        /* Programme etudiant avec              */
-        /*  - le tableau data_lidar_mm_main     */
-        /*  - la fonction set_direction_degre(.)*/
-        /*  - la fonction set_vitesse_m_s(...)  */
-        /*  - la fonction recule()              */
-        /****************************************/
-        angle_degre = 0.02*(data_lidar_mm_main[30]-data_lidar_mm_main[150]); //distance à 60° - distance à -60°
-        set_direction_degres(angle_degre);
-        vitesse_m_s = 0.5;
-        test(angle_degre);
+        cherche_discontinuitee(200);
 
-        set_vitesse_m_s(vitesse_m_s);
+        for (unsigned int i = 0; i < TAILLE_TABLEAU_DISCONTINUITEES; i++)
+        {
+            if (tableau_discontinuitees[i] > 0)
+              printf("(%d °, %d mm), ", i, tableau_discontinuitees[i]);
+        }
+         printf("\n");
+        printf("nombre discontinuité : %d\n", nombre_discontinuitees);
     }
   }
   /* This is necessary to cleanup webots resources */

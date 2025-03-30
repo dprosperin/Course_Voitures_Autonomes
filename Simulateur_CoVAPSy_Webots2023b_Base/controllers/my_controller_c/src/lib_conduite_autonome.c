@@ -3,7 +3,9 @@
 //
 
 #include "lib_conduite_autonome.h"
+#include "lib_voiture.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
 * @note Use the Disparity Extender approach
@@ -12,9 +14,33 @@
 * @todo 3. Choose a path based on virtual lidar readings
 */
 
+unsigned int nombre_discontinuitees = 0;
+unsigned int tableau_discontinuitees[TAILLE_TABLEAU_DISCONTINUITEES] = {0};
+
 void test(float angle_degre)
 {
    printf(">direction4:%f|xy\n", angle_degre);
+}
+
+/**
+* @brief Cherche les discontinuitées et les place dans le tableau discontinuitées à partir d'un seuil
+* @param seuil
+*/
+void cherche_discontinuitee(unsigned int seuil)
+{
+  nombre_discontinuitees = 0;
+  for (unsigned int i = 0; i < TAILLE_TABLEAU_DISCONTINUITEES; i++)
+  {
+    if (abs(data_lidar_mm_main[i] - data_lidar_mm_main[i + 1]) >= seuil)
+    {
+      tableau_discontinuitees[i] = data_lidar_mm_main[i];
+      nombre_discontinuitees++;
+    }
+    else
+    {
+      tableau_discontinuitees[i] = 0;
+    }
+  }
 }
 
 /**
