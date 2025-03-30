@@ -12,6 +12,7 @@
 #include <webots/keyboard.h>
 #include <stdio.h>
 #include <webots/lidar.h>
+#include "lib_conduite_autonome.h"
 
 #define TIME_STEP 32
 #define SIZE_TABLEAU 200

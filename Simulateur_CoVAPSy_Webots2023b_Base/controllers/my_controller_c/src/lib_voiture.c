@@ -101,19 +101,22 @@ void voiture_init(void){
     wb_keyboard_enable(TIME_STEP);
 }
 
+/**
+ * @note On a touné virtuellement le lidar de 90° vers la gauche pour qu'il correspond à la configuration réelle
+ *
+ */
 void lidar_read(void){
     float distance;
     /* lire le lidar et traiter les données :   */
     range_donnees=wb_lidar_get_range_image(lidar);
     distance = range_donnees[0];
     if((distance > 0.0) && (distance <20.0))
-        data_lidar_mm_main[0]=1000*distance;
-    else data_lidar_mm_main[0] = 0;
+        data_lidar_mm_main[rotation_angle_90_horaire(0)]=1000*distance;
+    else data_lidar_mm_main[rotation_angle_90_horaire(0)] = 0;
     for(unsigned int i = 1; i<360 ; i++)
     {
-        distance = range_donnees[360-i];
         if((distance > 0.0) && (distance <20.0))
-            data_lidar_mm_main[i]=1000*distance;
-        else data_lidar_mm_main[i] = 0;
+            data_lidar_mm_main[rotation_angle_90_horaire(i)]=1000*range_donnees[i];
+        else data_lidar_mm_main[rotation_angle_90_horaire(i)] = 0;
     }
 }

@@ -8,4 +8,4 @@ build/release/my_controller_c.o: my_controller_c.c \
   /Applications/Webots.app/Contents/include/controller/c/webots/keyboard.h \
   /Applications/Webots.app/Contents/include/controller/c/webots/lidar.h \
   /Applications/Webots.app/Contents/include/controller/c/webots/lidar_point.h \
-  include/ma_bibli.h
+  include/lib_conduite_autonome.h

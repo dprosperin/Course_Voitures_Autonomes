@@ -66,7 +66,7 @@
 ###-----------------------------------------------------------------------------
 
 # My custom config
-C_SOURCES = src/ma_bibli.c src/lib_voiture.c my_controller_c.c
+C_SOURCES = src/lib_conduite_autonome.c src/lib_voiture.c my_controller_c.c
 INCLUDE = -I"include"
 VERBOSE = 1
 

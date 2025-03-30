@@ -10,6 +10,6 @@
  * <webots/motor.h>, etc.
  */
 #include "lib_voiture.h"
-#include "ma_bibli.h"
+#include "lib_conduite_autonome.h"
 
 #endif //MY_CONTROLLER_C_H
