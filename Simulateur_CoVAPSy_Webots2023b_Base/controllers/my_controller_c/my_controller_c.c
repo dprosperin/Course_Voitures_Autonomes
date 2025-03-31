@@ -70,8 +70,8 @@ void reculer();
 void conduite_autonome();
 //
 //
-int cpt_discontuinuiter;
-int cpt_min_locaux;
+int cpt_discontuinuiter = 0;
+int cpt_min_locaux = 0 ;
 int angle_1_discontinuite = 0;
 //
 void clear();
@@ -94,7 +94,7 @@ int main(int argc, char **argv)
   // enable keyboard
   wb_keyboard_enable(TIME_STEP);
   // enable lidar
-  lidar = wb_robot_get_device("RpLidarA2");
+    WbDeviceTag lidar  = wb_robot_get_device("RpLidarA2");
   wb_lidar_enable(lidar, TIME_STEP);
   // affichage des points lidar sur la piste
   wb_lidar_enable_point_cloud(lidar);
@@ -127,13 +127,20 @@ int main(int argc, char **argv)
 
     if (modeAuto)
     {
-      get_mapped_tableau(data_lidar_mm_main, tab_mapped);
-      recherches_locaux();
-      discontinuite();
-      conduite_autonome();
-      vitesse_m_s = 0.7;
+      //get_mapped_tableau(data_lidar_mm_main, tab_mapped);
+       printf("----------------------------------\n") ; 
+      for (int i = 0; i <360 ; i++)
+      {
+        printf(" %d, ", data_lidar_mm_main[i]) ; 
+      }
+      printf("\n");
+       printf("----------------------------------\n") ; 
+      //recherches_locaux();
+      //discontinuite();
+      //conduite_autonome();
+      vitesse_m_s = 0.0;
       set_vitesse_m_s(vitesse_m_s);
-      clear();
+      //clear();
     }
   } // Fin de la boucle while
 
@@ -257,9 +264,11 @@ void discontinuite()
             tab_discontuinuite[i][1] = i;
             cpt_discontuinuiter++;
             angle_1_discontinuite = i;
+         //printf("i :%d  d: %d\n",i,distance_courante);
         }
     }
-  printf("%d\n",cpt_discontuinuiter);
+  
+  //printf("compteur discontinuite : %d\n",cpt_discontuinuiter);
 }
 
 
@@ -343,7 +352,7 @@ void conduite_autonome()
   int max_distance_0_discontinuite = 0;
   int angle_0_discontinuite = 0;
   //
-  if (cpt_discontuinuiter >= 1)
+  if (cpt_discontuinuiter > 1)
   {
     for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
     {
