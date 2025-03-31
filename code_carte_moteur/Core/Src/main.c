@@ -67,6 +67,7 @@ float Frecuency = 0;
 float measured_speed_m_par_sec = 0;
 float moyenne_measured_speed_final = 0;
 bool nouvelle_vitesse_moyenne = 1;
+float consigne = 0.0;
 
 //au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
@@ -175,7 +176,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  	float consigne = 0.3;
 	float error = 0;
 	float pwm = 0;
 
@@ -267,11 +267,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
          */
 				send_pos(ID_HERKULEX, pos_herculex);
 				break;
-			case CAN_ID_MOTEUR:
-					float rapport_cyclique = trame_rx.data[0] / 100.0;
+			case CAN_ID_MOTEUR://vitesse consigne réçu en mm/s
+					consigne = trame_rx.data[0] / 1000.0; //vitesse transformée en m/s
 					bool sens_rotation =  trame_rx.data[1];
-
-					PWM_dir_and_cycle(sens_rotation, &htim1, TIM_CHANNEL_1, rapport_cyclique);
 				break;
 			default:
 				break;
