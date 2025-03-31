@@ -127,20 +127,20 @@ int main(int argc, char **argv)
 
     if (modeAuto)
     {
-      //get_mapped_tableau(data_lidar_mm_main, tab_mapped);
-       printf("----------------------------------\n") ; 
+      get_mapped_tableau(data_lidar_mm_main, tab_mapped);
+      printf("----------------------------------\n") ; 
       for (int i = 0; i <360 ; i++)
       {
         printf(" %d, ", data_lidar_mm_main[i]) ; 
       }
       printf("\n");
        printf("----------------------------------\n") ; 
-      //recherches_locaux();
-      //discontinuite();
-      //conduite_autonome();
+      recherches_locaux();
+      discontinuite();
+      conduite_autonome();
       vitesse_m_s = 0.0;
       set_vitesse_m_s(vitesse_m_s);
-      //clear();
+      clear();
     }
   } // Fin de la boucle while
 
@@ -452,7 +452,7 @@ return angle ;
 
 void clear()
 {
-  for (int i = 0; i < 50; i++)
+  for (int i = 0; i < 180; i++)
   {
     tab_discontuinuite[i][0] = 0;
     tab_discontuinuite[i][1] = 0;
