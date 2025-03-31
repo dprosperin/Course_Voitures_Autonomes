@@ -32,10 +32,10 @@
 #define TIM_CLOCK_FOURCHE_OPTIQUE 170000000
 #define PRESCALAR_FOURCHE_OPTIQUE 1
 #define ARR_FOURCHE_OPTIQUE 170000000-1
-#define CAN_ID_FOURCHE_OPTIQUE 27
+#define DISTANCE_ANGULAIRE_EN_METRE 0.00493
 #define MAX_SPEED 4.14
 #define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 4.14)
-#define KP 2.5
+#define KP 1.5
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -45,7 +45,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#undef DEBUG_FOURCHE_OPTIQUE
+#define DEBUG_FOURCHE_OPTIQUE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -64,12 +64,16 @@ uint32_t IC_Val1 = 0, IC_Val2 = 0;
 uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
-float m_per_sec = 0;
-FDCAN_TxHeaderTypeDef header;
-int8_t	txData[2];
+float measured_speed_m_par_sec = 0;
+float moyenne_measured_speed_final = 0;
+bool nouvelle_vitesse_moyenne = 1;
+
 //au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
+	static unsigned int indice_valeur_fourche = 0;
+	static float somme_measured_speed  = 0;
+
 	if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
 	{
 		if(First_rising == 1)
@@ -90,25 +94,17 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 			}
 
 			Frecuency = CK_CNT/Difference;
-			m_per_sec = 4.9375*Frecuency;
-			txData[0] = ((int16_t)m_per_sec) >> 8;
-			txData[1] = ((int16_t)m_per_sec) & 0x00FF;
-			/******************* NE PAS TOUCHER **************************************/
-			header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-			header.BitRateSwitch = FDCAN_BRS_OFF;
-			header.FDFormat = FDCAN_CLASSIC_CAN;
-			header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-			header.MessageMarker = 0;
-			/*************************************************************************/
+			measured_speed_m_par_sec = DISTANCE_ANGULAIRE_EN_METRE*Frecuency;
+			somme_measured_speed += measured_speed_m_par_sec;
+			indice_valeur_fourche++;
 
-			header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
-			header.IdType = FDCAN_STANDARD_ID; // Standard ID
-			header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
-			header.DataLength = 2; // Data length
-
-			/*************************************************************************/
-			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
-
+			if(indice_valeur_fourche == 3)
+			{
+				moyenne_measured_speed_final = somme_measured_speed / 5.0;
+				somme_measured_speed = 0;
+				indice_valeur_fourche = 0;
+				nouvelle_vitesse_moyenne = 1;
+			}
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
 		}
@@ -179,32 +175,28 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  	float consigne = 0.8;
+  	float consigne = 0.3;
 	float error = 0;
 	float pwm = 0;
 
 	while (1)
 	{
 #ifdef DEBUG_FOURCHE_OPTIQUE
-		printf(">Vitesse: %f\n", measured_speed/1000);
+		printf(">Vitesse: %f\n", measured_speed_m_par_sec);
+		printf(">vitesse_moyenne: %2.5f m/s\n", moyenne_measured_speed_final);
 		//printf(">Frecuency: %f\n", Frecuency);
 #endif
 
 		/**
 		 * @note Vitesse asservie de 6.8V à 8.5V pour une consigne de 0.8 m/s
 		 */
-		error = consigne - (measured_speed/1000);
+		error = consigne - measured_speed_m_par_sec;
 		printf(">error_vitesse_lineaire: %2.5f m/s\n", error);
 		error = error * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE * KP;
 		printf(">error_rapport_cyclique: %2.5f m/s\n", error);
 		pwm = consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
 		printf(">pwm: %f\n", pwm);
 		PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, pwm);
-
-#ifdef DEBUG_FOURCHE_OPTIQUE
-		printf(">Vitesse: %f\n", m_per_sec/1000);
-		printf(">Frecuency: %f\n", Frecuency);
-#endif
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
