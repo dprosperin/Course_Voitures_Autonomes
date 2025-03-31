@@ -153,16 +153,16 @@ int main(void)
 #endif
 		lidar_handle_receive_character();
 
+		if (is_autonomous_driving_started)
+		{
+			conduite_autonome();
+		}
 
 		if (command_requested == LIDAR_SCAN_IN_PROGESS)
 		{
 #ifdef PRINT_LIDAR_MEASURES
 			lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
 #endif
-			if (is_autonomous_driving_started)
-			{
-				conduite_autonome();
-			}
 
 #ifdef PRINT_HERKULEX_SPEED
 			print_angle_herkulex_teleplot();

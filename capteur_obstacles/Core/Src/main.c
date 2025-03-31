@@ -132,7 +132,7 @@ int main(void)
   {
 	 if (flag_decoding_frame_complete)
 	 {
-		 capteur_obstacles_print_frame_teleplot_format(&global_tf0);
+		 //capteur_obstacles_print_frame_teleplot_format(&global_tf0);
 
 		 /**
 		  * @todo Faire algo de detection d'objets à l'arrière
