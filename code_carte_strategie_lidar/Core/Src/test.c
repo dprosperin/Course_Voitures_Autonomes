@@ -9,6 +9,7 @@
 #include <deplacement.h>
 #include <ihm.h>
 #include "lidar.h"
+#include "utils.h"
 
 etat_test etat_actuelle = TEST_CHOIX;
 
@@ -160,3 +161,31 @@ void test_herculex_balayage_plage()
 	}
 
 }
+
+void test_roues_balayage_plage_0_180()
+{
+	static float angle_herkulex = ANGLE_ROUE_BRAQUAGE_GAUCHE;
+	static float angle_plage_roues = 0;
+
+	for (; angle_plage_roues <= ANGLE_ROUE_BRAQUAGE_DROITE; angle_plage_roues++)
+	{
+
+		angle_herkulex = mapf(angle_plage_roues, ANGLE_ROUE_BRAQUAGE_DROITE, ANGLE_ROUE_BRAQUAGE_GAUCHE, ANGLE_HERKULEX_MAX, ANGLE_HERKULEX_MIN);
+		LCD_gotoxy(0, 0);
+		LCD_printf("roue %2.1f deg", angle_plage_roues);
+
+		LCD_gotoxy(0, 1);
+		LCD_printf("servo %2.1f deg", angle_herkulex);
+
+		set_angle_roue(angle_plage_roues);
+
+		HAL_Delay(500);
+
+		if (angle_plage_roues >= ANGLE_ROUE_BRAQUAGE_DROITE)
+		{
+			angle_plage_roues = ANGLE_ROUE_BRAQUAGE_GAUCHE;
+		}
+	}
+}
+
+

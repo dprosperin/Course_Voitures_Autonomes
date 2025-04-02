@@ -8,6 +8,7 @@
 #include <deplacement.h>
 #include "fdcan.h"
 #include <stdint.h>
+#include "utils.h"
 
 // Base motrice
 float rapport_cyclique = 0.0;
@@ -129,4 +130,20 @@ void set_angle(float nouvelle_angle)
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
 
 	// TODO : Mettre une tempo
+}
+
+/**
+ * @brief Fait touner les roues à un angle donnée dans la plage de ANGLE_ROUE_BRAQUAGE_GAUCHE à ANGLE_ROUE_BRAQUAGE_DROITE
+ * @param angle_roue angle en degrée dans la plage comprise de ANGLE_ROUE_BRAQUAGE_GAUCHE à ANGLE_ROUE_BRAQUAGE_DROITE
+ */
+void set_angle_roue(float angle_roue)
+{
+	if (angle_roue < ANGLE_ROUE_BRAQUAGE_GAUCHE)
+		angle_roue = ANGLE_ROUE_BRAQUAGE_GAUCHE;
+	else if (angle_roue > ANGLE_ROUE_BRAQUAGE_DROITE)
+		angle_roue = ANGLE_ROUE_BRAQUAGE_DROITE;
+
+	float angle_herkulex = mapf(angle_roue, ANGLE_ROUE_BRAQUAGE_DROITE, ANGLE_ROUE_BRAQUAGE_GAUCHE, ANGLE_HERKULEX_MAX, ANGLE_HERKULEX_MIN);
+
+	set_angle(angle_herkulex);
 }

@@ -49,7 +49,7 @@ void conduite_autonome(void)
 	//LCD_printf("angle %4.2f", angle);
 	//LCD_gotoxy(0,1);
     //LCD_printf("servo %4.2f", angle_mapped);
-	test_herculex_balayage_plage();
+	test_roues_balayage_plage_0_180();
 
     //printf(">angle:%4.3f|xy\n", angle);
     //printf(">angle_mapped:%4.3f|xy\n", angle_mapped);

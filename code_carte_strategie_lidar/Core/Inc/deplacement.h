@@ -14,6 +14,7 @@ void set_rapport_cyclique_et_sens(float nouveau_rapport_cyclique, bool nouveau_s
 void recule(void);
 void avance(void);
 void set_angle(float nouvelle_angle);
+void set_angle_roue(float angle_roue);
 
 #define CAN_ID_HERKULEX 0x601
 #define CAN_ID_MOTEUR 0x602
@@ -26,6 +27,9 @@ void set_angle(float nouvelle_angle);
  * @note ANGLE_HERKULEX_MAX les roues braquent totalement à droite
  */
 #define ANGLE_HERKULEX_MAX -79.0f
+
+#define ANGLE_ROUE_BRAQUAGE_GAUCHE 0
+#define ANGLE_ROUE_BRAQUAGE_DROITE 180
 
 extern float rapport_cyclique;
 extern bool  sens;
