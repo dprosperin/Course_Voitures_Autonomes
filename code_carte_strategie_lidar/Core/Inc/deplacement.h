@@ -18,7 +18,13 @@ void set_angle(float nouvelle_angle);
 #define CAN_ID_HERKULEX 0x601
 #define CAN_ID_MOTEUR 0x602
 
+/**
+ * @note ANGLE_HERKULEX_MIN les roues braquent totalement à gauche
+ */
 #define ANGLE_HERKULEX_MIN -150.0f
+/**
+ * @note ANGLE_HERKULEX_MAX les roues braquent totalement à droite
+ */
 #define ANGLE_HERKULEX_MAX -79.0f
 
 extern float rapport_cyclique;

@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "ihm.h"
+#include "test.h"
 
 void conduite_autonome(void);
 void lidar_complete_scan_callback(void);

@@ -91,6 +91,7 @@ void set_angle(float nouvelle_angle)
 	uint8_t txData[2];
 	uint16_t cmd_angle;
 	FDCAN_TxHeaderTypeDef header;
+	static float angle = -100;
 
 	//Fixer les limites de rotation du robot
 

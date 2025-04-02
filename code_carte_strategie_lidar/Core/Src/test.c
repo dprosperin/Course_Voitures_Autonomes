@@ -140,3 +140,23 @@ void test_composants_voiture ()
 
 			}
 }
+
+void test_herculex_balayage_plage()
+{
+	static float angle = ANGLE_HERKULEX_MIN;
+
+	for (; angle <= ANGLE_HERKULEX_MAX; angle++)
+	{
+		LCD_gotoxy(0, 0);
+		LCD_printf("servo %2.2f  ", angle);
+		set_angle(angle);
+
+		HAL_Delay(500);
+
+		if (angle >= ANGLE_HERKULEX_MAX)
+		{
+			angle = ANGLE_HERKULEX_MIN;
+		}
+	}
+
+}

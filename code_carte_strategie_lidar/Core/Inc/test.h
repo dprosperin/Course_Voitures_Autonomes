@@ -30,5 +30,6 @@ extern uint8_t valeur_cod;
 extern uint16_t cod_lidar;
 
 void test_composants_voiture ();
+void test_herculex_balayage_plage();
 
 #endif /* INC_DEPLACEMENT_H_ */
