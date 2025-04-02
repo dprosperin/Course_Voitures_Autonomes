@@ -24,7 +24,7 @@
 #define SIZE_TABLEAU 200
 #define MAX_SPEED 6.28 // Vitesse maximale des moteurs
 #define TAILLE_TABLEAU_MAPPED 180
-#define SEUIL_MIN_LOCAUX 60
+#define SEUIL_MIN_LOCAUX 2
 
 const float *range_donnees;
 // float range_donnees[SIZE_TABLEAU];
@@ -55,7 +55,6 @@ typedef enum
   AUGMENTER,
   DIMINUER
 } etat_discontuinuite;
-static etat_discontuinuite etat = INIT;
 int min_locaux[180][2] = {0};
 
 // Fonction Etudiant
@@ -66,7 +65,7 @@ void conduite_autonome();
 double get_angle_cap(double angle_mapped);
 double map(double x, double in_min, double in_max, double out_min, double out_max);
  void clear();
-
+void afficher(int angle_start , int angle_end) ; 
 
 /* main loop
  * Perform simulation steps of TIME_STEP milliseconds
@@ -91,6 +90,7 @@ int main(int argc, char **argv)
 
   affichage_consigne();
   set_vitesse_m_s(0);
+ 
   while (wbu_driver_step() != -1)
   {
     float distance;
@@ -114,12 +114,14 @@ int main(int argc, char **argv)
     if (modeAuto)
     {
       get_mapped_tableau(data_lidar_mm_main, tab_mapped);    
+     
      discontinuite();
     recherches_locaux();
+     afficher(0,180);
     conduite_autonome() ; 
-    vitesse_m_s = 0.6;
-    set_vitesse_m_s(vitesse_m_s);
-    clear();
+      vitesse_m_s = 0.5;
+      set_vitesse_m_s(vitesse_m_s);
+          clear();
     }
   }
 
@@ -183,7 +185,7 @@ void recule(void)
 }
 int get_mapped_tableau(signed int data_lidar[360], int data_maped[180])
 {
-  for (int i = 1; i < 90; i++)
+  for (int i = 0; i < 90; i++)
   {
     tab_mapped[i + 90] = data_lidar[i];
   }
@@ -212,12 +214,16 @@ void discontinuite()
       tab_discontuinuite[i][0] = distance_courante;
       tab_discontuinuite[i][1] = i;
       cpt_discontuinuiter++;
+      printf("v_discontinuiter : %d , a:%d\n",distance_courante,i);
     } 
   }
+printf("cpt_discontinuiter : %d \n",cpt_discontuinuiter) ;
 }
 
 void recherches_locaux()
 {
+
+ static etat_discontuinuite etat = INIT;
   int distance_actuelle = 0;
   int distance_apres = 0;
 
@@ -229,33 +235,33 @@ void recherches_locaux()
     switch (etat)
     {
     case INIT:
-      if (distance_actuelle < distance_apres && diff >=SEUIL_MIN_LOCAUX)
+      if (distance_actuelle < distance_apres)
       {
         etat = AUGMENTER;
       }
-      else if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
+      else if (distance_actuelle > distance_apres)
       {
         etat = DIMINUER;
       }
       break;
 
     case AUGMENTER:
-      if (distance_actuelle < distance_apres && diff >= SEUIL_MIN_LOCAUX)
+      if (distance_actuelle < distance_apres)
       {
         etat = AUGMENTER;
       }
-      else if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
+      else if (distance_actuelle > distance_apres)
       {
         etat = MAX_LOCAL;
       }
       break;
 
     case DIMINUER:
-      if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
+      if (distance_actuelle > distance_apres)
       {
         etat = DIMINUER;
       }
-      else if (distance_actuelle < distance_apres && diff >= SEUIL_MIN_LOCAUX)
+      else if (distance_actuelle < distance_apres)
       {
         etat = MIN_LOCAL;
       }
@@ -264,11 +270,11 @@ void recherches_locaux()
     case MIN_LOCAL:
       min_locaux[i][0] = distance_actuelle;
       min_locaux[i][1] = i;
-      etat = INIT;
+      etat = AUGMENTER;
       break;
 
     case MAX_LOCAL:
-      etat = INIT;
+      etat = DIMINUER;
       break;
 
     default:
@@ -346,8 +352,8 @@ void conduite_autonome()
         angle_1_discontinuite = i;
       }
     }
-
-    for (int i = 0; i > TAILLE_TABLEAU_MAPPED; i++)
+   printf("-----------------------\n");
+    for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
     {
       if (min_locaux[i][0] > max_distance_min_locaux_1)
       {
@@ -355,7 +361,8 @@ void conduite_autonome()
         angle_min_locaux_1 = i;
       }
     }
-
+       printf("-----------------------\n");
+    printf("min_locaux_d:%d,a:%d\n",max_distance_min_locaux_1,angle_min_locaux_1) ; 
     angle = (angle_min_locaux_1 + angle_1_discontinuite) / 2;
   }
 
@@ -369,31 +376,8 @@ void conduite_autonome()
         angle_0_discontinuite = i;
       }
     }
-if  (angle_0_discontinuite > 0 && angle_0_discontinuite < 90) 
-{
-angle  = 0 ; 
-}
-else if (angle_0_discontinuite > 90 && angle_0_discontinuite < 180)
-{
-angle = 180 ; 
-
-} 
-
-
-
-
-
-
-
-
-
-
-
- 
+angle   = angle_0_discontinuite ; 
   }
-  
-  
-  
   float commande_moteur = get_angle_cap(angle);
   wbu_driver_set_steering_angle(commande_moteur);
 }
@@ -412,4 +396,12 @@ angle = 180 ;
      min_locaux[i][0] = 0;
      min_locaux[i][1] = 0;
    }
+ }
+   
+void afficher(int angle_start , int angle_end) 
+ {
+    for (int i = angle_start; i < angle_end; i++)
+    {
+      printf("%d, ",tab_mapped[i]);
+    }
  }
