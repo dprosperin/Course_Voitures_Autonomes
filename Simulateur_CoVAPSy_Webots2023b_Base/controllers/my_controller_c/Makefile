@@ -79,3 +79,9 @@ LIBRARIES = -ldriver -lcar
 
 include $(WEBOTS_HOME_PATH)/resources/Makefile.include
 
+# Or add this line to your "~/.bash_profile" file. On macOS, type this:
+# $ export WEBOTS_HOME=/Applications/Webots.app
+# $ export WEBOTS_HOME_PATH=$WEBOTS_HOME/Contents
+# Windows
+# export WEBOTS_HOME="C:\Program Files\Webots"
+# export PATH=$PATH:/C/Program\ Files/Webots/msys64/mingw64/bin:/C/Program\ Files/Webots/msys64/mingw64/bin

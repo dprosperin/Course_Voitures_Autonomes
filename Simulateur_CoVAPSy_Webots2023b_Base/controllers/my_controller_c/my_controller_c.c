@@ -22,7 +22,11 @@ int main(int argc, char **argv)
 
     if(modeAuto)
     {
-        cherche_discontinuitee(200);
+      for(unsigned int i=0;i<360;i++)
+      printf("%03d=%05d ",i,data_lidar_mm_main[i]);
+      printf("\n-----------\n");
+      /*
+      cherche_discontinuitee(200);
 
         for (unsigned int i = 0; i < TAILLE_TABLEAU_DISCONTINUITEES; i++)
         {
@@ -30,7 +34,7 @@ int main(int argc, char **argv)
               printf("(%d °, %d mm), ", i, tableau_discontinuitees[i]);
         }
          printf("\n");
-        printf("nombre discontinuité : %d\n", nombre_discontinuitees);
+        printf("nombre discontinuité : %d\n", nombre_discontinuitees);*/
     }
   }
   /* This is necessary to cleanup webots resources */
