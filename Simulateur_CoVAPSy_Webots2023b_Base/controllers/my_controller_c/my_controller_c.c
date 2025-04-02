@@ -26,6 +26,10 @@
 #define TAILLE_TABLEAU_MAPPED 180
 #define SEUIL_MIN_LOCAUX 2
 
+#define KP_1_DSCONTINUITE 0.90
+#define KP_2_DSCONTINUITE 1.0
+#define KP_0_DSCONTINUITE 0.90
+
 const float *range_donnees;
 // float range_donnees[SIZE_TABLEAU];
 unsigned char gestion_appuie_clavier(void);
@@ -340,6 +344,8 @@ void conduite_autonome()
       }
     }
     angle = (angle_discontinuite_2_1 + angle_discontinuite_2_2) / 2;
+    
+    angle *= KP_2_DSCONTINUITE;
   }
 
   else if (cpt_discontuinuiter == 1)
@@ -364,6 +370,8 @@ void conduite_autonome()
        printf("-----------------------\n");
     printf("min_locaux_d:%d,a:%d\n",max_distance_min_locaux_1,angle_min_locaux_1) ; 
     angle = (angle_min_locaux_1 + angle_1_discontinuite) / 2;
+    
+    angle *= KP_1_DSCONTINUITE;
   }
 
   else if (cpt_discontuinuiter == 0)
@@ -376,7 +384,9 @@ void conduite_autonome()
         angle_0_discontinuite = i;
       }
     }
-angle   = angle_0_discontinuite ; 
+  angle   = angle_0_discontinuite ; 
+
+  angle *= KP_0_DSCONTINUITE;
   }
   float commande_moteur = get_angle_cap(angle);
   wbu_driver_set_steering_angle(commande_moteur);
