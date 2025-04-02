@@ -27,8 +27,8 @@
 #define SEUIL_MIN_LOCAUX 2
 
 #define KP_1_DSCONTINUITE 0.90
-#define KP_2_DSCONTINUITE 1.0
-#define KP_0_DSCONTINUITE 0.90
+#define KP_2_DSCONTINUITE 1.1
+#define KP_0_DSCONTINUITE 0.91
 
 const float *range_donnees;
 // float range_donnees[SIZE_TABLEAU];
