@@ -42,7 +42,7 @@ void BAR_set(uint16_t motif_BAR)
 	uint8_t pTxData[2] = {(uint8_t)(motif_BAR>>8), (uint8_t)(motif_BAR)};
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , pTxData);
 
-	// TODO : Tempo : ? HAL_Delay(1);
+	HAL_Delay(1);
 }
 
 void LCD_gotoxy (uint8_t x, uint8_t y)
@@ -75,7 +75,7 @@ void LCD_clear(void)
 
 	uint8_t pTxData = 0;
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , &pTxData);
-	// TODO : Tempo : ? HAL_Delay(1);
+	HAL_Delay(1);
 }
 
 void LCD_printf(const char* format, ...)
@@ -127,7 +127,7 @@ void LCD_printf(const char* format, ...)
 			pTxData[i] = tableau_ecran[i + j * 8];
 
 		HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header , pTxData);
-		// TODO : Tempo : ? HAL_Delay(1);
+		HAL_Delay(1);
 	}
 }
 

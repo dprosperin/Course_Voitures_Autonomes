@@ -45,9 +45,10 @@ void conduite_autonome(void)
 	set_angle(angle_mapped);
 	LCD_gotoxy(0,0);
 	//LCD_printf("Nb disc %d", cpt_discontinuitees) ;
-	LCD_printf("%3.3f %d", angle_mapped,cpt_discontinuitees);
-	//LCD_gotoxy(0,1);
-    //LCD_printf("angle %4.4f", angle_mapped) ;
+	//LCD_printf("%3.3f %d", angle_mapped, cpt_discontinuitees);
+	LCD_printf("angle %4.2f", angle);
+	LCD_gotoxy(0,1);
+    LCD_printf("servo %4.2f", angle_mapped);
 
     printf(">angle:%4.3f|xy\n", angle);
     printf(">angle_mapped:%4.3f|xy\n", angle_mapped);
