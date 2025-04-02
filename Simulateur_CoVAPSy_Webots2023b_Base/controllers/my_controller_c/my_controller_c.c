@@ -24,6 +24,7 @@
 #define SIZE_TABLEAU 200
 #define MAX_SPEED 6.28 // Vitesse maximale des moteurs
 #define TAILLE_TABLEAU_MAPPED 180
+#define SEUIL_MIN_LOCAUX 60
 
 const float *range_donnees;
 // float range_donnees[SIZE_TABLEAU];
@@ -102,7 +103,7 @@ int main(int argc, char **argv)
       data_lidar_mm_main[0] = 0;
     for (i = 1; i < 360; i++)
     {
-      distance = range_donnees[360 - i];
+      distance = range_donnees[i];
       if ((distance > 0.0) && (distance < 20.0))
         data_lidar_mm_main[i] = 1000 * distance;
       else
@@ -112,13 +113,13 @@ int main(int argc, char **argv)
     gestion_appui_clavier();
     if (modeAuto)
     {
-      get_mapped_tableau(data_lidar_mm_main, tab_mapped);
-      discontinuite();
-      recherches_locaux();
-      conduite_autonome();
-      clear();
-      vitesse_m_s = 0.5;
-      set_vitesse_m_s(vitesse_m_s);
+      get_mapped_tableau(data_lidar_mm_main, tab_mapped);    
+     discontinuite();
+    recherches_locaux();
+    conduite_autonome() ; 
+    vitesse_m_s = 0.6;
+    set_vitesse_m_s(vitesse_m_s);
+    clear();
     }
   }
 
@@ -197,7 +198,7 @@ void discontinuite()
   int distance_courante = 0;
   int distance_suivante = 0;
   int diff = 0;
-  int seuil_discontinuite = 1000;
+  int seuil_discontinuite = 250;
   cpt_discontuinuiter = 0;
 
   for (int i = 0; i < 179; i++)
@@ -211,9 +212,8 @@ void discontinuite()
       tab_discontuinuite[i][0] = distance_courante;
       tab_discontuinuite[i][1] = i;
       cpt_discontuinuiter++;
-    }
+    } 
   }
-printf("%d \n",cpt_discontuinuiter) ; 
 }
 
 void recherches_locaux()
@@ -225,36 +225,37 @@ void recherches_locaux()
   {
     distance_actuelle = tab_mapped[i];
     distance_apres = tab_mapped[i + 1];
+    int diff = (int)fabs(distance_apres - distance_actuelle);
     switch (etat)
     {
     case INIT:
-      if (distance_actuelle < distance_apres)
+      if (distance_actuelle < distance_apres && diff >=SEUIL_MIN_LOCAUX)
       {
         etat = AUGMENTER;
       }
-      else if (distance_actuelle > distance_apres)
+      else if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
       {
         etat = DIMINUER;
       }
       break;
 
     case AUGMENTER:
-      if (distance_actuelle < distance_apres)
+      if (distance_actuelle < distance_apres && diff >= SEUIL_MIN_LOCAUX)
       {
         etat = AUGMENTER;
       }
-      else if (distance_actuelle > distance_apres)
+      else if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
       {
         etat = MAX_LOCAL;
       }
       break;
 
     case DIMINUER:
-      if (distance_actuelle > distance_apres)
+      if (distance_actuelle > distance_apres && diff <= -SEUIL_MIN_LOCAUX)
       {
         etat = DIMINUER;
       }
-      else if (distance_actuelle < distance_apres)
+      else if (distance_actuelle < distance_apres && diff >= SEUIL_MIN_LOCAUX)
       {
         etat = MIN_LOCAL;
       }
@@ -285,7 +286,7 @@ double get_angle_cap(double angle_mapped)
 {
   if (angle_mapped >= 0 && angle_mapped <= 180)
   {
-    return map(angle_mapped, 0, 180, 0.31, -0.31);
+    return map(angle_mapped, 0, 180, -0.31, 0.31);
   }
   else
   {
@@ -368,23 +369,38 @@ void conduite_autonome()
         angle_0_discontinuite = i;
       }
     }
-    if (0 <= angle_0_discontinuite && angle_0_discontinuite <= 89)
-    {
-      angle = -16;
-    }
-    else if (90 <= angle_0_discontinuite && angle_0_discontinuite <= 179)
-    {
-      angle = 16;
-    }
+if  (angle_0_discontinuite > 0 && angle_0_discontinuite < 90) 
+{
+angle  = 0 ; 
+}
+else if (angle_0_discontinuite > 90 && angle_0_discontinuite < 180)
+{
+angle = 180 ; 
+
+} 
+
+
+
+
+
+
+
+
+
+
+
+ 
   }
+  
+  
+  
   float commande_moteur = get_angle_cap(angle);
-  wbu_driver_set_steering_angle(-commande_moteur);
+  wbu_driver_set_steering_angle(commande_moteur);
 }
 
  
  void clear()
  {
-   for (int i = 0; i < 50; i++)
    for (int i = 0; i < 180; i++)
    {
      tab_discontuinuite[i][0] = 0;
@@ -396,5 +412,4 @@ void conduite_autonome()
      min_locaux[i][0] = 0;
      min_locaux[i][1] = 0;
    }
-
  }
