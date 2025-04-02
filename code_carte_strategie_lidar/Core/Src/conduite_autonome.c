@@ -24,6 +24,7 @@ int min_locaux[TAILLE_MIN_LOCAUX][2] = {0};
 
 int cpt_discontinuitees = 0;
 
+float angle_roue = 90.0;
 
 void conduite_autonome(void)
 {
@@ -40,19 +41,14 @@ void conduite_autonome(void)
 	    printf("-------------------------------------------\n");
 	clear ();
 
-	//float angle_mapped = mapf(angle, 0, 180, ANGLE_HERKULEX_MAX, ANGLE_HERKULEX_MIN);
+	LCD_gotoxy(0,0);
+	LCD_printf("Nb disc %d", cpt_discontinuitees) ;
+	LCD_gotoxy(0,1);
+	LCD_printf("angle %3.2f deg", angle_roue);
 
-	//set_angle(angle_mapped);
-	//LCD_gotoxy(0,0);
-	//LCD_printf("Nb disc %d", cpt_discontinuitees) ;
-	//LCD_printf("%3.3f %d", angle_mapped, cpt_discontinuitees);
-	//LCD_printf("angle %4.2f", angle);
-	//LCD_gotoxy(0,1);
-    //LCD_printf("servo %4.2f", angle_mapped);
-	test_roues_balayage_plage_0_180();
+	set_angle_roue(angle_roue);
 
-    //printf(">angle:%4.3f|xy\n", angle);
-    //printf(">angle_mapped:%4.3f|xy\n", angle_mapped);
+    printf(">angle:%4.3f|xy\n", angle_roue);
     cpt_discontinuitees = 0;
 }
 
@@ -190,7 +186,7 @@ void autonomous()
 				angle_discontinuite_2_2 = i;
 			}
 		}
-		angle = (angle_discontinuite_2_1 + angle_discontinuite_2_2) / 2;
+		angle_roue = (angle_discontinuite_2_1 + angle_discontinuite_2_2) / 2;
 	}
 
 	else if (cpt_discontinuitees == 1)
@@ -212,7 +208,7 @@ void autonomous()
 		}
 
 
-	angle  = (angle_min_locaux_1 + angle_1_discontinuite)/2;
+		angle_roue  = (angle_min_locaux_1 + angle_1_discontinuite)/2;
 	}
 
 	else if (cpt_discontinuitees == 0)
@@ -225,7 +221,7 @@ void autonomous()
 				angle_0_discontinuite = i;
 			}
 		}
-	angle  = angle_0_discontinuite ;
+		angle_roue  = angle_0_discontinuite ;
 	}
 }
 
