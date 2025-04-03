@@ -139,6 +139,11 @@ int main(void)
 		  * @todo Envoyer en CAN la distance de l'objet détecté et son type si possible
 		  */
 
+		 if (global_tf0.checksum_pass)
+		 {
+			 send_frame_capteur_obstacles(global_tf0);
+		 }
+
 		 flag_decoding_frame_complete = false;
 	 }
     /* USER CODE END WHILE */

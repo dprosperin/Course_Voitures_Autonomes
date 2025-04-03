@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "capteur_obstacles.h"
 #include <stdbool.h>
+#include "fdcan.h"
 
 uint8_t buffer_DMA_reception[BUFFER_DMA_RECEPTION_SIZE] = {0};
 bool flag_decoding_frame_complete = false;
@@ -297,4 +298,30 @@ HAL_StatusTypeDef capteur_obstacles_set_data_output_mode(uint8_t id, tof_data_ou
 	write_frame[31] = capteur_obstacles_compute_checksum(write_frame, TOF_SIZE_PARAMETER);
 
 	return HAL_UART_Transmit(&huart1, write_frame, TOF_SIZE_PARAMETER, HAL_MAX_DELAY);
+}
+
+void send_frame_capteur_obstacles(tof_parameter tof0)
+{
+	uint8_t txData[4];
+	FDCAN_TxHeaderTypeDef header;
+
+	txData[0] = tof0.dis;
+	txData[1] = (uint8_t)(tof0.dis >> 8);
+	txData[2] = (uint8_t)(tof0.dis >> 16);
+	txData[3] = (uint8_t)(tof0.dis >> 24);
+
+	/******************* NE PAS TOUCHER **************************************/
+	header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	header.BitRateSwitch = FDCAN_BRS_OFF;
+	header.FDFormat = FDCAN_CLASSIC_CAN;
+	header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	header.MessageMarker = 0;
+	/*************************************************************************/
+
+	header.Identifier = tof0.id; // Set your CAN identifier
+	header.IdType = FDCAN_STANDARD_ID; // Standard ID
+	header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
+	header.DataLength = 4; // Data length
+
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
 }

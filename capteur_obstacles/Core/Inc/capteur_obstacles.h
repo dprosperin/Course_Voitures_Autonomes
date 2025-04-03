@@ -50,6 +50,7 @@ HAL_StatusTypeDef capteur_obstacles_send_read_frame(uint8_t id);
 HAL_StatusTypeDef capteur_obstacles_set_data_output_mode(uint8_t id, tof_data_output_mode_t tof_data_output_mode);
 void capteur_obstacles_automate_decode(uint8_t received_char);
 uint8_t capteur_obstacles_compute_checksum(uint8_t *rx_buf, size_t rx_buf_length);
+void send_frame_capteur_obstacles(tof_parameter tof0);
 
 extern bool flag_decoding_frame_complete;
 extern tof_parameter global_tf0;
