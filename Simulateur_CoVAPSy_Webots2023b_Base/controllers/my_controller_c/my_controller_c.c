@@ -141,9 +141,16 @@ int main(int argc, char **argv)
          recherches_locaux();
          //afficher(0,180);
          conduite_autonome() ; 
-         vitesse_m_s = 0.5;
          set_vitesse_m_s(vitesse_m_s);
          clear();
+         
+       if ( tab_mapped[90] < 10000 && tab_mapped[90] > 1200)
+       {vitesse_m_s = 1.1; }
+       else 
+       {
+       vitesse_m_s = 0.7 ; 
+       }
+       
        if(tab_mapped[90] < 185)
        {
        etat_deplacement = BLOQUE ; 
