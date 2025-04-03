@@ -45,6 +45,8 @@
 #define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
 #define CAN_ID_SET_KP_VALUE 0x300
+#define CAN_ID_TOF_LEFT_SENSOR 93
+#define CAN_ID_TOF_RIGHT_SENSOR 92
 #undef TESTS_COMPOSANTS
 #define PRINT_LIDAR_MEASURES
 #undef PRINT_HERKULEX_SPEED
@@ -60,6 +62,9 @@
 uint8_t flag_reception_uart2 = 0;
 uint8_t caractere;
 bool is_autonomous_driving_started = 1;
+
+uint32_t capteur_obstacles_gauche = 0;
+uint32_t capteur_obstacles_droit = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -122,13 +127,26 @@ int main(void)
 	/**
 	 * @warning L'appel de la fonction lidar_send_reset() fait planter la liaison avec le LiDAR
 	 */
-	lidar_send_stop();
-	HAL_Delay(1000);
+	do {
+		lidar_send_stop();
+		HAL_Delay(250);
 
-	lidar_send_get_health();
-	HAL_Delay(5000);
+		lidar_send_reset();
+		HAL_Delay(500);
 
-	lidar_send_start_scan();
+		lidar_send_get_health();
+		HAL_Delay(250);
+
+		lidar_send_start_scan();
+
+		attentive_demarrage_lidar++;
+	} while (etat_health_lidar != 0 && attentive_demarrage_lidar < 3);
+
+	if (attentive_demarrage_lidar == 3) {
+		LCD_gotoxy(0, 0);
+	    LCD_printf("DEFAUT LIDAR");
+	    HAL_Delay(1000);
+	}
 
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
@@ -243,7 +261,6 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		is_autonomous_driving_started = 0;
 		break;
 	case CAN_ID_FOURCHE_OPTIQUE:
-		//HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
 		/**
 		 * @note Il faudra probablement passer sur une taille de données de deux octets
 		 */
@@ -257,6 +274,22 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		kp = (((uint16_t) buffer_trame_rx[marker1].data[0] << 8) | buffer_trame_rx[marker1].data[1]) / 1000.0;
 		printf(">kp:%2.5f|xy\n", kp);
 		break;
+
+	case CAN_ID_TOF_LEFT_SENSOR:
+		capteur_obstacles_gauche = ((uint32_t) buffer_trame_rx[marker1].data[3] << 24)
+					|| ((uint32_t) buffer_trame_rx[marker1].data[2] << 16)
+					|| ((uint32_t) buffer_trame_rx[marker1].data[1] << 8)
+					|| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+		printf(">capteur_obstacles_gauche:%lu|xy\n", capteur_obstacles_gauche);
+	break;
+
+	case CAN_ID_TOF_RIGHT_SENSOR:
+		capteur_obstacles_droit = ((uint32_t) buffer_trame_rx[marker1].data[3] << 24)
+		|| ((uint32_t) buffer_trame_rx[marker1].data[2] << 16)
+		|| ((uint32_t) buffer_trame_rx[marker1].data[1] << 8)
+		|| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+		printf(">capteur_obstacles_droit:%lu|xy\n", capteur_obstacles_droit);
+	break;
 	}
 
 	marker1++;

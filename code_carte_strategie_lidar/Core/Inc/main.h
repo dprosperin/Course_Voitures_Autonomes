@@ -53,7 +53,6 @@ extern "C" {
 void Error_Handler(void);
 
 /* USER CODE BEGIN EFP */
-
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
@@ -67,8 +66,8 @@ void Error_Handler(void);
 #define T_SWCLK_GPIO_Port GPIOA
 #define T_SWO_Pin GPIO_PIN_3
 #define T_SWO_GPIO_Port GPIOB
-#define LD2_Pin GPIO_PIN_8
-#define LD2_GPIO_Port GPIOB
+#define led_temoin_Pin GPIO_PIN_8
+#define led_temoin_GPIO_Port GPIOB
 
 /* USER CODE BEGIN Private defines */
 #define LIDAR_HUART huart1
@@ -76,6 +75,8 @@ void Error_Handler(void);
 
 extern uint8_t flag_reception_uart2;
 extern uint8_t caractere;
+extern uint32_t capteur_obstacles_gauche;
+extern uint32_t capteur_obstacles_droit;
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

@@ -60,7 +60,9 @@ void conduite_autonome(void)
  */
 void lidar_complete_scan_callback()
 {
-	//printf(">demi_tour:%lu|xy\n", HAL_GetTick());
+	HAL_GPIO_TogglePin(led_temoin_GPIO_Port, led_temoin_Pin);
+	uint16_t motif_bar = 1;
+	BAR_set(motif_bar <<= ((uint16_t)angle_roue / 18));
 }
 
 void discontinuite()

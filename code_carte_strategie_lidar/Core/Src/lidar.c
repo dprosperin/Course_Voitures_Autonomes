@@ -22,6 +22,9 @@ int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
 bool flag_demi_tour = 0;
 
+uint8_t etat_health_lidar = 1;
+uint8_t attentive_demarrage_lidar = 1;
+
 /**
  * @brief Decode l'angle et la distance
  * 
@@ -86,6 +89,8 @@ void lidar_decode_get_health(uint8_t *buffer)
 	char status_msg[16] = "";
 
 	uint8_t status = ((rplidar_device_health_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_HEALTH))->status;
+
+	etat_health_lidar = status;
 
 	uint8_t error_code_low_byte = ((rplidar_device_health_data_response_t *)(buffer + LIDAR_RESPONSE_DESCRIPTOR_SIZE_GET_HEALTH))->error_code_7_0;
 

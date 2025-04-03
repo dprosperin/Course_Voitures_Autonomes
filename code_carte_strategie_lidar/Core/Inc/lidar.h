@@ -126,6 +126,9 @@ extern int16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
 extern bool flag_demi_tour;
 
+extern uint8_t etat_health_lidar;
+extern uint8_t attentive_demarrage_lidar;
+
 void lidar_decode_angle_and_distance(uint8_t *buffer, uint16_t *angle, uint16_t *distance, bool *is_first_scan_point);
 void lidar_print_single_point_teleplot_format(float angle, float distance);
 void lidar_print_array_distance_teleplot_format(int16_t *points, float num_points_scan);
