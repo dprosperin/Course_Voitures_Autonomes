@@ -36,6 +36,8 @@
 #define MAX_SPEED 4.14
 #define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 4.14)
 #define KP 1.5
+#define CAN_ID_FOURCHE_OPTIQUE 27
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -65,15 +67,11 @@ uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
 float measured_speed_m_par_sec = 0;
-float moyenne_measured_speed_final = 0;
-bool nouvelle_vitesse_moyenne = 1;
-float consigne = 0.0;
+float consigne = 0.4;
 
 //au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
-	static unsigned int indice_valeur_fourche = 0;
-	static float somme_measured_speed  = 0;
 
 	if(htim->Channel == HAL_TIM_ACTIVE_CHANNEL_3)
 	{
@@ -96,21 +94,21 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 			Frecuency = CK_CNT/Difference;
 			measured_speed_m_par_sec = DISTANCE_ANGULAIRE_EN_METRE*Frecuency;
-			somme_measured_speed += measured_speed_m_par_sec;
-			indice_valeur_fourche++;
 
-			if(indice_valeur_fourche == 3)
-			{
-				moyenne_measured_speed_final = somme_measured_speed / 5.0;
-				somme_measured_speed = 0;
-				indice_valeur_fourche = 0;
-				nouvelle_vitesse_moyenne = 1;
-			}
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
 		}
 	}
 }
+bool dix_millisecondes_passes = 0;
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+  	if (htim==&htim3)
+  	{
+  		dix_millisecondes_passes = 1;
+  	}
+
+  }
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -162,12 +160,13 @@ int main(void)
   MX_FDCAN1_Init();
   MX_TIM1_Init();
   MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
   HAL_FDCAN_Start(&hfdcan1);
   HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
   HAL_TIM_IC_Start_IT(&htim2,TIM_CHANNEL_3);
   HAL_TIM_PWM_Start(&htim1,TIM_CHANNEL_1);
-
+  HAL_TIM_Base_Start_IT(&htim3);
 	/**
 	 * @note Mettre la vitesse à 0 au démarrage du moteur CC
 	 */
@@ -178,12 +177,15 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	float error = 0;
 	float pwm = 0;
-
+	float compteur_de_10_mms;
+	float compteur_de_vitesse_nulle;
+	float measured_speed_m_par_sec_ancien = 0;
+	int8_t txData[2];
+	FDCAN_TxHeaderTypeDef header;
 	while (1)
 	{
 #ifdef DEBUG_FOURCHE_OPTIQUE
 		printf(">Vitesse: %f\n", measured_speed_m_par_sec);
-		printf(">vitesse_moyenne: %2.5f m/s\n", moyenne_measured_speed_final);
 		//printf(">Frecuency: %f\n", Frecuency);
 #endif
 
@@ -192,11 +194,51 @@ int main(void)
 		 */
 		error = consigne - measured_speed_m_par_sec;
 		printf(">error_vitesse_lineaire: %2.5f m/s\n", error);
+		measured_speed_m_par_sec_ancien = measured_speed_m_par_sec;
 		error = error * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE * KP;
 		printf(">error_rapport_cyclique: %2.5f m/s\n", error);
 		pwm = consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
 		printf(">pwm: %f\n", pwm);
 		PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, pwm);
+		if(dix_millisecondes_passes)
+				{
+					compteur_de_10_mms++;
+					if(measured_speed_m_par_sec == measured_speed_m_par_sec_ancien)
+					{
+						compteur_de_vitesse_nulle++;
+						printf(">compteur_de_vitesse_nulle: %2.5f m/s\n", compteur_de_vitesse_nulle);
+					}
+					else compteur_de_vitesse_nulle = 0;
+					if(compteur_de_vitesse_nulle == 20)
+					{
+						measured_speed_m_par_sec = 0;
+						compteur_de_vitesse_nulle = 0;
+					}
+					if(compteur_de_10_mms == 50)
+					{
+						txData[0] = ((int16_t)measured_speed_m_par_sec) >> 8;
+						txData[1] = ((int16_t)measured_speed_m_par_sec) & 0x00FF;
+						/******************* NE PAS TOUCHER **************************************/
+						header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+						header.BitRateSwitch = FDCAN_BRS_OFF;
+						header.FDFormat = FDCAN_CLASSIC_CAN;
+						header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+						header.MessageMarker = 0;
+						/*************************************************************************/
+
+						header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
+						header.IdType = FDCAN_STANDARD_ID; // Standard ID
+						header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
+						header.DataLength = 2; // Data length
+
+						/*************************************************************************/
+						HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
+						compteur_de_10_mms = 0;
+
+					}
+					dix_millisecondes_passes = 0;
+
+				}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
