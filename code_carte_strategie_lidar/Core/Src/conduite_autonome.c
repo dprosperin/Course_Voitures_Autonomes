@@ -49,6 +49,7 @@ void conduite_autonome(void)
 
 	set_angle_roue(angle_roue);
 
+	printf(">cpt_discontinuitees:%d|xy\n", cpt_discontinuitees);
     printf(">angle:%4.3f|xy\n", angle_roue);
 	clear () ;
 }
@@ -210,6 +211,11 @@ void autonomous()
 					}
 		}
 
+		printf(">max_distance_1_discontinuite:%d|xy\n", max_distance_1_discontinuite);
+		printf(">angle_1_discontinuite:%d|xy\n", angle_1_discontinuite);
+
+		printf(">max_distance_min_locaux_1:%d|xy\n", max_distance_min_locaux_1);
+		printf(">angle_min_locaux_1:%d|xy\n", angle_min_locaux_1);
 
 		angle_roue  = (angle_min_locaux_1 + angle_1_discontinuite)/2;
 	}
@@ -224,6 +230,8 @@ void autonomous()
 				angle_0_discontinuite = i;
 			}
 		}
+		printf(">max_distance_0_discontinuite:%d|xy\n", max_distance_0_discontinuite);
+		printf(">angle_0_discontinuite:%d|xy\n", angle_0_discontinuite);
 		angle_roue  = angle_0_discontinuite ;
 	}
 }
