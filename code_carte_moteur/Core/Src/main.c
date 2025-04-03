@@ -88,23 +88,6 @@ void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 
 			Frecuency = CK_CNT/Difference;
 			m_per_sec = 4.9375*Frecuency;
-			txData[0] = ((int16_t)m_per_sec) >> 8;
-			txData[1] = ((int16_t)m_per_sec) & 0x00FF;
-			/******************* NE PAS TOUCHER **************************************/
-			header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
-			header.BitRateSwitch = FDCAN_BRS_OFF;
-			header.FDFormat = FDCAN_CLASSIC_CAN;
-			header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
-			header.MessageMarker = 0;
-			/*************************************************************************/
-
-			header.Identifier = CAN_ID_FOURCHE_OPTIQUE; // Set your CAN identifier
-			header.IdType = FDCAN_STANDARD_ID; // Standard ID
-			header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
-			header.DataLength = 2; // Data length
-
-			/*************************************************************************/
-			HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
 
 			__HAL_TIM_SET_COUNTER(htim, 0);
 			First_rising = 1;
