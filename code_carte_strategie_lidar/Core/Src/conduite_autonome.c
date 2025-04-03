@@ -14,10 +14,11 @@ typedef enum
 	AUGMENTER,
 	DIMINUER
 } etat_discontuinuite;
-static etat_discontuinuite etat = INIT;
+
 
 #define TAILLE_TAB_DISCONTINUITEES 180
 #define TAILLE_MIN_LOCAUX 180
+#define TAILLE_TABLEAU_LIDAR 180
 
 int tab_discontinuitees[TAILLE_TAB_DISCONTINUITEES][2] = {0};
 int min_locaux[TAILLE_MIN_LOCAUX][2] = {0};
@@ -34,12 +35,12 @@ void conduite_autonome(void)
 	autonomous () ;
 
 
+
 	for (unsigned int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
 	    {
 	    	printf("angle : %d distance : %d \n", i, tab_discontinuitees[i][0]);
 	    }
 	    printf("-------------------------------------------\n");
-	clear ();
 
 	LCD_gotoxy(0,0);
 	LCD_printf("Nb disc %d", cpt_discontinuitees) ;
@@ -49,7 +50,7 @@ void conduite_autonome(void)
 	set_angle_roue(angle_roue);
 
     printf(">angle:%4.3f|xy\n", angle_roue);
-    cpt_discontinuitees = 0;
+	clear () ;
 }
 
 /**
@@ -67,6 +68,7 @@ void discontinuite()
 	int distance_suivante = 0 ;
 	int diff = 0 ;
 	int seuil_discontinuite = 250;
+    cpt_discontinuitees = 0;
 
 
 	for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES - 1; i++)
@@ -87,10 +89,11 @@ void discontinuite()
 
 void recherches_locaux()
 {
+	static etat_discontuinuite etat = INIT;
 	int distance_actuelle = 0;
 	int distance_apres = 0;
 
-	for (int i = 0; i < 179; i++)
+	for (int i = 0; i < TAILLE_MIN_LOCAUX - 1; i++)
 	{
 		distance_actuelle = data_lidar_mm_main[i];
 		distance_apres = data_lidar_mm_main[i + 1];
@@ -164,9 +167,9 @@ void autonomous()
 	int angle_0_discontinuite = 0;
 
 
-	if (cpt_discontinuitees >= 2)
+	if (cpt_discontinuitees > 1)
 	{
-		for (int i = 0; i < 180; i++)
+		for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
 		{
 			if (max_discontinuite_2_distance_1 < tab_discontinuitees[i][0])
 			{
@@ -191,7 +194,7 @@ void autonomous()
 
 	else if (cpt_discontinuitees == 1)
 	{
-		for (int i = 0; i < 180; i++)
+		for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
 		{
 
 			if (tab_discontinuitees[i][0] > max_distance_1_discontinuite)
@@ -213,7 +216,7 @@ void autonomous()
 
 	else if (cpt_discontinuitees == 0)
 	{
-		for (int i = 0; i < 180; i++)
+		for (int i = 0; i < TAILLE_TABLEAU_LIDAR; i++)
 		{
 			if (data_lidar_mm_main[i] > max_distance_0_discontinuite)
 			{
@@ -227,13 +230,13 @@ void autonomous()
 
 void clear ()
 {
-	for (int i = 0; i < 180; i++)
+	for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
 	{
 		tab_discontinuitees[i][0] = 0;
 		tab_discontinuitees[i][1] = 0;
 	}
 
-	for (int i = 0; i < 180; i++)
+	for (int i = 0; i < TAILLE_MIN_LOCAUX; i++)
 	{
 		min_locaux[i][0] = 0;
 		min_locaux[i][1] = 0;
