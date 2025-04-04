@@ -27,13 +27,13 @@ static etat_deplacement_e etat_deplacement  = AVANCER ;
 
 
 #define TAILLE_TAB_DISCONTINUITEES 180
-#define TAILLE_MIN_LOCAUX 180
+#define TAILLE_MAX_LOCAUX 180
 #define TAILLE_TABLEAU_LIDAR 180
 #define SEUIL_RECULER_CAPTEUR_OBSTACLES 200
 
 
 int tab_discontinuitees[TAILLE_TAB_DISCONTINUITEES][2] = {0};
-int min_locaux[TAILLE_MIN_LOCAUX][2] = {0};
+int max_locaux[TAILLE_MAX_LOCAUX][2] = {0};
 
 int cpt_discontinuitees = 0;
 
@@ -56,7 +56,7 @@ void conduite_autonome(void)
 		discontinuite() ;
 		recherches_locaux();
 		autonomous () ;
-		set_consigne_vitesse(0.9, 0);
+		set_consigne_vitesse(1, 0);
 		set_angle_roue(angle_roue);
 
 
@@ -78,8 +78,9 @@ void conduite_autonome(void)
 		set_consigne_vitesse(0.7, 1);
 		set_angle_roue(180.0-angle_roue);
 		HAL_Delay(1000) ;
-        set_angle(90);
-        HAL_Delay(500);
+		set_consigne_vitesse(1, 0);
+		set_angle_roue(90);
+        HAL_Delay(1000);
 		etat_deplacement = AVANCER ;
 		break ;
 
