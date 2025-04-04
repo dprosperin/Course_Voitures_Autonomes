@@ -62,7 +62,7 @@
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart2 = 0;
 uint8_t caractere;
-bool is_autonomous_driving_started = 1;
+bool is_autonomous_driving_started = 0;
 
 uint32_t capteur_obstacles_gauche = 0;
 uint32_t capteur_obstacles_droit = 0;
