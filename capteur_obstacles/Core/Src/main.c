@@ -142,6 +142,7 @@ int main(void)
 		 if (global_tf0.checksum_pass)
 		 {
 			 send_frame_capteur_obstacles(global_tf0);
+			 //capteur_obstacles_print_frame_teleplot_format(global_tf0);
 		 }
 
 		 flag_decoding_frame_complete = false;

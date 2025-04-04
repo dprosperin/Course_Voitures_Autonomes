@@ -96,8 +96,8 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
         		  cpt_octet = 0;
         		  // Décodage de system time
         		  tf0.system_time = (uint32_t)(((uint32_t)system_time_octets[3]) << 24
-        				  |((uint32_t)system_time_octets[2]) << 16 |
-						  ((uint32_t)system_time_octets[1]) << 8
+        				  |((uint32_t)system_time_octets[2]) << 16
+						  |((uint32_t)system_time_octets[1]) << 8
 						  |(uint32_t)system_time_octets[0]);
 
         		  etat_futur = TOF_STATE_DIS;
@@ -112,9 +112,9 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
         	  if (cpt_octet >= 3)
         	  {
         		  cpt_octet = 0;
-        		  tf0.dis = (((uint32_t)dis_octets[2]<<24)
-        				  | ((uint32_t)dis_octets[1] << 16)
-						  | ((uint32_t)dis_octets[0]<<8));
+        		  tf0.dis = (((uint32_t)dis_octets[2] << 16)
+        				  | ((uint32_t)dis_octets[1]  <<  8)
+						  | ((uint32_t)dis_octets[0]));
 
         		  etat_futur = TOF_STATE_DIS_STATUS;
         	  }
@@ -170,20 +170,20 @@ void capteur_obstacles_automate_decode(uint8_t received_char)
  *
  * @param[in] tof0 Pointeur vers la structure contenant les paramètres TOFSense.
  */
-void capteur_obstacles_print_frame(tof_parameter *tof0)
+void capteur_obstacles_print_frame(tof_parameter tof0)
 {
-	printf("\nid: %d", tof0->id);
-	printf("\nsystem_time: %lu", tof0->system_time);
-	printf("\ndis: %f", tof0->dis/1000.0);
-	printf("\ndis_status: %d", tof0->dis_status);
-	printf("\nsignal_strength: %d", tof0->signal_strength);
-	printf("\nrange_precision: %d", tof0->range_precision);
-	printf("\nchecksum_pass: %d", tof0->checksum_pass);
+	printf("\nid: %d", tof0.id);
+	printf("\nsystem_time: %lu", tof0.system_time);
+	printf("\ndis: %f", tof0.dis/1000.0);
+	printf("\ndis_status: %d", tof0.dis_status);
+	printf("\nsignal_strength: %d", tof0.signal_strength);
+	printf("\nrange_precision: %d", tof0.range_precision);
+	printf("\nchecksum_pass: %d", tof0.checksum_pass);
 }
 
-void capteur_obstacles_print_frame_teleplot_format(tof_parameter *tof0)
+void capteur_obstacles_print_frame_teleplot_format(tof_parameter tof0)
 {
-	printf(">capteur_obstacles_%d:%lu|xy\n", tof0->id, tof0->dis);
+	printf(">capteur_obstacles_%d:%f|xy\n", tof0.id, tof0.dis / 1000.0);
 }
 
 /**
@@ -302,13 +302,12 @@ HAL_StatusTypeDef capteur_obstacles_set_data_output_mode(uint8_t id, tof_data_ou
 
 void send_frame_capteur_obstacles(tof_parameter tof0)
 {
-	uint8_t txData[4];
+	uint8_t txData[3];
 	FDCAN_TxHeaderTypeDef header;
 
 	txData[0] = tof0.dis;
 	txData[1] = (uint8_t)(tof0.dis >> 8);
 	txData[2] = (uint8_t)(tof0.dis >> 16);
-	txData[3] = (uint8_t)(tof0.dis >> 24);
 
 	/******************* NE PAS TOUCHER **************************************/
 	header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;

@@ -50,6 +50,7 @@
 #undef TESTS_COMPOSANTS
 #define PRINT_LIDAR_MEASURES
 #undef PRINT_HERKULEX_SPEED
+#define DEBUG_CAPTEUR_OBSTACLES
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -276,19 +277,25 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		break;
 
 	case CAN_ID_TOF_LEFT_SENSOR:
-		capteur_obstacles_gauche = ((uint32_t) buffer_trame_rx[marker1].data[3] << 24)
-					|| ((uint32_t) buffer_trame_rx[marker1].data[2] << 16)
-					|| ((uint32_t) buffer_trame_rx[marker1].data[1] << 8)
-					|| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+		capteur_obstacles_gauche =
+					(((uint32_t) buffer_trame_rx[marker1].data[2]) << 16)
+					| (((uint32_t) buffer_trame_rx[marker1].data[1]) << 8)
+					| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+
+#ifdef DEBUG_CAPTEUR_OBSTACLES
 		printf(">capteur_obstacles_gauche:%lu|xy\n", capteur_obstacles_gauche);
+#endif
 	break;
 
 	case CAN_ID_TOF_RIGHT_SENSOR:
-		capteur_obstacles_droit = ((uint32_t) buffer_trame_rx[marker1].data[3] << 24)
-		|| ((uint32_t) buffer_trame_rx[marker1].data[2] << 16)
-		|| ((uint32_t) buffer_trame_rx[marker1].data[1] << 8)
-		|| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+		capteur_obstacles_droit =
+	     (((uint32_t) buffer_trame_rx[marker1].data[2]) << 16)
+		| (((uint32_t) buffer_trame_rx[marker1].data[1]) << 8)
+		| ((uint32_t) buffer_trame_rx[marker1].data[0]);
+
+#ifdef DEBUG_CAPTEUR_OBSTACLES
 		printf(">capteur_obstacles_droit:%lu|xy\n", capteur_obstacles_droit);
+#endif
 	break;
 	}
 

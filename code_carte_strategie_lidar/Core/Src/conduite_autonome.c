@@ -27,6 +27,8 @@ int cpt_discontinuitees = 0;
 
 float angle_roue = 90.0;
 
+#undef DEBUG_VERBOSE
+
 void conduite_autonome(void)
 {
 
@@ -35,12 +37,13 @@ void conduite_autonome(void)
 	autonomous () ;
 
 
-
+#ifdef DEBUG_VERBOSE
 	for (unsigned int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
 	    {
 	    	printf("angle : %d distance : %d \n", i, tab_discontinuitees[i][0]);
 	    }
 	    printf("-------------------------------------------\n");
+#endif
 
 	LCD_gotoxy(0,0);
 	LCD_printf("Nb disc %d", cpt_discontinuitees) ;
@@ -49,8 +52,11 @@ void conduite_autonome(void)
 
 	set_angle_roue(angle_roue);
 
+#ifdef DEBUG_VERBOSE
 	printf(">cpt_discontinuitees:%d|xy\n", cpt_discontinuitees);
     printf(">angle:%4.3f|xy\n", angle_roue);
+#endif
+
 	clear () ;
 }
 
@@ -213,11 +219,13 @@ void autonomous()
 					}
 		}
 
+#ifdef DEBUG_VERBOSE
 		printf(">max_distance_1_discontinuite:%d|xy\n", max_distance_1_discontinuite);
 		printf(">angle_1_discontinuite:%d|xy\n", angle_1_discontinuite);
 
 		printf(">max_distance_min_locaux_1:%d|xy\n", max_distance_min_locaux_1);
 		printf(">angle_min_locaux_1:%d|xy\n", angle_min_locaux_1);
+#endif
 
 		angle_roue  = (angle_min_locaux_1 + angle_1_discontinuite)/2;
 	}
@@ -232,8 +240,10 @@ void autonomous()
 				angle_0_discontinuite = i;
 			}
 		}
+#ifdef DEBUG_VERBOSE
 		printf(">max_distance_0_discontinuite:%d|xy\n", max_distance_0_discontinuite);
 		printf(">angle_0_discontinuite:%d|xy\n", angle_0_discontinuite);
+#endif
 		angle_roue  = angle_0_discontinuite ;
 	}
 }
