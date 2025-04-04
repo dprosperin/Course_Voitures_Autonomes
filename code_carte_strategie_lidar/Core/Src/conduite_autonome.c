@@ -50,6 +50,9 @@ void conduite_autonome(void)
 	LCD_gotoxy(0,1);
 	LCD_printf("angle %3.2f deg", angle_roue);
 
+	uint16_t motif_bar = 0b1000000000;
+	BAR_set(motif_bar >>= ((uint16_t)angle_roue / 18));
+
 	set_angle_roue(angle_roue);
 
 #ifdef DEBUG_VERBOSE
@@ -67,8 +70,9 @@ void conduite_autonome(void)
 void lidar_complete_scan_callback()
 {
 	HAL_GPIO_TogglePin(led_temoin_GPIO_Port, led_temoin_Pin);
-	uint16_t motif_bar = 1;
-	BAR_set(motif_bar <<= ((uint16_t)angle_roue / 18));
+	/**
+	 * @warning Pas de requête CAN dans cette fonction de callback
+	 */
 }
 
 void discontinuite()
@@ -219,7 +223,7 @@ void autonomous()
 					}
 		}
 
-#ifdef DEBUG_VERBOSE
+#ifdef DEBUG_DISC_1
 		printf(">max_distance_1_discontinuite:%d|xy\n", max_distance_1_discontinuite);
 		printf(">angle_1_discontinuite:%d|xy\n", angle_1_discontinuite);
 
@@ -240,7 +244,7 @@ void autonomous()
 				angle_0_discontinuite = i;
 			}
 		}
-#ifdef DEBUG_VERBOSE
+#ifdef DEBUG_DISC_0
 		printf(">max_distance_0_discontinuite:%d|xy\n", max_distance_0_discontinuite);
 		printf(">angle_0_discontinuite:%d|xy\n", angle_0_discontinuite);
 #endif

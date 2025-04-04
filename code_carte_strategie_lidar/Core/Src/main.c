@@ -48,7 +48,7 @@
 #define CAN_ID_TOF_LEFT_SENSOR 93
 #define CAN_ID_TOF_RIGHT_SENSOR 92
 #undef TESTS_COMPOSANTS
-#define PRINT_LIDAR_MEASURES
+#undef PRINT_LIDAR_MEASURES
 #undef PRINT_HERKULEX_SPEED
 #define DEBUG_CAPTEUR_OBSTACLES
 /* USER CODE END PD */
@@ -128,26 +128,13 @@ int main(void)
 	/**
 	 * @warning L'appel de la fonction lidar_send_reset() fait planter la liaison avec le LiDAR
 	 */
-	do {
-		lidar_send_stop();
-		HAL_Delay(250);
+	lidar_send_stop();
+	HAL_Delay(1000);
 
-		lidar_send_reset();
-		HAL_Delay(500);
+    lidar_send_get_health();
+	HAL_Delay(5000);
 
-		lidar_send_get_health();
-		HAL_Delay(250);
-
-		lidar_send_start_scan();
-
-		attentive_demarrage_lidar++;
-	} while (etat_health_lidar != 0 && attentive_demarrage_lidar < 3);
-
-	if (attentive_demarrage_lidar == 3) {
-		LCD_gotoxy(0, 0);
-	    LCD_printf("DEFAUT LIDAR");
-	    HAL_Delay(1000);
-	}
+    lidar_send_start_scan();
 
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
   /* USER CODE END 2 */
@@ -265,7 +252,9 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		/**
 		 * @note Il faudra probablement passer sur une taille de données de deux octets
 		 */
-		vitesse_lineaire = (float)buffer_trame_rx[marker1].data[0]/1000.0;
+		vitesse_lineaire =
+				((uint16_t)(buffer_trame_rx[marker1].data[1])|
+				(uint16_t)buffer_trame_rx[marker1].data[0] << 8) / 1000.0;
 		printf(">vitesse_lineaire:%2.5f\n", vitesse_lineaire);
 		break;
 	case CAN_ID_SET_KP_VALUE:

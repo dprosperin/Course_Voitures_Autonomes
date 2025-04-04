@@ -52,11 +52,13 @@ void handle_receive_character(uint8_t receive_character)
 	case GAMEPAD_L2:
 		printf("Diminuer la vitesse du moteur CC\n");
 		rapport_cyclique -= 0.02;
+		printf("PWM actuelle : %2.3f\n", rapport_cyclique);
 		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_L1:
 		printf("Augmenter la vitesse du moteur CC \n");
 		rapport_cyclique += 0.02;
+		printf("PWM actuelle : %2.3f\n", rapport_cyclique);
 		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
 		break;
 	case GAMEPAD_START:
