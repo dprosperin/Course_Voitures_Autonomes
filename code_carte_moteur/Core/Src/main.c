@@ -31,10 +31,10 @@
 #include "pwm_api.h"
 #define TIM_CLOCK_FOURCHE_OPTIQUE 170000000
 #define PRESCALAR_FOURCHE_OPTIQUE 1
-#define ARR_FOURCHE_OPTIQUE 170000000-1
+#define ARR_FOURCHE_OPTIQUE 0xffffffff
 #define DISTANCE_ANGULAIRE_EN_METRE 0.00493
-#define MAX_SPEED 4.14
-#define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 4.14)
+#define MAX_SPEED 4.07
+#define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 3.90)
 #define KP 1.5
 #define CAN_ID_FOURCHE_OPTIQUE 27
 
@@ -67,7 +67,8 @@ uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
 float measured_speed_m_par_sec = 0;
-float consigne = 0.4;
+float consigne = 0.0;
+bool sens_rotation;
 
 //au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
@@ -180,6 +181,7 @@ int main(void)
 	float compteur_de_10_mms;
 	float compteur_de_vitesse_nulle;
 	float measured_speed_m_par_sec_ancien = 0;
+	int16_t measured_speed_mm_par_sec = 0;
 	int8_t txData[2];
 	FDCAN_TxHeaderTypeDef header;
 	while (1)
@@ -199,7 +201,7 @@ int main(void)
 		printf(">error_rapport_cyclique: %2.5f m/s\n", error);
 		pwm = consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
 		printf(">pwm: %f\n", pwm);
-		PWM_dir_and_cycle(0, &htim1, TIM_CHANNEL_1, pwm);
+		PWM_dir_and_cycle(sens_rotation, &htim1, TIM_CHANNEL_1, pwm);
 		if(dix_millisecondes_passes)
 				{
 					compteur_de_10_mms++;
@@ -209,15 +211,16 @@ int main(void)
 						printf(">compteur_de_vitesse_nulle: %2.5f m/s\n", compteur_de_vitesse_nulle);
 					}
 					else compteur_de_vitesse_nulle = 0;
-					if(compteur_de_vitesse_nulle == 20)
+					if(compteur_de_vitesse_nulle == 40)
 					{
 						measured_speed_m_par_sec = 0;
 						compteur_de_vitesse_nulle = 0;
 					}
 					if(compteur_de_10_mms == 50)
 					{
-						txData[0] = ((int16_t)measured_speed_m_par_sec) >> 8;
-						txData[1] = ((int16_t)measured_speed_m_par_sec) & 0x00FF;
+						measured_speed_mm_par_sec = measured_speed_m_par_sec*1000;
+						txData[0] = measured_speed_mm_par_sec >> 8;
+						txData[1] = measured_speed_mm_par_sec & 0x00FF;
 						/******************* NE PAS TOUCHER **************************************/
 						header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
 						header.BitRateSwitch = FDCAN_BRS_OFF;
@@ -311,7 +314,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 				break;
 			case CAN_ID_MOTEUR://vitesse consigne réçu en mm/s
 					consigne = trame_rx.data[0] / 1000.0; //vitesse transformée en m/s
-					bool sens_rotation =  trame_rx.data[1];
+					sens_rotation =  trame_rx.data[1];
 				break;
 			default:
 				break;
