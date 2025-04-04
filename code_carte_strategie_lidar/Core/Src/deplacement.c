@@ -147,3 +147,41 @@ void set_angle_roue(float angle_roue)
 
 	set_angle(angle_herkulex);
 }
+
+
+/**
+ * @brief envoi la vitesse consigne linéaire
+ * @param vitesse consigne en linéaire en m/s
+ */
+void set_consigne_vitesse(float vitesse, bool sens)
+{
+	uint16_t octets_vitesse_linaire_mm_par_seconde;
+	uint8_t octet_sens;
+	uint8_t txData[3];
+	FDCAN_TxHeaderTypeDef header;
+
+	octets_vitesse_linaire_mm_par_seconde = (uint16_t) (vitesse * 1000);
+	octet_sens     =  sens;
+
+	txData[0] = (int8_t) (octets_vitesse_linaire_mm_par_seconde >> 8);
+	txData[1] =  (int8_t)(octets_vitesse_linaire_mm_par_seconde);
+
+	// Troisième octet le sens de rotation
+	txData[2] = octet_sens;
+
+	/******************* NE PAS TOUCHER **************************************/
+	header.ErrorStateIndicator = FDCAN_ESI_ACTIVE;
+	header.BitRateSwitch = FDCAN_BRS_OFF;
+	header.FDFormat = FDCAN_CLASSIC_CAN;
+	header.TxEventFifoControl = FDCAN_NO_TX_EVENTS;
+	header.MessageMarker = 0;
+	/*************************************************************************/
+
+	header.Identifier = CAN_ID_VITESSE_LINEAIRE; // Set your CAN identifier
+	header.IdType = FDCAN_STANDARD_ID; // Standard ID
+	header.TxFrameType = FDCAN_DATA_FRAME; // Data frame
+	header.DataLength = 3; // Data length
+
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, txData);
+
+}

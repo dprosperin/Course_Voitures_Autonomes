@@ -32,6 +32,8 @@ float angle_roue = 90.0;
 void conduite_autonome(void)
 {
 
+	set_consigne_vitesse(0.7, 1);
+
 	discontinuite() ;
 	recherches_locaux();
 	autonomous () ;

@@ -15,9 +15,11 @@ void recule(void);
 void avance(void);
 void set_angle(float nouvelle_angle);
 void set_angle_roue(float angle_roue);
+void set_consigne_vitesse(float vitesse, bool sens);
 
 #define CAN_ID_HERKULEX 0x601
 #define CAN_ID_MOTEUR 0x602
+#define CAN_ID_VITESSE_LINEAIRE 0x603
 
 /**
  * @note ANGLE_HERKULEX_MIN les roues braquent totalement à gauche
