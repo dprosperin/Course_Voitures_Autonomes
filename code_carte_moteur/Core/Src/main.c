@@ -320,9 +320,8 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 					utiliser_asservissement = 0;
 				break;
 			case CAN_ID_VITESSE_LINEAIRE://vitesse consigne réçu en mm/s
-					int16_t vitesse_consigne_en_mm = trame_rx.data[0]  >> 8; //vitesse transformée en m/s
-					vitesse_consigne_en_mm = trame_rx.data[1] & 0x00FF;
-					vitesse_consigne = vitesse_consigne_en_mm/1000;
+					int16_t vitesse_consigne_en_mm = ((uint16_t)trame_rx.data[0]  << 8) | (uint16_t)trame_rx.data[1]; //vitesse transformée en m/s
+					vitesse_consigne = vitesse_consigne_en_mm / 1000.0;
 					sens_rotation =  trame_rx.data[2];
 					utiliser_asservissement = 1;
 				break;
