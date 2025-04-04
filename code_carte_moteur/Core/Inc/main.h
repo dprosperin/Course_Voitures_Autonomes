@@ -89,6 +89,8 @@ void Error_Handler(void);
  * @note ID CAN permettant de controler la vitesse et le sens de rotation du moteur CC
  */
 #define CAN_ID_MOTEUR 0x602
+#define CAN_ID_FOURCHE_OPTIQUE 0x1B
+#define CAN_ID_VITESSE_LINEAIRE 0x603
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

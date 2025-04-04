@@ -36,7 +36,6 @@
 #define MAX_SPEED 4.07
 #define FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE (1.0 / 3.90)
 #define KP 1.5
-#define CAN_ID_FOURCHE_OPTIQUE 27
 
 /* USER CODE END Includes */
 
@@ -47,7 +46,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
-#define DEBUG_FOURCHE_OPTIQUE
+#undef DEBUG_FOURCHE_OPTIQUE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -67,9 +66,9 @@ uint32_t Difference = 0;
 char First_rising;
 float Frecuency = 0;
 float measured_speed_m_par_sec = 0;
-float consigne = 0.0;
+float vitesse_consigne = 0.0;
 bool sens_rotation;
-
+bool utiliser_asservissement = 0;
 //au moment de changement du projet le tim interrupt se désactive
 void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim)
 {
@@ -194,29 +193,31 @@ int main(void)
 		/**
 		 * @note Vitesse asservie de 6.8V à 8.5V pour une consigne de 0.8 m/s
 		 */
-		error = consigne - measured_speed_m_par_sec;
-		printf(">error_vitesse_lineaire: %2.5f m/s\n", error);
-		measured_speed_m_par_sec_ancien = measured_speed_m_par_sec;
+		if(utiliser_asservissement)
+		{
+		error = vitesse_consigne - measured_speed_m_par_sec;
+		//printf(">error_vitesse_lineaire: %2.5f m/s\n", error);
 		error = error * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE * KP;
-		printf(">error_rapport_cyclique: %2.5f m/s\n", error);
-		pwm = consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
-		printf(">pwm: %f\n", pwm);
+		//printf(">error_rapport_cyclique: %2.5f m/s\n", error);
+		pwm = vitesse_consigne * FACTEUR_CONVERTION_VITESSE_LINEAIRE_EN_RAPPORT_CYCLIQUE + error;
+		//printf(">pwm: %f\n", pwm);
 		PWM_dir_and_cycle(sens_rotation, &htim1, TIM_CHANNEL_1, pwm);
+		}
 		if(dix_millisecondes_passes)
 				{
 					compteur_de_10_mms++;
 					if(measured_speed_m_par_sec == measured_speed_m_par_sec_ancien)
 					{
 						compteur_de_vitesse_nulle++;
-						printf(">compteur_de_vitesse_nulle: %2.5f m/s\n", compteur_de_vitesse_nulle);
+						//printf(">compteur_de_vitesse_nulle: %2.5f m/s\n", compteur_de_vitesse_nulle);
 					}
 					else compteur_de_vitesse_nulle = 0;
-					if(compteur_de_vitesse_nulle == 40)
+					if(compteur_de_vitesse_nulle == 50)
 					{
 						measured_speed_m_par_sec = 0;
 						compteur_de_vitesse_nulle = 0;
 					}
-					if(compteur_de_10_mms == 50)
+					if(compteur_de_10_mms == 10)
 					{
 						measured_speed_mm_par_sec = measured_speed_m_par_sec*1000;
 						txData[0] = measured_speed_mm_par_sec >> 8;
@@ -240,7 +241,7 @@ int main(void)
 
 					}
 					dix_millisecondes_passes = 0;
-
+					measured_speed_m_par_sec_ancien = measured_speed_m_par_sec;
 				}
     /* USER CODE END WHILE */
 
@@ -312,9 +313,18 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
          */
 				send_pos(ID_HERKULEX, pos_herculex);
 				break;
-			case CAN_ID_MOTEUR://vitesse consigne réçu en mm/s
-					consigne = trame_rx.data[0] / 1000.0; //vitesse transformée en m/s
-					sens_rotation =  trame_rx.data[1];
+			case CAN_ID_MOTEUR://pwm consigne en %
+					float pwm_consigne = trame_rx.data[0] / 100.0; //pwm consigne en decimal
+					bool sens_rotation =  trame_rx.data[1];
+					PWM_dir_and_cycle(sens_rotation, &htim1, TIM_CHANNEL_1, pwm_consigne);
+					utiliser_asservissement = 0;
+				break;
+			case CAN_ID_VITESSE_LINEAIRE://vitesse consigne réçu en mm/s
+					int16_t vitesse_consigne_en_mm = trame_rx.data[0]  >> 8; //vitesse transformée en m/s
+					vitesse_consigne_en_mm = trame_rx.data[1] & 0x00FF;
+					vitesse_consigne = vitesse_consigne_en_mm/1000;
+					sens_rotation =  trame_rx.data[2];
+					utiliser_asservissement = 1;
 				break;
 			default:
 				break;
