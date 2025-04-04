@@ -20,8 +20,6 @@ uint8_t buffer_DMA_scan[BUFFER_DMA_SIZE] = {0};
 uint8_t buffer_UART[BUFFER_UART_SIZE] = {0};
 uint16_t data_lidar_mm_main[DATA_LIDAR_MM_MAIN_SIZE];
 
-float X[360];
-float Y[360];
 
 /**
  * @brief Decode l'angle et la distance
@@ -283,11 +281,20 @@ void lidar_print_array_distance_teleplot_format(int16_t *points, float num_point
 	//printf("|xy\n");
 }
 
-
-void PolairesACartesiens(uint16_t* data_lidar_mm_main, uint16_t* angle){
+/*
+void PolairesACartesiens(uint16_t* data_lidar_mm_main, uint16_t* angle)
+{
 	X[*angle] = ((float)data_lidar_mm_main[*angle])*cos((((float)*angle) * M_PI) / 180.0);
 	Y[*angle] = ((float)data_lidar_mm_main[*angle])*sin((((float)*angle) * M_PI) / 180.0);
 }
+*/
+void polToCart(lidar_point_t* p, uint16_t dist, int16_t angle)
+{
+	p->x = ((float)dist)*cos((((float)- angle) * M_PI) / 180.0);
+	p->y = ((float)dist)*sin((((float)- angle) * M_PI) / 180.0);
+	p->i = angle;
+}
+
 
 
 /**
