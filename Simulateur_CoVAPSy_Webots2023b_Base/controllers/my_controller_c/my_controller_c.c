@@ -48,6 +48,7 @@ float maxSpeed = 28; // km/h
 // angle max de la direction
 float maxangle_degre = 16;
 // variable étudiant
+int angle = 0;
 int tab_mapped[180] = {0};
 int tab_discontuinuite[180][2] = {0};
 int cpt_discontuinuiter = 0;
@@ -139,18 +140,11 @@ int main(int argc, char **argv)
        case AVANCER:
          discontinuite();
          recherches_locaux();
-         //afficher(0,180);
          conduite_autonome() ; 
-         set_vitesse_m_s(vitesse_m_s);
+           vitesse_m_s = 0.0;
+        set_vitesse_m_s(vitesse_m_s);
          clear();
-         
-       if ( tab_mapped[90] < 10000 && tab_mapped[90] > 1200)
-       {vitesse_m_s = 1.1; }
-       else 
-       {
-       vitesse_m_s = 0.7 ; 
-       }
-       
+          
        if(tab_mapped[90] < 185)
        {
        etat_deplacement = BLOQUE ; 
@@ -164,17 +158,18 @@ int main(int argc, char **argv)
         break;
         
         case RECULER:
-        vitesse_m_s = 0.5;
+        vitesse_m_s = 0.8;
         set_vitesse_m_s(vitesse_m_s);
-       if (tab_mapped [90] < 250) 
+       if (tab_mapped [90] < 185) 
         {
-        commande_moteur = -commande_moteur*1.9 , 
-        recule();
-        wb_robot_step(2500); 
-        }
-        else 
-        {
-        etat_deplacement = AVANCER ; 
+     commande_moteur = get_angle_cap(180-angle);
+     wbu_driver_set_steering_angle(commande_moteur);
+      recule();
+     wb_robot_step(2500);
+     commande_moteur = get_angle_cap(90);
+     wbu_driver_set_steering_angle(commande_moteur);
+     wb_robot_step(500); 
+     etat_deplacement = AVANCER ;  
         }
         break;
         
@@ -256,6 +251,7 @@ int get_mapped_tableau(signed int data_lidar[360], int data_maped[180])
 }
 void discontinuite()
 {
+  printf("--------------------\n");
   int distance_courante = 0;
   int distance_suivante = 0;
   int diff = 0;
@@ -273,10 +269,11 @@ void discontinuite()
       tab_discontuinuite[i][0] = distance_courante;
       tab_discontuinuite[i][1] = i;
       cpt_discontuinuiter++;
-  //    printf("v_discontinuiter : %d , a:%d\n",distance_courante,i);
+    printf("distance : %d , angle : %d \n",distance_courante,i);
     } 
   }
-//printf("cpt_discontinuiter : %d \n",cpt_discontuinuiter) ;
+printf("nombre de discontinuité :  %d \n",cpt_discontuinuiter) ; 
+
 }
 
 void recherches_locaux()
@@ -329,11 +326,11 @@ void recherches_locaux()
     case MIN_LOCAL:
       min_locaux[i][0] = distance_actuelle;
       min_locaux[i][1] = i;
-      etat = AUGMENTER;
+      etat = INIT;
       break;
 
     case MAX_LOCAL:
-      etat = DIMINUER;
+      etat = INIT;
       break;
 
     default:
@@ -361,7 +358,6 @@ double get_angle_cap(double angle_mapped)
 
 void conduite_autonome()
 {
-  int angle = 0;
   //
   int max_discontinuite_2_distance_1 = 0;
   int max_discontinuite_2_distance_2 = 0;
@@ -399,8 +395,6 @@ void conduite_autonome()
       }
     }
     angle = (angle_discontinuite_2_1 + angle_discontinuite_2_2) / 2;
-    
-    angle *= KP_2_DSCONTINUITE;
   }
 
   else if (cpt_discontuinuiter == 1)
@@ -412,21 +406,16 @@ void conduite_autonome()
         max_distance_1_discontinuite = tab_discontuinuite[i][0];
         angle_1_discontinuite = i;
       }
-    }
-  // printf("-----------------------\n");
-    for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
-    {
-      if (min_locaux[i][0] > max_distance_min_locaux_1)
+    
+        if (min_locaux[i][0] > max_distance_min_locaux_1)
       {
         max_distance_min_locaux_1 = min_locaux[i][0];
         angle_min_locaux_1 = i;
       }
     }
-    //   printf("-----------------------\n");
-    //printf("min_locaux_d:%d,a:%d\n",max_distance_min_locaux_1,angle_min_locaux_1) ; 
     angle = (angle_min_locaux_1 + angle_1_discontinuite) / 2;
-    
-    angle *= KP_1_DSCONTINUITE;
+    printf("maximum des min_locaux, distance : %d , angle : %d \n",max_distance_min_locaux_1,angle_min_locaux_1) ; 
+    printf("angle de direction : %d \n",angle) ; 
   }
 
   else if (cpt_discontuinuiter == 0)
@@ -440,33 +429,23 @@ void conduite_autonome()
       }
     }
   angle   = angle_0_discontinuite ; 
-
-  angle *= KP_0_DSCONTINUITE;
   }
-  commande_moteur = get_angle_cap(angle);
-  wbu_driver_set_steering_angle(commande_moteur);
+     commande_moteur = get_angle_cap(angle);
+     wbu_driver_set_steering_angle(commande_moteur);
 }
 
- 
  void clear()
  {
-   for (int i = 0; i < 180; i++)
+   for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
    {
      tab_discontuinuite[i][0] = 0;
      tab_discontuinuite[i][1] = 0;
    }
  
-   for (int i = 0; i < 180; i++)
+   for (int i = 0; i < TAILLE_TABLEAU_MAPPED; i++)
    {
      min_locaux[i][0] = 0;
      min_locaux[i][1] = 0;
    }
  }
    
-void afficher(int angle_start , int angle_end) 
- {
-    for (int i = angle_start; i < angle_end; i++)
-    {
-   //   printf("%d, ",tab_mapped[i]);
-    }
- }
