@@ -252,6 +252,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 	case CAN_ID_STOP_AUTONOMOUS_DRIVING:
 		printf("STOP AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 0;
+		set_consigne_vitesse(0, 0);
 		break;
 
 	case CAN_ID_FOURCHE_OPTIQUE:
