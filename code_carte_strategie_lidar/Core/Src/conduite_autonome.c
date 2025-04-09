@@ -67,7 +67,9 @@ void conduite_autonome(void)
 		vitesse_lineaire_ancienne = vitesse_lineaire;
 		break ;
 	case BLOQUER :
-		if(capteur_obstacles_droit >= SEUIL_RECULER_CAPTEUR_OBSTACLES && capteur_obstacles_gauche >= SEUIL_RECULER_CAPTEUR_OBSTACLES)
+		if((capteur_obstacles_droit >= SEUIL_RECULER_CAPTEUR_OBSTACLES
+				&& capteur_obstacles_gauche >= SEUIL_RECULER_CAPTEUR_OBSTACLES) ||
+				(capteur_obstacles_gauche == 0 && capteur_obstacles_droit == 0))
 		{
 			etat_deplacement = RECULER ;
 		}
@@ -77,10 +79,10 @@ void conduite_autonome(void)
 
 		set_consigne_vitesse(0.7, 1);
 		set_angle_roue(180.0-angle_roue);
-		HAL_Delay(1000) ;
+		HAL_Delay(500) ;
 		set_consigne_vitesse(1, 0);
 		set_angle_roue(90);
-        HAL_Delay(1000);
+		HAL_Delay(1000);
 		etat_deplacement = AVANCER ;
 		break ;
 
@@ -89,11 +91,6 @@ void conduite_autonome(void)
 	default:
 		break;
 	}
-
-
-
-
-
 
 #ifdef DEBUG_VERBOSE
 	for (unsigned int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
@@ -111,8 +108,6 @@ void conduite_autonome(void)
 
 	uint16_t motif_bar = 0b1000000000;
 	BAR_set(motif_bar >>= ((uint16_t)angle_roue / 18));
-
-
 
 #ifdef DEBUG_VERBOSE
 	printf(">cpt_discontinuitees:%d|xy\n", cpt_discontinuitees);
@@ -145,15 +140,18 @@ void discontinuite()
 
 	for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES - 1; i++)
 	{
-		distance_courante = data_lidar_mm_main[i];
-		distance_suivante = data_lidar_mm_main[i + 1];
-		diff = (int)fabs(distance_suivante - distance_courante);
-
-		if (diff >= seuil_discontinuite)
+		if (data_lidar_mm_main[i] != 0xFFFF)
 		{
-			tab_discontinuitees[i][0] = distance_courante;
-			tab_discontinuitees[i][1] = i;
-			cpt_discontinuitees++;
+			distance_courante = data_lidar_mm_main[i];
+			distance_suivante = data_lidar_mm_main[i + 1];
+			diff = (int)fabs(distance_suivante - distance_courante);
+
+			if (diff >= seuil_discontinuite)
+			{
+				tab_discontinuitees[i][0] = distance_courante;
+				tab_discontinuitees[i][1] = i;
+				cpt_discontinuitees++;
+			}
 		}
 	}
 }
@@ -167,55 +165,58 @@ void recherches_locaux()
 
 	for (int i = 0; i < TAILLE_MAX_LOCAUX - 1; i++)
 	{
-		distance_actuelle = data_lidar_mm_main[i];
-		distance_apres = data_lidar_mm_main[i + 1];
-		switch (etat)
+		if (data_lidar_mm_main[i] != 0xFFFF)
 		{
-		case INIT:
-			if (distance_actuelle < distance_apres)
+			distance_actuelle = data_lidar_mm_main[i];
+			distance_apres = data_lidar_mm_main[i + 1];
+			switch (etat)
 			{
-				etat = AUGMENTER;
-			}
-			else if (distance_actuelle > distance_apres)
-			{
-				etat = DIMINUER;
-			}
-			break;
+			case INIT:
+				if (distance_actuelle < distance_apres)
+				{
+					etat = AUGMENTER;
+				}
+				else if (distance_actuelle > distance_apres)
+				{
+					etat = DIMINUER;
+				}
+				break;
 
-		case AUGMENTER:
-			if (distance_actuelle < distance_apres)
-			{
-				etat = AUGMENTER;
-			}
-			else if (distance_actuelle > distance_apres)
-			{
-				etat = MAX_LOCAL;
-			}
-			break;
+			case AUGMENTER:
+				if (distance_actuelle < distance_apres)
+				{
+					etat = AUGMENTER;
+				}
+				else if (distance_actuelle > distance_apres)
+				{
+					etat = MAX_LOCAL;
+				}
+				break;
 
-		case DIMINUER:
-			if (distance_actuelle > distance_apres)
-			{
-				etat = DIMINUER;
+			case DIMINUER:
+				if (distance_actuelle > distance_apres)
+				{
+					etat = DIMINUER;
+				}
+				else if (distance_actuelle < distance_apres)
+				{
+					etat = MIN_LOCAL;
+				}
+				break;
+
+			case MIN_LOCAL:
+				etat = INIT;
+				break;
+
+			case MAX_LOCAL:
+				max_locaux[i][0] = distance_actuelle;
+				max_locaux[i][1] = i;
+				etat = INIT;
+				break;
+
+			default:
+				break;
 			}
-			else if (distance_actuelle < distance_apres)
-			{
-				etat = MIN_LOCAL;
-			}
-			break;
-
-		case MIN_LOCAL:
-			etat = INIT;
-			break;
-
-		case MAX_LOCAL:
-			max_locaux[i][0] = distance_actuelle;
-			max_locaux[i][1] = i;
-			etat = INIT;
-			break;
-
-		default:
-			break;
 		}
 	}
 
@@ -238,7 +239,7 @@ void autonomous()
 	int max_distance_1_max_locaux = 0;
 	int angle_1_max_locaux = 0;
 	int max_distance_2_max_locaux = 0;
-   int angle_2_max_locaux = 0;
+	int angle_2_max_locaux = 0;
 
 
 	if (cpt_discontinuitees > 1)
@@ -298,25 +299,25 @@ void autonomous()
 	else if (cpt_discontinuitees == 0)
 	{
 		for (int i = 0; i < TAILLE_TAB_DISCONTINUITEES; i++)
-				{
-					if (max_distance_1_max_locaux < tab_discontinuitees[i][0])
-					{
-						max_distance_2_max_locaux = max_distance_1_max_locaux;
-						angle_2_max_locaux = angle_1_max_locaux;
-						max_distance_1_max_locaux = tab_discontinuitees[i][0];
-						angle_1_max_locaux = i ;
-					}
-					else if (max_distance_2_max_locaux < tab_discontinuitees[i][0] && max_distance_1_max_locaux > tab_discontinuitees[i][0])
-					{
-						max_distance_2_max_locaux = tab_discontinuitees[i][0];
-						angle_2_max_locaux = i;
-					}
-					else if (max_distance_1_max_locaux == tab_discontinuitees[i][0] && max_distance_2_max_locaux < tab_discontinuitees[i][0])
-					{
-						max_discontinuite_2_distance_2 = tab_discontinuitees[i][0];
-						angle_2_max_locaux = i;
-					}
-				}
+		{
+			if (max_distance_1_max_locaux < tab_discontinuitees[i][0])
+			{
+				max_distance_2_max_locaux = max_distance_1_max_locaux;
+				angle_2_max_locaux = angle_1_max_locaux;
+				max_distance_1_max_locaux = tab_discontinuitees[i][0];
+				angle_1_max_locaux = i ;
+			}
+			else if (max_distance_2_max_locaux < tab_discontinuitees[i][0] && max_distance_1_max_locaux > tab_discontinuitees[i][0])
+			{
+				max_distance_2_max_locaux = tab_discontinuitees[i][0];
+				angle_2_max_locaux = i;
+			}
+			else if (max_distance_1_max_locaux == tab_discontinuitees[i][0] && max_distance_2_max_locaux < tab_discontinuitees[i][0])
+			{
+				max_discontinuite_2_distance_2 = tab_discontinuitees[i][0];
+				angle_2_max_locaux = i;
+			}
+		}
 #ifdef DEBUG_DISC_0
 		printf(">max_distance_0_discontinuite:%d|xy\n", max_distance_0_discontinuite);
 		printf(">angle_0_discontinuite:%d|xy\n", angle_0_discontinuite);
