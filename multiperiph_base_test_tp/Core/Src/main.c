@@ -34,7 +34,7 @@
 #include "utils.h"
 #include <math.h> //pour formule
 
-
+#define VERBOSE
 
 
 /* USER CODE END Includes */
@@ -176,14 +176,16 @@ int main(void)
 
 
 
-  	lidar_av = (HAL_GetUIDw0() == 3014698);
+  	lidar_av = (HAL_GetUIDw0() == 3014698); //verifier que cest le bon pour la carte avant
 
+#ifdef VERBOSE
 	printf("Programme interface LIDAR\n");
 	printf("Compile le %s\n", __DATE__);
+#endif
 
 	HAL_FDCAN_Start(&hfdcan1);
 	HAL_FDCAN_ActivateNotification(&hfdcan1, FDCAN_IT_RX_FIFO0_NEW_MESSAGE, 0);
-	LCD_clear();
+	LCD_clear(); //clear
 
 	//pour éviter de faire le start scan, demarrage automatique
 	lidar_send_stop();
@@ -212,12 +214,13 @@ int main(void)
 			//lidar_print_array_distance_teleplot_format(data_lidar_mm_main, 360);
 		}
 
+#ifdef VERBOSE
 		printf(">pts:");
 		for(uint16_t i = 0; i < 360; i++){
 			if(pts[i].valid) printf("%d:%d;", pts[i].x, pts[i].y);
 		}
-		printf("|xy,clr\n");
-
+		printf("|xy,\n");
+#endif
 
 		/*
 		lidar_point_t disconts[360];
@@ -296,7 +299,9 @@ void point_incoming(){
 	if(angle < 100 || angle > 260)
 	{
 
-		if(!lidar_av) angle += 180;
+		if(!lidar_av) angle += 180; //Transformation pour le lidar arriere
+
+		angle = angle % 360; //Replacement de ou notre obstacle se trouve
 
 		pts[angle].valid = 1;
 		polToCart(&pts[angle], distance, angle);
