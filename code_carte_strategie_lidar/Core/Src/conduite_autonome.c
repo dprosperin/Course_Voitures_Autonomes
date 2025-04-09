@@ -40,6 +40,8 @@ int cpt_discontinuitees = 0;
 float angle_roue = 90.0;
 float vitesse_lineaire_ancienne = 0.0;
 
+float vitesse_moyenne = 0;
+
 #undef DEBUG_VERBOSE
 
 void conduite_autonome(void)
@@ -56,7 +58,7 @@ void conduite_autonome(void)
 		discontinuite() ;
 		recherches_locaux();
 		autonomous () ;
-		set_consigne_vitesse(1, 0);
+		set_consigne_vitesse(vitesse_moyenne, 0);
 		set_angle_roue(angle_roue);
 
 

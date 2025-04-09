@@ -25,5 +25,7 @@ void recherches_locaux();
 void autonomous () ;
 void clear();
 
+extern float vitesse_moyenne;
+
 
 #endif /* INC_CONDUITE_AUTONOME_H_ */

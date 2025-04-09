@@ -22,9 +22,7 @@
  * | L1               | l              | Augmenter la vitesse du moteur CC          |
  * | Start            | n              | Démarrer du programme de conduite autonome |
  * | Select           | m              | Arret du programme de conduite autonome    |
- * | B                | v              | Arret d'urgence du véhicule                |
- * | R1               | p              | Augmenter kp                               |
- * | R2               | k              | Diminuer kp                                |
+ * | B                | v              | Arret d'urgence du véhicule                |                              |
  *
  */
 
@@ -46,12 +44,12 @@ typedef enum {
 void handle_receive_character(uint8_t receive_character);
 void send_start_autonomous_driving(void);
 void send_stop_autonomous_driving(void);
-void set_kp_value(float new_kp_value);
+void send_augmenter_vitesse_moyenne(void);
+void send_diminuer_vitesse_moyenne(void);
 
 #define CAN_ID_START_AUTONOMOUS_DRIVING 0x500
 #define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
-#define CAN_ID_SET_KP_VALUE 0x300
-
-extern float kp;
+#define CAN_ID_AUGMENTER_VITESSE_MOYENNE 0x300
+#define CAN_ID_DIMINUER_VITESSE_MOYENNE 0x301
 
 #endif /* INC_REMOTE_GAMEPAD_C_ */

@@ -23,12 +23,9 @@
  * | L1               | l              | Augmenter la vitesse du moteur CC          |
  * | Start            | n              | Démarrer du programme de conduite autonome |
  * | Select           | m              | Arret du programme de conduite autonome    |
- * | B                | v              | Arret d'urgence du véhicule                |
- * | R1               | p              | Augmenter kp                               |
- * | R2               | k              | Diminuer kp                                |
+ * | B                | v              | Arret d'urgence du véhicule                |                               |
  *
  */
-float kp = 0.6;
 
 void handle_receive_character(uint8_t receive_character)
 {
@@ -51,15 +48,11 @@ void handle_receive_character(uint8_t receive_character)
 		break;
 	case GAMEPAD_L2:
 		printf("Diminuer la vitesse du moteur CC\n");
-		rapport_cyclique -= 0.02;
-		printf("PWM actuelle : %2.3f\n", rapport_cyclique);
-		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
+		send_diminuer_vitesse_moyenne();
 		break;
 	case GAMEPAD_L1:
 		printf("Augmenter la vitesse du moteur CC \n");
-		rapport_cyclique += 0.02;
-		printf("PWM actuelle : %2.3f\n", rapport_cyclique);
-		set_rapport_cyclique_et_sens(rapport_cyclique, sens);
+		send_augmenter_vitesse_moyenne();
 		break;
 	case GAMEPAD_START:
 		printf("Démarrer du programme de conduite autonome \n");
@@ -74,18 +67,6 @@ void handle_receive_character(uint8_t receive_character)
 		break;
 	case GAMEPAD_STOP_PRESSED:
 		printf("GAMEPAD_STOP_PRESSED \n");
-		break;
-	case GAMEPAD_R1:
-		printf("Augmenter kp\n");
-		kp += 0.01;
-		printf(">kp:%2.5f\n", kp);
-		set_kp_value(kp);
-		break;
-	case GAMEPAD_R2:
-		printf("Diminuer kp\n");
-		kp -= 0.01;
-		printf(">kp:%2.5f\n", kp);
-		set_kp_value(kp);
 		break;
 	}
 }
@@ -116,25 +97,28 @@ void send_stop_autonomous_driving(void)
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &pTxData);
 }
 
-void set_kp_value(float new_kp_value)
+void send_augmenter_vitesse_moyenne(void)
 {
-	uint8_t txData[2] = {0};
-	uint8_t octet_faible_angle = 0;
-	uint8_t octet_fort_angle = 0;
-	int16_t kp_multiply_1000 = kp * 1000;
-
 	FDCAN_TxHeaderTypeDef pTxHeader = { 0 };
 
-	pTxHeader.Identifier = CAN_ID_SET_KP_VALUE;
+	pTxHeader.Identifier = CAN_ID_AUGMENTER_VITESSE_MOYENNE;
 	pTxHeader.IdType = FDCAN_STANDARD_ID;
-	pTxHeader.TxFrameType = FDCAN_DATA_FRAME;
-	pTxHeader.DataLength = 2;
+	pTxHeader.TxFrameType = FDCAN_REMOTE_FRAME;
+	pTxHeader.DataLength = 0;
 
-	octet_faible_angle = (uint8_t) kp_multiply_1000;
-	octet_fort_angle   = (kp_multiply_1000 >> 8) & 0x00FF;
+	uint8_t pTxData;
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &pTxData);
+}
 
-	txData[0] = octet_fort_angle;
-	txData[1] = octet_faible_angle;
+void send_diminuer_vitesse_moyenne(void)
+{
+	FDCAN_TxHeaderTypeDef pTxHeader = { 0 };
 
-	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &txData);
+	pTxHeader.Identifier = CAN_ID_DIMINUER_VITESSE_MOYENNE;
+	pTxHeader.IdType = FDCAN_STANDARD_ID;
+	pTxHeader.TxFrameType = FDCAN_REMOTE_FRAME;
+	pTxHeader.DataLength = 0;
+
+	uint8_t pTxData;
+	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &pTxHeader, &pTxData);
 }

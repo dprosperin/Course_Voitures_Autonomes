@@ -44,13 +44,18 @@
 #define CAN_ID_START_AUTONOMOUS_DRIVING 0x500
 #define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
 #define CAN_ID_FOURCHE_OPTIQUE 27
-#define CAN_ID_SET_KP_VALUE 0x300
+#define CAN_ID_START_AUTONOMOUS_DRIVING 0x500
+#define CAN_ID_STOP_AUTONOMOUS_DRIVING 0x501
+#define CAN_ID_AUGMENTER_VITESSE_MOYENNE 0x300
+#define CAN_ID_DIMINUER_VITESSE_MOYENNE 0x301
 #define CAN_ID_TOF_LEFT_SENSOR 93
 #define CAN_ID_TOF_RIGHT_SENSOR 92
 #undef TESTS_COMPOSANTS
 #undef PRINT_LIDAR_MEASURES
 #undef PRINT_HERKULEX_SPEED
 #undef DEBUG_CAPTEUR_OBSTACLES
+#undef PRINT_VITESSE_LINEAIRE
+#define PRINT_VITESSE_MOYENNE_CONSIGNE
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -248,6 +253,7 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		printf("STOP AUTONOMOUS DRIVING\n");
 		is_autonomous_driving_started = 0;
 		break;
+
 	case CAN_ID_FOURCHE_OPTIQUE:
 		/**
 		 * @note Il faudra probablement passer sur une taille de données de deux octets
@@ -255,14 +261,28 @@ void HAL_FDCAN_RxFifo0Callback(FDCAN_HandleTypeDef *hfdcan, uint32_t RxFifo0ITs)
 		vitesse_lineaire =
 				((uint16_t)(buffer_trame_rx[marker1].data[1])|
 						(uint16_t)buffer_trame_rx[marker1].data[0] << 8) / 1000.0;
-		//printf(">vitesse_lineaire:%2.5f\n", vitesse_lineaire);
+#ifdef PRINT_VITESSE_LINEAIRE
+		printf(">vitesse_lineaire:%2.5f\n", vitesse_lineaire);
+#endif
 		break;
-	case CAN_ID_SET_KP_VALUE:
-		/**
-		 * @note Les valeurs de kp négatifs ne fonctionne pas
-		 */
-		kp = (((uint16_t) buffer_trame_rx[marker1].data[0] << 8) | buffer_trame_rx[marker1].data[1]) / 1000.0;
-		printf(">kp:%2.5f|xy\n", kp);
+
+
+	case CAN_ID_AUGMENTER_VITESSE_MOYENNE:
+		vitesse_moyenne += 0.1;
+#ifdef PRINT_VITESSE_MOYENNE_CONSIGNE
+		printf(">vitesse_moyenne_consigne:%2.5f\n", vitesse_moyenne);
+#endif
+		break;
+
+	case CAN_ID_DIMINUER_VITESSE_MOYENNE:
+		vitesse_moyenne -= 0.1;
+
+		if (vitesse_moyenne < 0)
+			vitesse_moyenne = 0;
+
+#ifdef PRINT_VITESSE_MOYENNE_CONSIGNE
+		printf(">vitesse_moyenne_consigne:%2.5f\n", vitesse_moyenne);
+#endif
 		break;
 
 	case CAN_ID_TOF_LEFT_SENSOR:
