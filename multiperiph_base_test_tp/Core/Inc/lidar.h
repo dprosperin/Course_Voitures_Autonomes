@@ -147,6 +147,8 @@ void PolairesACartesiens(uint16_t* data_lidar_mm_main, uint16_t* angle);
 
 void distance(int32_t x, int32_t y);
 
+//void find_discton(lidar_point_t* points, lidar_point_t* disctonts, uint16_t start, uint16_t stop);
+
 HAL_StatusTypeDef lidar_send_start_scan(void);
 HAL_StatusTypeDef lidar_send_get_health(void);
 HAL_StatusTypeDef lidar_send_get_info(void);

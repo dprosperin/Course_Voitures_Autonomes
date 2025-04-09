@@ -59,6 +59,7 @@
 uint8_t flag_reception_uart2 = 0;
 uint8_t caractere;
 
+bool lidar_av = 0  ;
 
 
 /* USER CODE END PV */
@@ -71,11 +72,39 @@ void SystemClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-
+uint32_t message_id = 0x199;
 
 FDCAN_TxHeaderTypeDef header1;
 FDCAN_TxHeaderTypeDef header2;
 
+
+uint16_t dist(int16_t x1, int16_t y1, int16_t x2, int16_t y2){
+	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
+}
+
+
+uint16_t find_discton(lidar_point_t* points, lidar_point_t* disctonts, uint16_t start, uint16_t stop)
+	{ // renvoie le nombre de discontinuités trouvées
+
+	uint16_t i = start;
+	uint16_t disconts_nb = 0;
+
+	while(i != stop)
+		{
+
+		if(dist(points[i].x, points[i].y, points[i+1 % 360].x, points[i+1 % 360].y) > 60){
+			disctonts[disconts_nb] = points[i];
+			disconts_nb++;
+		}
+
+		i++;
+		if(i > 359) i = 0;
+	}
+
+	return disconts_nb; //essayer de printf disconts
+
+
+}
 
 
 
@@ -100,7 +129,7 @@ void addPointToFIFO(lidar_point_t* p) {
 		.TxEventFifoControl = FDCAN_NO_TX_EVENTS,
 
 		.DataLength = 6,
-		.Identifier = 0x200,
+		.Identifier = (lidar_av ? 0x200 : 0x201), //pour faire la comparaison
 	};
 
 	HAL_FDCAN_AddMessageToTxFifoQ(&hfdcan1, &header, (uint8_t*)p); //envoie trame
@@ -143,6 +172,12 @@ int main(void)
   MX_FDCAN1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
+
+
+
+
+  	lidar_av = (HAL_GetUIDw0() == 3014698);
+
 	printf("Programme interface LIDAR\n");
 	printf("Compile le %s\n", __DATE__);
 
@@ -160,10 +195,6 @@ int main(void)
 	lidar_send_start_scan();
 
 	//fin
-
-
-	HAL_FDCAN_Start(&hfdcan1); //start
-
 
 
 	HAL_UART_Receive_IT(&PC_HUART, &caractere, 1); // A laisser proche de la boucle while(1)
@@ -187,6 +218,12 @@ int main(void)
 		}
 		printf("|xy,clr\n");
 
+
+		/*
+		lidar_point_t disconts[360];
+		uint16_t disconts_nb = find_discton(pts, disconts, 0, 359);
+		printf("disconts_nb : %d\n", disconts_nb);
+*/
 
 
     /* USER CODE END WHILE */
@@ -255,7 +292,12 @@ void point_incoming(){
 
 	lidar_decode_angle_and_distance(buffer_DMA_scan, &angle, &distance, &is_first_scan_point);
 
-	if(angle < 100 || angle > 260) {
+
+	if(angle < 100 || angle > 260)
+	{
+
+		if(!lidar_av) angle += 180;
+
 		pts[angle].valid = 1;
 		polToCart(&pts[angle], distance, angle);
 		addPointToFIFO(&pts[angle]);
@@ -263,30 +305,6 @@ void point_incoming(){
 		pts[angle].valid = 0;
 	}
 }
-
-uint16_t dist(int16_t x1, int16_t y1, int16_t x2, int16_t y2){
-	return sqrt((x2 - x1) * (x2 - x1) + (y2 - y1) * (y2 - y1));
-}
-
-
-uint16_t find_discton(lidar_point_t* points, lidar_point_t* disctonts, uint16_t start, uint16_t stop){ // renvoie le nombre de discontinuités trouvées
-	uint16_t i = start;
-	uint16_t disconts_nb = 0;
-
-	while(i != stop){
-		if(dist(points[i].x, points[i].y, points[i+1 % 360].x, points[i+1 % 360].y) > 60){
-			disctonts[disconts_nb] = points[i];
-			disconts_nb++;
-		}
-
-		i++;
-		if(i > 359) i = 0;
-	}
-
-	return disconts_nb;
-}
-
-
 
 
 
@@ -390,3 +408,5 @@ void assert_failed(uint8_t *file, uint32_t line)
   /* USER CODE END 6 */
 }
 #endif /* USE_FULL_ASSERT */
+
+
