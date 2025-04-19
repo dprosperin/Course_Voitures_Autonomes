@@ -108,8 +108,36 @@ void automate_decode(void)
     printf("Etat num %d\n", etat_actuel);
 }
 
+HAL_StatusTypeDef Pixy2_getVersion(void)
+{
+	uint8_t getVersion[4] = {0xAE, 0xC1, 0xE, 0x0};
+	return  HAL_UART_Transmit(&PIXY2_HUART, getVersion, 4, HAL_MAX_DELAY);
+}
+
+HAL_StatusTypeDef Pixy2_getResolution(void)
+{
+	uint8_t getResolution_request[5] = {0xAE, 0xC1, 0xC, 0x1};
+	return  HAL_UART_Transmit(&PIXY2_HUART, getResolution_request, 5, HAL_MAX_DELAY);
+}
+
 HAL_StatusTypeDef Pixy2_setLED(uint8_t red, uint8_t green, uint8_t blue)
 {
 	uint8_t setLed[7] = {0xAE, 0xC1, 0x14, 0x3, red, green, blue};
 	return  HAL_UART_Transmit(&PIXY2_HUART, setLed, 7, HAL_MAX_DELAY);
+}
+
+HAL_StatusTypeDef Pixy2_setCameraBrightness(uint8_t brightness)
+{
+	uint8_t setCameraBrightness_request[5] = {0xAE, 0xC1, 0x10, 0x1, brightness};
+	return  HAL_UART_Transmit(&PIXY2_HUART, setCameraBrightness_request, 5, HAL_MAX_DELAY);
+}
+
+HAL_StatusTypeDef Pixy2_getRGB(uint16_t x, uint16_t y, bool saturate)
+{
+	if (x > 315 || y > 207)
+		return HAL_ERROR;
+
+	uint8_t getRGB_request[9] = {0xAE, 0xC1, 0x70, 0x5, (uint8_t) x, (uint8_t)(x >> 8), (uint8_t) y, (uint8_t) (y >> 8), saturate};
+
+	return  HAL_UART_Transmit(&PIXY2_HUART, getRGB_request, 9, HAL_MAX_DELAY);
 }
