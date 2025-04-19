@@ -8,7 +8,7 @@ OUTPUT_DIRECTORY       = docs
 CREATE_SUBDIRS         = NO
 
 # Source Code
-INPUT                  = code_carte_moteur/Core/ code_carte_strategie_lidar/Core/ capteur_obstacles/Core/ README.md images
+INPUT                  = code_carte_moteur/Core/ code_carte_strategie_lidar/Core/ capteur_obstacles/Core/ README.md images tp_pixy2/Core/
 FILE_PATTERNS          = *.c *.h
 RECURSIVE              = YES
 EXCLUDE                = ./Debug ./Core/Startup ./Drivers
