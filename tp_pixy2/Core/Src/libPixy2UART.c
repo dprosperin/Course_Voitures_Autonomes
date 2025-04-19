@@ -4,10 +4,9 @@
  *  Created on: Dec 10, 2024
  *      Author: davidprosperin
  */
+#include "libPixy2UART.h"
 
-#include <stdint.h>
-
-extern uint8_t buffer_rx[10];
+extern uint8_t buffer_rx[1000];
 extern uint8_t index_read;
 
 void automate_decode(void)
@@ -107,4 +106,10 @@ void automate_decode(void)
     }
 
     printf("Etat num %d\n", etat_actuel);
+}
+
+HAL_StatusTypeDef Pixy2_setLED(uint8_t red, uint8_t green, uint8_t blue)
+{
+	uint8_t setLed[7] = {0xAE, 0xC1, 0x14, 0x3, red, green, blue};
+	return  HAL_UART_Transmit(&PIXY2_HUART, setLed, 7, HAL_MAX_DELAY);
 }
