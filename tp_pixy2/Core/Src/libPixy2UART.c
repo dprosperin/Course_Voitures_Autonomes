@@ -75,7 +75,7 @@ void Pixy2_automate_decode(uint8_t received_byte)
 				&& checksum_value == byte_sum)
 		{
 			 // @todo À vérifier car la documentation mentionne une taille de charge utile à 4 pour la requête getRGB
-			if (type_of_packet == PIXY2_ACK_RES && payload_length = 5)
+			if (type_of_packet == PIXY2_ACK_RES && payload_length == 5)
 			{
 				blue_pixel_value = received_byte_array[0];
 				green_pixel_value = received_byte_array[1];
@@ -123,3 +123,5 @@ HAL_StatusTypeDef Pixy2_getRGB(uint16_t x, uint16_t y, bool saturate)
 
 	return  HAL_UART_Transmit(&PIXY2_HUART, getRGB_request, 9, HAL_MAX_DELAY);
 }
+
+

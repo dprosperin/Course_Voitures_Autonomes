@@ -48,6 +48,7 @@
 
 /* USER CODE BEGIN PV */
 uint8_t flag_reception_uart1 = 0;
+uint8_t received_byte = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -99,11 +100,8 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  uint8_t received_byte = 0;
-
-  printf("Hello\n");
-
-  HAL_UART_Receive_IT(&huart1, &receive_byte, 1);
+  printf("Interface Pixy2CAM\n");
+  HAL_UART_Receive_IT(&huart1, &received_byte, 1);
   while (1)
   {
 	  Pixy2_setLED(0, 0xFF, 0);
