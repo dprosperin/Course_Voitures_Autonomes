@@ -58,8 +58,19 @@ HAL_StatusTypeDef Pixy2_getVersion(void);
 HAL_StatusTypeDef Pixy2_getResolution(void);
 HAL_StatusTypeDef Pixy2_setCameraBrightness(uint8_t brightness);
 HAL_StatusTypeDef Pixy2_getRGB(uint16_t x, uint16_t y, bool saturate);
+HAL_StatusTypeDef Pixy2_getBlocks(uint8_t sigmap, uint8_t maxBlocks);
 
 extern uint8_t received_byte_array[PIXY2_MAX_PAYLOAD_LENGTH];
 extern uint8_t blue_pixel_value,  green_pixel_value, red_pixel_value;
+
+// getBlocks variables
+extern uint8_t color_code_number,
+	position_x_of_blocks,
+	position_y_of_blocks,
+	width_of_blocks,
+	height_of_blocks,
+	angle_of_color_code,
+	tracking_index_of_blocks,
+	age;
 
 #endif /* INC_LIBPIXY2UART_H_ */

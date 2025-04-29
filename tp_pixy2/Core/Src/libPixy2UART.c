@@ -9,6 +9,15 @@
 uint8_t received_byte_array[PIXY2_MAX_PAYLOAD_LENGTH] = {0};
 uint8_t blue_pixel_value = 0,  green_pixel_value = 0, red_pixel_value = 0;
 
+uint8_t color_code_number = 0,
+	position_x_of_blocks = 0,
+	position_y_of_blocks = 0,
+	width_of_blocks = 0,
+	height_of_blocks = 0,
+	angle_of_color_code = 0,
+	tracking_index_of_blocks = 0,
+	age = 0;
+
 void Pixy2_automate_decode(uint8_t received_byte)
 {
 	static uint8_t index_received_byte = 0,
@@ -82,6 +91,18 @@ void Pixy2_automate_decode(uint8_t received_byte)
 				red_pixel_value = received_byte_array[2];
 			}
 
+			if (type_of_packet == PIXY2_GET_BLOCKS_RES && payload_length == 16)
+			{
+				color_code_number = received_byte_array[1] >> 8 | received_byte_array[0];
+				position_x_of_blocks = received_byte_array[3] >> 8 | received_byte_array[2];
+				position_y_of_blocks = received_byte_array[5] >> 8 | received_byte_array[4];
+				width_of_blocks = received_byte_array[7] >> 8 | received_byte_array[6];
+				height_of_blocks = received_byte_array[9] >> 8 | received_byte_array[8];
+				angle_of_color_code = received_byte_array[10] >> 8 | received_byte_array[9];
+				tracking_index_of_blocks = received_byte_array[11];
+				age = received_byte_array[12];
+			}
+
 			// Décodage
 			automate_current_state = PIXY2_FIRST_SYNC_BYTE;
 		}
@@ -124,4 +145,10 @@ HAL_StatusTypeDef Pixy2_getRGB(uint16_t x, uint16_t y, bool saturate)
 	return  HAL_UART_Transmit(&PIXY2_HUART, getRGB_request, 9, HAL_MAX_DELAY);
 }
 
+HAL_StatusTypeDef Pixy2_getBlocks(uint8_t sigmap, uint8_t maxBlocks)
+{
+	uint8_t getBlocks_request[6] = {0xAE, 0xC1, PIXY2_GET_BLOCKS_REQ, 2, sigmap, maxBlocks};
+
+	return HAL_UART_Transmit(&PIXY2_HUART, getBlocks_request, 6, HAL_MAX_DELAY);
+}
 
