@@ -47,12 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t buffer_rx[1000];
 uint8_t flag_reception_uart1 = 0;
-uint8_t index_read = 0;
-uint8_t index_write = 0;
-uint8_t receive_byte = 0;
-uint8_t flag_end = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,8 +99,7 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-
-  uint8_t getVersion[4] = {0xAE, 0xC1, 0xE, 0x0};
+  uint8_t received_byte = 0;
 
   printf("Hello\n");
 
@@ -113,28 +107,6 @@ int main(void)
   while (1)
   {
 	  Pixy2_setLED(0, 0xFF, 0);
-
-	  /*if (index_write > index_read
-		   || (index_write < index_read && flag_end == 1))
-	  {
-		  printf("0x%x\n", buffer_rx[index_read]);
-
-		  //
-		  //printf("Reponse\n");
-
-		  automate_decode();
-
-
-		  index_read++;
-
-		  if (index_read >= sizeof(buffer_rx))
-		  {
-			  index_read = 0;
-			  flag_end = 0;
-		  }
-	  }*/
-
-
 
     /* USER CODE END WHILE */
 
@@ -193,18 +165,10 @@ void SystemClock_Config(void)
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if (huart->Instance == USART1){
-		buffer_rx[index_write] = receive_byte;
-
-		index_write++;
-
-		if (index_write >= sizeof(buffer_rx))
-		{
-			index_write = 0;
-			flag_end = 1;
-		}
+		Pixy2_automate_decode(received_byte);
 
 		flag_reception_uart1 = 1;
-		HAL_UART_Receive_IT(&huart1, &receive_byte, 1);
+		HAL_UART_Receive_IT(&huart1, &received_byte, 1);
 	}
 }
 /* USER CODE END 4 */
